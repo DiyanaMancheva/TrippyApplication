@@ -5,51 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="473d22e7-d72e-4526-85b2-03f6871c23c3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/Authors.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/Books.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/Clients.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/LibraryManagement.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/author/Author.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/author/AuthorMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/author/AuthorPresenter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/author/AuthorService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/book/Book.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/book/BookMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/book/BookPresenter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/book/BookService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/client/Client.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/client/ClientMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/client/ClientPresenter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/client/ClientService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/order/Order.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/util/ConsoleReader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/util/ItemAccessor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/LibraryManagement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/author/Author.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/author/AuthorMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/author/AuthorPresenter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/author/AuthorService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/book/Book.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/book/BookMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/book/BookPresenter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/book/BookService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/client/Client.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/client/ClientMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/client/ClientPresenter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/client/ClientService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/order/Order.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/util/ConsoleReader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/util/ItemAccessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LibManagement/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/LibManagement/.idea/vcs.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,6 +60,21 @@
       <recent name="com.diyanamancheva.util" />
       <recent name="com.diyanamancheva.author" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="LibraryManagement" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="LibraryManagement" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
