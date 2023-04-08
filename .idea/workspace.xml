@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="473d22e7-d72e-4526-85b2-03f6871c23c3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/Authors.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/Books.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/Clients.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/LibraryManagement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/author/Author.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/author/AuthorMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/author/AuthorPresenter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/author/AuthorService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/book/Book.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/book/BookMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/book/BookPresenter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/book/BookService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/client/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/client/ClientMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/client/ClientPresenter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/client/ClientService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/order/Order.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/util/ConsoleReader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diyanamancheva/util/ItemAccessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/LibraryManagement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/author/Author.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/author/AuthorMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/author/AuthorPresenter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/author/AuthorService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/book/Book.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/book/BookMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/book/BookPresenter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/book/BookService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/client/Client.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/client/ClientMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/client/ClientPresenter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/client/ClientService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/order/Order.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/util/ConsoleReader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/diyanamancheva/util/ItemAccessor.class" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="workspaceImportEnabled" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2NnR5nWGKOXeXTHKN7JFnaZqlIs" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Diyana/Java/LibraryManagement/src/main/java/com/diyanamancheva&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Diyana\Java\LibraryManagement\src\main\java\com\diyanamancheva" />
+      <recent name="C:\Users\Diyana\Java\LibraryManagement\src\main\java\com\diyanamancheva\client" />
+      <recent name="C:\Users\Diyana\Java\LibraryManagement\src\main\java\com\diyanamancheva\util" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.diyanamancheva.order" />
+      <recent name="com.diyanamancheva.book" />
+      <recent name="com.diyanamancheva.util" />
+      <recent name="com.diyanamancheva.author" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="473d22e7-d72e-4526-85b2-03f6871c23c3" name="Changes" comment="" />
+      <created>1680297682686</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1680297682686</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/diyanamancheva/book/BookService.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/diyanamancheva/book/BookService.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/diyanamancheva/book/BookService.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
