@@ -6,7 +6,7 @@ import com.diyanamancheva.util.ConsoleReader;
 public class BookPresenter {
   private static final String OPTIONS_MESSAGE =
     "Choose what to do: \n1. Search for a book\n2. Add a new book\n3. " +
-    "Edit a book\n4. Remove a book\n5. Show all books\n6. Back";
+    "Remove a book\n4. Show all books\n5. Exit";
   private static final String BOOK_NAME_PROMPT = "Enter book name: ";
   private static final String BOOK_AUTHOR_PROMPT = "Enter author name: ";
   private static final String BOOK_PUBLISHING_DATE_PROMPT = "Enter date of publishing: ";
@@ -14,7 +14,7 @@ public class BookPresenter {
   private static final String BOOK_EDIT_AUTHOR_PROMPT = "Enter author new name: ";
   private static final String BOOK_EDIT_PUBLISHING_DATE_PROMPT = "Enter new date of publishing: ";
   private static final int MIN_MENU_OPTION = 1;
-  private static final int MAX_MENU_OPTION = 6;
+  private static final int MAX_MENU_OPTION = 5;
 
   private static final BookService bookService = new BookService();
 
@@ -34,17 +34,14 @@ public class BookPresenter {
         break;
       case 2:
         addBook();
-      case 3:
-        //editBook();
         break;
-      case 4:
+      case 3:
         deleteBook();
         break;
-      case 5:
+      case 4:
         showAllBooks();
         break;
-      case 6:
-        //back
+      case 5:
         break;
     }
 
@@ -78,5 +75,6 @@ public class BookPresenter {
   public void showAllBooks(){
     String booksString = bookService.showAllBooks();
     System.out.println(booksString);
+    showBookMenu();
   }
 }

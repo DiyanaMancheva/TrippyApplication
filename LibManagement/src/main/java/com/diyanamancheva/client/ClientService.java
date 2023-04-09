@@ -108,7 +108,7 @@ public class ClientService {
     return clientMapper.mapClientListToString(clients);
   }
 
-  private Client getClientByName(String name, List<Client> clients) {
+  public Client getClientByName(String name, List<Client> clients) {
     Client client = null;
     for (Client clientFromList : clients) {
       if (clientFromList.getName().equals(name)) {
@@ -119,7 +119,7 @@ public class ClientService {
     return client;
   }
 
-  private List<Client> getAllClients() {
+  public List<Client> getAllClients() {
     List<String> clientsString = clientAccessor.readAllItems(ITEMS_FILE_PATH);
     ArrayList<Client> clients = new ArrayList<Client>();
     for (String clientString : clientsString) {

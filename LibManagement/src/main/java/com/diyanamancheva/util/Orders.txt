@@ -12,7 +12,5 @@
 12 Carla Ruby School
 13 Jonathan Ballers
 14 Northup
-15 Author Author
-16 Author Author 2
-17 Author Author
-18 vv
+15 dan
+16 vv

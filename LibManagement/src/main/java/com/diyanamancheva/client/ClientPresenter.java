@@ -6,7 +6,7 @@ import com.diyanamancheva.util.ConsoleReader;
 public class ClientPresenter {
   private static final String OPTIONS_MESSAGE =
     "Choose what to do: \n1. Search for a client\n2. Add a new client\n3. " +
-    "Edit a client\n4. Remove a client\n5. Show all clients\n6. Back";
+    "Edit a client\n4. Remove a client\n5. Show all clients\n6. Exit";
   private static final String CLIENT_NAME_PROMPT = "Enter client name: ";
   private static final String CLIENT_EDIT_NAME_PROMPT = "Enter new name: ";
   private static final int MIN_MENU_OPTION = 1;
@@ -39,7 +39,6 @@ public class ClientPresenter {
         showAllClients();
         break;
       case 6:
-        //back
         break;
     }
 

@@ -25,7 +25,7 @@ public class BookMapper {
 
     String[] authorTokens = authorPart.split(" ");
     StringBuilder authorNameBuilder = new StringBuilder();
-    for (int i = 1; i < authorTokens.length; i++) {
+    for (int i = 0; i < authorTokens.length; i++) {
       if (i < authorTokens.length - 1) {
         authorNameBuilder.append(authorTokens[i]).append(" ");
       } else {
@@ -47,8 +47,8 @@ public class BookMapper {
     String authorString = book.getAuthor().getName();
     String publishingDate = book.getPublishingDate();
 
-    String BookNameString = String.join(" ", Integer.toString(idString), nameString);
-    return String.join("_", BookNameString, authorString, publishingDate);
+    String bookNameString = String.join(" ", Integer.toString(idString), nameString);
+    return String.join("_", bookNameString, authorString, publishingDate);
   }
 
   public String mapBookListToString(List<Book> bookList){

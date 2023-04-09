@@ -111,7 +111,7 @@ public class BookService {
     return bookMapper.mapBookListToString(books);
   }
 
-  private Book getBookByName(String name, List<Book> books) {
+  public Book getBookByName(String name, List<Book> books) {
     Book book = null;
     for (Book bookFromList : books) {
       if (bookFromList.getName().equals(name)) {
@@ -122,7 +122,7 @@ public class BookService {
     return book;
   }
 
-  private List<Book> getAllBooks() {
+  public List<Book> getAllBooks() {
     List<String> booksString = bookAccessor.readAllItems(BOOKS_FILE_PATH);
     ArrayList<Book> books = new ArrayList<Book>();
     for (String bookString : booksString) {

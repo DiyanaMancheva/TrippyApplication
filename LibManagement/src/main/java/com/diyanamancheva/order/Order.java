@@ -27,7 +27,7 @@ public class Order {
 
   public void setBook(Book book){ this.book = book; }
 
-  public Client getClient(Client client){ return  this.client; }
+  public Client getClient(){ return  this.client; }
 
   public void setClient(Client client){ this.client = client; }
 
@@ -47,10 +47,9 @@ public class Order {
 
     if (monthInt == 12){
       monthInt = 1;
-
+      yearInt++;
     }else{
       monthInt++;
-      yearInt++;
     }
 
     if(dateInt == 31){
@@ -62,4 +61,5 @@ public class Order {
 
     return dueDate;
   }
+
 }
