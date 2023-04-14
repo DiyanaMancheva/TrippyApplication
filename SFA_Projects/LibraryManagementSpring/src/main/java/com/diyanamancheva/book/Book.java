@@ -5,13 +5,13 @@ import com.diyanamancheva.author.Author;
 public class Book {
   private int id;
   private String title;
-  private Author author;
+  private int authorId;
   private String publishingDate;
 
 
-  public Book(String title, Author author, String publishingDate){
+  public Book(String title, int authorId, String publishingDate){
     this.title = title;
-    this.author = author;
+    this.authorId = authorId;
     this.publishingDate = publishingDate;
   }
 
@@ -31,12 +31,12 @@ public class Book {
     this.title = title;
   }
 
-  public Author getAuthor() {
-    return author;
+  public int getAuthorId() {
+    return authorId;
   }
 
-  public void setAuthor(Author author) {
-    this.author = author;
+  public void setAuthorId(int authorId) {
+    this.authorId = authorId;
   }
 
   public String getPublishingDate() {
