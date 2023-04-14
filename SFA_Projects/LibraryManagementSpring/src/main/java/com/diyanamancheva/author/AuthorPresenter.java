@@ -9,10 +9,18 @@ import java.util.List;
 @Component
 public class AuthorPresenter {
   private static final String OPTIONS_MESSAGE =
-    "Choose what to do: \n1. Search for an author\n2. Add a new author\n3. " +
-    "Remove an author\n4. Show all authors\n5. Back\n";
+    "------------------------------------------\n" +
+    "Authors Menu: \n" +
+    "------------------------------------------\n" +
+    "1. Search for an author\n" +
+    "2. Add a new author\n3. " +
+    "Remove an author\n" +
+    "4. Show all authors\n" +
+    "5. Back\n" +
+    "------------------------------------------\n" +
+    "Your choice: \n" +
+    "------------------------------------------";
   private static final String AUTHOR_NAME_PROMPT = "Enter author name: ";
-  private static final String AUTHOR_EDIT_NAME_PROMPT = "Enter new name: ";
   private static final String AUTHOR_ID_PROMPT = "Enter author id: ";
   private static final int MIN_MENU_OPTION = 1;
   private static final int MAX_MENU_OPTION = 5;
