@@ -1,5 +1,6 @@
 package com.diyanamancheva;
 
+import com.diyanamancheva.author.AuthorPresenter;
 import com.diyanamancheva.util.ConsoleReader;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,12 +17,13 @@ public class LibraryManagementSpring implements CommandLineRunner {
 																								"5. Exit\n" +
 																								"Your choice: ";
 	private static final int INPUT_MIN_VALUE = 1;
-
 	private static final int INPUT_MAX_VALUE = 5;
 
-	//public LibraryManagementSpring(ItemPresenter itemPresenter) {
-	//	this.itemPresenter = itemPresenter;
-	//}
+	private final AuthorPresenter authorPresenter;
+
+	public LibraryManagementSpring(AuthorPresenter authorPresenter) {
+		this.authorPresenter = authorPresenter;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(LibraryManagementSpring.class, args);
@@ -35,7 +37,7 @@ public class LibraryManagementSpring implements CommandLineRunner {
 
 		switch (choice) {
 			case 1:
-				System.out.printf("You chose %d", choice);
+				//orderPresenter.showOrderMenu();
 				break;
 			case 2:
 				//bookPresenter.showBookMenu();
@@ -44,10 +46,10 @@ public class LibraryManagementSpring implements CommandLineRunner {
 				//clientPresenter.showClientMenu();
 				break;
 			case 4:
-				//authorPresenter.showAuthorMenu();
+				authorPresenter.showAuthorMenu();
 				break;
 			case 5:
-				return;
+				//return;
 		}
 	}
 
