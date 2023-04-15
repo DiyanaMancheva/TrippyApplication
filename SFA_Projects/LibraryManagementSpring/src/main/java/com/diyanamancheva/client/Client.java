@@ -1,4 +1,5 @@
 package com.diyanamancheva.client;
+
 public class Client {
   private int id;
   private String name;

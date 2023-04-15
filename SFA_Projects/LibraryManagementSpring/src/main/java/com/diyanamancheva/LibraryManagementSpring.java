@@ -1,6 +1,7 @@
 package com.diyanamancheva;
 
 import com.diyanamancheva.author.AuthorPresenter;
+import com.diyanamancheva.book.BookPresenter;
 import com.diyanamancheva.client.ClientPresenter;
 import com.diyanamancheva.util.ConsoleReader;
 import org.springframework.boot.CommandLineRunner;
@@ -27,10 +28,13 @@ public class LibraryManagementSpring implements CommandLineRunner {
 
 	private final AuthorPresenter authorPresenter;
 	private final ClientPresenter clientPresenter;
+	private final BookPresenter bookPresenter;
 
-	public LibraryManagementSpring(AuthorPresenter authorPresenter, ClientPresenter clientPresenter) {
+	public LibraryManagementSpring(AuthorPresenter authorPresenter, ClientPresenter clientPresenter,
+																 BookPresenter bookPresenter) {
 		this.authorPresenter = authorPresenter;
 		this.clientPresenter = clientPresenter;
+		this.bookPresenter = bookPresenter;
 	}
 
 	public static void main(String[] args) {
@@ -48,7 +52,7 @@ public class LibraryManagementSpring implements CommandLineRunner {
 				//orderPresenter.showOrderMenu();
 				break;
 			case 2:
-				//bookPresenter.showBookMenu();
+				bookPresenter.showBookMenu();
 				break;
 			case 3:
 				clientPresenter.showClientMenu();
