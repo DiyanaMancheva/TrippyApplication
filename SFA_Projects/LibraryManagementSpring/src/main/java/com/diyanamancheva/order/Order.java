@@ -7,7 +7,7 @@ public class Order {
   private int clientId;
   private int bookId;
   private String issueDate;
-  private final String dueDate;
+  private String dueDate;
 
   public Order(int clientId, int bookId, String issueDate){
     this.clientId = clientId;
@@ -33,6 +33,8 @@ public class Order {
   public void setIssueDate(String issueDate){ this.issueDate = issueDate; }
 
   public String getDueDate(){ return this.dueDate; }
+
+  public void setDueDate(String dueDate){ this.dueDate = dueDate; }
 
   private String CalculateDueDate(){
     return LocalDate.parse(this.issueDate).plusMonths(1).toString();
