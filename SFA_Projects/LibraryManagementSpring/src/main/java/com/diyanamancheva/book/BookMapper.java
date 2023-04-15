@@ -1,10 +1,13 @@
 package com.diyanamancheva.book;
 
+import org.springframework.stereotype.Component;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class BookMapper {
 
   public List<Book> mapResultSetToBooks(ResultSet booksResultSet) {

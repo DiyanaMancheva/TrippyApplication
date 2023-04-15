@@ -1,7 +1,5 @@
 package com.diyanamancheva.book;
 
-import com.diyanamancheva.author.Author;
-
 public class Book {
   private int id;
   private String title;
