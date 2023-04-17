@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,15 +20,16 @@ public class OrderService {
     return orderAccessor.readAllOrders();
   }
 
-  public void addOrder(int clientId, int bookId, String issueDate) {
+  public void addOrder(int clientId, int bookId, LocalDate issueDate) {
     Order order = new Order(clientId, bookId, issueDate);
     orderAccessor.addOrder(order);
   }
 
-  public int editOrder(int dueDate, int id) {
+  public int editOrder(LocalDate dueDate, int id) {
     List<Order> orders = getAllOrders();
-    Order order = getOrderById(id, orders);
-    return orderAccessor.updateOrder(order);
+    Order orderToEdit = getOrderById(id, orders);
+    orderToEdit.setDueDate(dueDate);
+    return orderAccessor.updateOrder(orderToEdit);
   }
 
   public int deleteOrder(int id) { return orderAccessor.deleteOrder(id); }
@@ -43,103 +45,91 @@ public class OrderService {
     return order;
   }
 
-  public Order getOrderByClientId(int clientId, List<Order> orders) {
-    Order order = null;
+  public List<Order> getOrderByClientId(int clientId, List<Order> orders) {
+    List<Order> ordersByClientId = new ArrayList<Order>();
+
     for (Order orderFromList : orders) {
-      if (orderFromList.getClientId() == clientId) {
-        order = orderFromList;
-        break;
+     if (orderFromList.getClientId() == clientId) {
+        ordersByClientId.add(orderFromList);
       }
     }
-    return order;
+    return ordersByClientId;
   }
 
-  public Order getOrderByBookId(int bookId, List<Order> orders) {
-    Order order = null;
+  public List<Order> getOrderByBookId(int bookId, List<Order> orders) {
+    List<Order> ordersByBookId = new ArrayList<Order>();
+
     for (Order orderFromList : orders) {
       if (orderFromList.getBookId() == bookId) {
-        order = orderFromList;
-        break;
+        ordersByBookId.add(orderFromList);
       }
     }
-    return order;
+    return ordersByBookId;
   }
 
-  public Order getOrderOnIssueDate(String issueDate, List<Order> orders) {
-    Order order = null;
+  public List<Order> getOrderOnIssueDate(LocalDate issueDate, List<Order> orders) {
+    List<Order> ordersOnIssueDate = new ArrayList<Order>();
+
     for (Order orderFromList : orders) {
-      LocalDate orderFromListLocal = LocalDate.parse(orderFromList.getIssueDate());
-      LocalDate issueLocal = LocalDate.parse(issueDate);
-      if ( orderFromListLocal.isEqual(issueLocal)) {
-        order = orderFromList;
-        break;
+      if ( orderFromList.getIssueDate().isEqual(issueDate)) {
+        ordersOnIssueDate.add(orderFromList);
       }
     }
-    return order;
+    return ordersOnIssueDate;
   }
 
-  public Order getOrderBeforeIssueDate(String issueDate, List<Order> orders) {
-    Order order = null;
+  public List<Order> getOrderBeforeIssueDate(LocalDate issueDate, List<Order> orders) {
+    List<Order> ordersBeforeIssueDate = new ArrayList<Order>();
+
     for (Order orderFromList : orders) {
-      LocalDate orderFromListLocal = LocalDate.parse(orderFromList.getIssueDate());
-      LocalDate issueLocal = LocalDate.parse(issueDate);
-      if ( orderFromListLocal.isBefore(issueLocal)) {
-        order = orderFromList;
-        break;
+      if ( orderFromList.getIssueDate().isBefore(issueDate)) {
+        ordersBeforeIssueDate.add(orderFromList);
       }
     }
-    return order;
+    return ordersBeforeIssueDate;
   }
 
-  public Order getOrderAfterIssueDate(String issueDate, List<Order> orders) {
-    Order order = null;
+  public List<Order> getOrderAfterIssueDate(LocalDate issueDate, List<Order> orders) {
+    List<Order> ordersAfterIssueDate = new ArrayList<Order>();
+
     for (Order orderFromList : orders) {
-      LocalDate orderFromListLocal = LocalDate.parse(orderFromList.getIssueDate());
-      LocalDate issueLocal = LocalDate.parse(issueDate);
-      if ( orderFromListLocal.isAfter(issueLocal)) {
-        order = orderFromList;
-        break;
+      if ( orderFromList.getIssueDate().isAfter(issueDate)) {
+        ordersAfterIssueDate.add(orderFromList);
       }
     }
-    return order;
+    return ordersAfterIssueDate;
   }
 
-  public Order getOrderOnDueDate(String dueDate, List<Order> orders) {
-    Order order = null;
+  public List<Order> getOrderOnDueDate(LocalDate dueDate, List<Order> orders) {
+    List<Order> ordersOnDueDate = new ArrayList<Order>();
+
     for (Order orderFromList : orders) {
-      LocalDate orderFromListLocal = LocalDate.parse(orderFromList.getDueDate());
-      LocalDate dueLocal = LocalDate.parse(dueDate);
-      if ( orderFromListLocal.isEqual(dueLocal)) {
-        order = orderFromList;
-        break;
+      if ( orderFromList.getDueDate().isEqual(dueDate)) {
+        ordersOnDueDate.add(orderFromList);
       }
     }
-    return order;
+    return ordersOnDueDate;
   }
 
-  public Order getOrderBeforeDueDate(String dueDate, List<Order> orders) {
-    Order order = null;
+  public List<Order> getOrderBeforeDueDate(LocalDate dueDate, List<Order> orders) {
+    List<Order> ordersBeforeDueDate = new ArrayList<Order>();
+
     for (Order orderFromList : orders) {
-      LocalDate orderFromListLocal = LocalDate.parse(orderFromList.getDueDate());
-      LocalDate dueLocal = LocalDate.parse(dueDate);
-      if ( orderFromListLocal.isBefore(dueLocal)) {
-        order = orderFromList;
-        break;
+      if ( orderFromList.getDueDate().isBefore(dueDate)) {
+        ordersBeforeDueDate.add(orderFromList);
       }
     }
-    return order;
+    return ordersBeforeDueDate;
   }
 
-  public Order getOrderAfterDueDate(String dueDate, List<Order> orders) {
-    Order order = null;
+  public List<Order> getOrderAfterDueDate(LocalDate dueDate, List<Order> orders) {
+    List<Order> ordersAfterDueDate = new ArrayList<Order>();
+
     for (Order orderFromList : orders) {
-      LocalDate orderFromListLocal = LocalDate.parse(orderFromList.getDueDate());
-      LocalDate dueLocal = LocalDate.parse(dueDate);
-      if ( orderFromListLocal.isAfter(dueLocal)) {
-        order = orderFromList;
-        break;
+      if ( orderFromList.getDueDate().isAfter(dueDate)) {
+        ordersAfterDueDate.add(orderFromList);
       }
     }
-    return order;
+    return ordersAfterDueDate;
   }
 }

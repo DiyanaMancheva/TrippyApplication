@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,21 +22,25 @@ public class OrderAccessor {
     }
 
     public void addOrder(Order order) {
-      final String insertSQL = "INSERT INTO Orders(client_id, book_id, issue_date, due_date) VALUES(?,?,?)";
+      final String insertSQL = "INSERT INTO Orders(client_id, book_id, issue_date, due_date) VALUES(?,?,?,?)";
 
       try (Connection connection = DataSource.getConnection();
            PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 
         preparedStatement.setInt(1, order.getClientId());
         preparedStatement.setInt(2, order.getBookId());
-        preparedStatement.setString(3, order.getIssueDate());
-        preparedStatement.setString(4, order.getDueDate());
+        preparedStatement.setDate(3, Date.valueOf(order.getIssueDate().toString()));
+        preparedStatement.setDate(4, Date.valueOf(order.getDueDate().toString()));
 
         preparedStatement.executeUpdate();
 
-        System.out.println("Order: " + order.getId() + " was successfully added.");
+        System.out.println("------------------------------------------");
+        System.out.println("Order for ClientId " + order.getClientId() + " and BookId " + order.getBookId() + " was successfully added.");
+        System.out.println("------------------------------------------");
       } catch (SQLException e) {
-        System.out.println("Order: " + order.getId() + " was NOT added.");
+        System.out.println("------------------------------------------");
+        System.out.println("Order was NOT added.");
+        System.out.println("------------------------------------------");
         throw new RuntimeException(e);
       }
     }
@@ -57,7 +62,7 @@ public class OrderAccessor {
       try (Connection connection = DataSource.getConnection();
            PreparedStatement updateStatement = connection.prepareStatement(UpdateSQL)) {
 
-        updateStatement.setString(1, order.getDueDate());
+        updateStatement.setDate(1, Date.valueOf(order.getDueDate().toString()));
         updateStatement.setInt(2, order.getId());
 
         return updateStatement.executeUpdate();
