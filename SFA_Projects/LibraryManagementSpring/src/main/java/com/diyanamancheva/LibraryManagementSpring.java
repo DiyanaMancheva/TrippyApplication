@@ -3,6 +3,7 @@ package com.diyanamancheva;
 import com.diyanamancheva.author.AuthorPresenter;
 import com.diyanamancheva.book.BookPresenter;
 import com.diyanamancheva.client.ClientPresenter;
+import com.diyanamancheva.order.OrderPresenter;
 import com.diyanamancheva.util.ConsoleReader;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,12 +30,14 @@ public class LibraryManagementSpring implements CommandLineRunner {
 	private final AuthorPresenter authorPresenter;
 	private final ClientPresenter clientPresenter;
 	private final BookPresenter bookPresenter;
+	private final OrderPresenter orderPresenter;
 
 	public LibraryManagementSpring(AuthorPresenter authorPresenter, ClientPresenter clientPresenter,
-																 BookPresenter bookPresenter) {
+																 BookPresenter bookPresenter, OrderPresenter orderPresenter) {
 		this.authorPresenter = authorPresenter;
 		this.clientPresenter = clientPresenter;
 		this.bookPresenter = bookPresenter;
+		this.orderPresenter = orderPresenter;
 	}
 
 	public static void main(String[] args) {
@@ -43,26 +46,28 @@ public class LibraryManagementSpring implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		System.out.println(GREETING_MESSAGE);
 
-		int choice = ConsoleReader.readWithinRange(INPUT_MIN_VALUE, INPUT_MAX_VALUE);
+		while (true) {
+			System.out.println(GREETING_MESSAGE);
 
-		switch (choice) {
-			case 1:
-				//orderPresenter.showOrderMenu();
-				break;
-			case 2:
-				bookPresenter.showBookMenu();
-				break;
-			case 3:
-				clientPresenter.showClientMenu();
-				break;
-			case 4:
-				authorPresenter.showAuthorMenu();
-				break;
-			case 5:
-				//return;
+			int choice = ConsoleReader.readWithinRange(INPUT_MIN_VALUE, INPUT_MAX_VALUE);
+
+			switch (choice) {
+				case 1:
+					orderPresenter.showOrderMenu();
+					break;
+				case 2:
+					bookPresenter.showBookMenu();
+					break;
+				case 3:
+					clientPresenter.showClientMenu();
+					break;
+				case 4:
+					authorPresenter.showAuthorMenu();
+					break;
+				case 5:
+					return;
+			}
 		}
 	}
-
 }
