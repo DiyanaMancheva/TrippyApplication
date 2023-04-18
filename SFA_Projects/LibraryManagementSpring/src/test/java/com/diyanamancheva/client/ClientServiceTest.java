@@ -11,11 +11,9 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
-//import org.springframework.boot.test.context.SpringBootTest;
 
-//@SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
-public class ClientAccessorTest {
+public class ClientServiceTest {
   @Mock
   private ClientAccessor clientAccessor;
   @InjectMocks
