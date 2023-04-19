@@ -10,6 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Collections;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
