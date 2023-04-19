@@ -1,7 +1,5 @@
 package com.diyanamancheva.book;
 
-import com.diyanamancheva.client.Client;
-import com.diyanamancheva.client.ClientDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
