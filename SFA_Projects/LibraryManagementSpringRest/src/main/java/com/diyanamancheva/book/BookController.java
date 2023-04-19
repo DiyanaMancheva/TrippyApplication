@@ -21,7 +21,7 @@ public class BookController {
 
   @GetMapping("/index")
   public ResponseEntity<String> getIndex() {
-    return ResponseEntity.ok("This is the index page");
+    return ResponseEntity.ok("Welcome to LibraryManagement Application!");
   }
 
   @GetMapping("/books")

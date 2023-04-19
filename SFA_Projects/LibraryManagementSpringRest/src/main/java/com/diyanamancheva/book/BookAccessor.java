@@ -35,10 +35,7 @@ public class BookAccessor {
         preparedStatement.setString(3, book.getPublishingDate());
 
         preparedStatement.executeUpdate();
-
-        System.out.println("Book: " + book.getTitle() + " was successfully added.");
       } catch (SQLException e) {
-        System.out.println("Book: " + book.getTitle() + " was NOT added.");
         throw new RuntimeException(e);
       }
     }
