@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -26,7 +28,10 @@ public class ClientController {
 
   @PostMapping("/clients")
   public ResponseEntity<Void> createClient(@RequestBody ClientRequest clientRequest){
-    clientService.addClient(clientRequest.getName());
-    return ResponseEntity.status(201).build();
+    Client client = clientService.addClient(clientRequest.getName());
+    URI location = UriComponentsBuilder.fromUriString("/clients/{id}")
+                                       .buildAndExpand(client.getId())
+                                       .toUri();
+    return ResponseEntity.created(location).build();
   }
 }
