@@ -22,21 +22,30 @@ public class ClientAccessor {
       this.dataSource = dataSource;
     }
 
-    public void addClient(Client client) {
+    public Client addClient(Client client) {
       final String insertSQL = "INSERT INTO Clients(client_name) VALUES(?)";
+      int clientId;
 
       try (Connection connection = dataSource.getConnection();
-           PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+           PreparedStatement preparedStatement = connection.prepareStatement(insertSQL,
+                                                                             Statement.RETURN_GENERATED_KEYS)) {
 
         preparedStatement.setString(1, client.getName());
 
         preparedStatement.executeUpdate();
 
-        System.out.println("Client: " + client.getName() + " was successfully added.");
+        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+        if(resultSet.next()){
+          clientId = resultSet.getInt(1);
+        }else{
+          throw new SQLException("ID was NOT retrieved from inserted client.");
+        }
       } catch (SQLException e) {
-        System.out.println("Client: " + client.getName() + " was NOT added.");
-        throw new RuntimeException(e);
+         throw new RuntimeException("NOT able to create database connection.",e);
       }
+
+      client.setId(clientId);
+      return client;
     }
 
     public List<Client> readAllClients() {
