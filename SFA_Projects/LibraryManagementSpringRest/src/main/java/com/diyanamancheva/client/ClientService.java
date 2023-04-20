@@ -1,11 +1,11 @@
 package com.diyanamancheva.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class ClientService {
   private ClientAccessor clientAccessor;
   private ClientMapper clientMapper;
@@ -22,10 +22,11 @@ public class ClientService {
     return clientMapper.mapClientsToDtos(clients);
   }
 
-  public void addClient(String name) {
-    Client client = new Client(name);
-    clientAccessor.addClient(client);
-  }
+    public Client addClient(String name) {
+      Client client = new Client(name);
+      client = clientAccessor.addClient(client);
+      return client;
+    }
 
   public int editClient(int id, String name) {
     Client client = new Client(name);
