@@ -22,11 +22,15 @@ public class ClientService {
     return clientMapper.mapClientsToDtos(clients);
   }
 
-    public Client addClient(String name) {
-      Client client = new Client(name);
-      client = clientAccessor.addClient(client);
-      return client;
-    }
+  public Client getClientById(int id) {
+    return clientAccessor.readClientById(id);
+  }
+
+  public Client addClient(String name) {
+    Client client = new Client(name);
+    client = clientAccessor.addClient(client);
+    return client;
+  }
 
   public int editClient(int id, String name) {
     Client client = new Client(name);

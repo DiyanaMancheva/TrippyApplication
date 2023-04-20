@@ -60,6 +60,28 @@ public class ClientAccessor {
       return clients;
     }
 
+    public Client readClientById(int id) {
+      ResultSet resultSet;
+      List<Client> clients;
+
+      final String SQL = "SELECT * FROM clients WHERE id = ?";
+      try (Connection connection = dataSource.getConnection();
+           PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+        preparedStatement.setInt(1, id);
+
+        resultSet = preparedStatement.executeQuery();
+
+        clients = clientMapper.mapResultSetToClients(resultSet);
+        if(clients.size() > 1){
+          throw new SQLException("More than one clients with equal id");
+        }
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+      return clients.get(0);
+    }
+
     public int updateClient(Client client) {
       final String UpdateSQL = "UPDATE clients SET client_name = ? WHERE client_id = ?";
       try (Connection connection = dataSource.getConnection();
