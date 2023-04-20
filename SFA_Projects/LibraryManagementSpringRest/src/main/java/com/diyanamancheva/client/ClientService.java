@@ -32,11 +32,14 @@ public class ClientService {
     return client;
   }
 
-  public int editClient(int id, String name) {
-    Client client = new Client(name);
-    client.setId(id);
+  public ClientDto editClient(int id, ClientRequest clientRequest) {
 
-    return clientAccessor.updateClient(client);
+    Client client = getClientById(id);
+    Client clientNew = new Client(id, clientRequest.getName());
+    clientAccessor.updateClient(clientNew);
+    ClientDto clientDto = new ClientDto(client.getName());
+
+    return clientDto;
   }
 
   public int deleteClient(int id) {

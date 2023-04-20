@@ -64,7 +64,7 @@ public class ClientAccessor {
       ResultSet resultSet;
       List<Client> clients;
 
-      final String SQL = "SELECT * FROM clients WHERE id = ?";
+      final String SQL = "SELECT * FROM clients WHERE client_id = ?";
       try (Connection connection = dataSource.getConnection();
            PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
 
