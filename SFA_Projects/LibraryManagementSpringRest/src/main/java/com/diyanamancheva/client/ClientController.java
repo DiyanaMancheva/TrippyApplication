@@ -33,7 +33,7 @@ public class ClientController {
   @GetMapping("/clients/{id}")
   public ResponseEntity<ClientDto> getClient(@PathVariable int id) {
     Client client = clientService.getClientById(id);
-    ClientDto clientDto = new ClientDto(client.getName());
+    ClientDto clientDto = new ClientDto(client.getId(),client.getName());
     return ResponseEntity.ok(clientDto);
   }
 

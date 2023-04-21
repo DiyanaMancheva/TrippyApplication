@@ -1,10 +1,20 @@
 package com.diyanamancheva.client;
 
 public class ClientDto {
+  private int id;
   private String name;
 
-  public ClientDto(String name) {
+  public ClientDto(int id, String name) {
+    this.id = id;
     this.name = name;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId ( int id) {
+    this.id = id;
   }
 
   public String getName() {

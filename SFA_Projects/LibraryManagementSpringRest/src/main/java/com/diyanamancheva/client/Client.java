@@ -8,7 +8,7 @@ public class Client {
   }
   public Client(int id, String name){
     this(name);
-    this.name = name;
+    this.id = id;
   }
   public int getId() {
     return id;

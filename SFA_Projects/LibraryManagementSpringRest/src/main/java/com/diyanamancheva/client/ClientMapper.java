@@ -28,7 +28,7 @@ public class ClientMapper{
     ArrayList<ClientDto> clientDtos = new ArrayList<>();
 
     for(Client client : clients){
-      ClientDto clientDto = new ClientDto(client.getName());
+      ClientDto clientDto = new ClientDto(client.getId(), client.getName());
       clientDtos.add(clientDto);
     }
     return clientDtos;

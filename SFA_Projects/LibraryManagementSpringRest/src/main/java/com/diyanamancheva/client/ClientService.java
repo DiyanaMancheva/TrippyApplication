@@ -37,7 +37,7 @@ public class ClientService {
     Client client = getClientById(id);
     Client clientNew = new Client(id, clientRequest.getName());
     clientAccessor.updateClient(clientNew);
-    ClientDto clientDto = new ClientDto(client.getName());
+    ClientDto clientDto = new ClientDto(client.getId(), client.getName());
 
     return clientDto;
   }
@@ -45,6 +45,6 @@ public class ClientService {
   public ClientDto removeClient(int id) {
     Client oldClient = getClientById(id);
     clientAccessor.deleteClient(id);
-    return new ClientDto(oldClient.getName());
+    return new ClientDto(oldClient.getId(), oldClient.getName());
   }
 }
