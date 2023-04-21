@@ -58,4 +58,17 @@ public class ClientController {
       return ResponseEntity.noContent().build();
     }
   }
+
+  @DeleteMapping("/clients/{id}")
+  public ResponseEntity<ClientDto> removeClient(
+    @RequestBody ClientRequest clientRequest, @PathVariable int id,
+    @RequestParam(required = false) boolean returnOld) {
+
+    ClientDto clientDto = clientService.removeClient(id);
+    if (returnOld) {
+      return ResponseEntity.ok(clientDto);
+    } else {
+      return ResponseEntity.noContent().build();
+    }
+  }
 }

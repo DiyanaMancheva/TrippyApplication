@@ -41,4 +41,10 @@ public class ClientService {
 
     return clientDto;
   }
+
+  public ClientDto removeClient(int id) {
+    Client oldClient = getClientById(id);
+    clientAccessor.deleteClient(id);
+    return new ClientDto(oldClient.getName());
+  }
 }

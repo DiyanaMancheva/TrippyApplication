@@ -95,4 +95,17 @@ public class ClientAccessor {
         throw new RuntimeException(e);
       }
     }
+
+    public int deleteClient(int id) {
+      final String deleteSQL = "DELETE FROM clients WHERE client_id = ?";
+
+      try (Connection connection = dataSource.getConnection();
+           PreparedStatement deleteStatement = connection.prepareStatement(deleteSQL)) {
+
+        deleteStatement.setInt(1, id);
+        return deleteStatement.executeUpdate();
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+    }
 }
