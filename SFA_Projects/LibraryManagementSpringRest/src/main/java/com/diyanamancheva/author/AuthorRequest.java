@@ -4,7 +4,7 @@ public class AuthorRequest {
   private String name;
 
   public AuthorRequest(String name) {
-    this.name = name;
+    
   }
 
   public String getName() {

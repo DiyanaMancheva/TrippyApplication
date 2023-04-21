@@ -2,9 +2,8 @@ package com.diyanamancheva.client;
 
 public class ClientRequest {
   private String name;
+  public ClientRequest(){
 
-  public ClientRequest(String name) {
-    this.name = name;
   }
 
   public String getName() {
