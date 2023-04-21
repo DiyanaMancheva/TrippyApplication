@@ -28,7 +28,7 @@ public class AuthorMapper {
   public List<AuthorDto> mapAuthorsToDtos(List<Author> authors){
     ArrayList<AuthorDto> authorDtos = new ArrayList<>();
     for(Author author : authors){
-      AuthorDto authorDto = new AuthorDto(author.getName());
+      AuthorDto authorDto = new AuthorDto(author.getId(), author.getName());
       authorDtos.add(authorDto);
     }
     return authorDtos;
