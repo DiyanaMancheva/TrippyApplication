@@ -41,18 +41,4 @@ public class ClientService {
 
     return clientDto;
   }
-
-  public int deleteClient(int id) {
-    return clientAccessor.deleteClient(id);
-  }
-  public Client getClientByName(String name, List<Client> clients) {
-    Client client = null;
-    for (Client clientCurr : clients) {
-      if (clientCurr.getName().equals(name)) {
-        client = clientCurr;
-        break;
-      }
-    }
-    return client;
-  }
 }

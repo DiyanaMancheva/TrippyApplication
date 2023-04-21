@@ -2,6 +2,7 @@ package com.diyanamancheva.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +48,8 @@ public class ClientController {
 
   @PutMapping("/clients/{id}")
   public ResponseEntity<ClientDto> updateClient(
-    @RequestBody ClientRequest clientRequest, @PathVariable int id, @RequestParam(required = false) boolean returnOld) {
+    @RequestBody ClientRequest clientRequest, @PathVariable int id,
+    @RequestParam(required = false) boolean returnOld) {
 
     ClientDto clientDto = clientService.editClient(id, clientRequest);
     if (returnOld) {
