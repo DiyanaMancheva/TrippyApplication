@@ -1,5 +1,6 @@
 package com.diyanamancheva.author;
 
+import com.diyanamancheva.client.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -19,6 +20,10 @@ public class AuthorService {
     List<Author> authors = authorAccessor.readAllAuthors();
 
     return authorMapper.mapAuthorsToDtos(authors);
+  }
+
+  public Author getAuthorById(int id) {
+    return authorAccessor.readAuthorById(id);
   }
 
   public void addAuthor(String name) {

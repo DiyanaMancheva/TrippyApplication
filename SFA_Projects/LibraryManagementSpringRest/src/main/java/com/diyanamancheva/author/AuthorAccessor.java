@@ -1,5 +1,6 @@
 package com.diyanamancheva.author;
 
+import com.diyanamancheva.client.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -63,6 +64,28 @@ public class AuthorAccessor {
         throw new RuntimeException(e);
       }
       return authors;
+    }
+
+    public Author readAuthorById(int id) {
+      ResultSet resultSet;
+      List<Author> authors;
+
+      final String SQL = "SELECT * FROM authors WHERE author_id = ?";
+      try (Connection connection = dataSource.getConnection();
+           PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+        preparedStatement.setInt(1, id);
+
+        resultSet = preparedStatement.executeQuery();
+
+        authors = authorMapper.mapResultSetToAuthors(resultSet);
+        if(authors.size() > 1){
+          throw new SQLException("More than one authors with equal id");
+        }
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+      return authors.get(0);
     }
 
     public int deleteAuthor(int id) {
