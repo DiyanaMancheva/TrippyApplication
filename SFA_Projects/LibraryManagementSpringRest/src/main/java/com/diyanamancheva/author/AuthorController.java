@@ -1,9 +1,7 @@
 package com.diyanamancheva.author;
 
-import com.diyanamancheva.client.Client;
-import com.diyanamancheva.client.ClientDto;
-import com.diyanamancheva.client.ClientRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,4 +59,28 @@ public class AuthorController {
       return ResponseEntity.noContent().build();
     }
   }
+  @DeleteMapping("authors/{id}")
+  public ResponseEntity<AuthorDto> removeAuthor(
+    @RequestBody AuthorRequest authorRequest, @PathVariable int id,
+    @RequestParam(required = false) boolean returnOld){
+
+    AuthorDto authorDto = authorService.removeAuthor(id);
+    if(returnOld){
+      return ResponseEntity.ok(authorDto);
+    }else{
+      return ResponseEntity.noContent().build();
+    }
+  }
+  //@DeleteMapping("/authors/{id}")
+  //public ResponseEntity<AuthorDto> removeAuthor(
+  //  @RequestBody AuthorRequest authorRequest, @PathVariable int id,
+  //  @RequestParam(required = false) boolean returnOld) {
+//
+  //  AuthorDto authorDto = authorService.removeAuthor(id);
+  //  if (returnOld) {
+  //    return ResponseEntity.ok(authorDto);
+  //  } else {
+  //    return ResponseEntity.noContent().build();
+  //  }
+  //}
 }
