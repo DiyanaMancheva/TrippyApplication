@@ -2,14 +2,20 @@ package com.diyanamancheva.author;
 
 import com.diyanamancheva.client.Client;
 import com.diyanamancheva.client.ClientDto;
+import com.diyanamancheva.client.ClientRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -28,7 +34,7 @@ public class AuthorController {
   }
 
   @GetMapping("/authors/{id}")
-  public ResponseEntity<AuthorDto> getSuthor(@PathVariable int id) {
+  public ResponseEntity<AuthorDto> getAuthor(@PathVariable int id) {
     Author author = authorService.getAuthorById(id);
     AuthorDto authorDto = new AuthorDto(author.getId(),author.getName());
     return ResponseEntity.ok(authorDto);
@@ -36,7 +42,23 @@ public class AuthorController {
 
   @PostMapping("/authors")
   public ResponseEntity<Void> createAuthor(@RequestBody AuthorRequest authorRequest){
-    authorService.addAuthor(authorRequest.getName());
-    return ResponseEntity.status(201).build();
+    Author author = authorService.addAuthor(authorRequest.getName());
+    URI location = UriComponentsBuilder.fromUriString("/authors/{id}")
+                                       .buildAndExpand(author.getId())
+                                       .toUri();
+    return ResponseEntity.created(location).build();
+  }
+
+  @PutMapping("/authors/{id}")
+  public ResponseEntity<AuthorDto> updateAuthor(
+    @RequestBody AuthorRequest authorRequest, @PathVariable int id,
+    @RequestParam(required = false) boolean returnOld) {
+
+    AuthorDto authorDto = authorService.editAuthor(id, authorRequest);
+    if (returnOld) {
+      return ResponseEntity.ok(authorDto);
+    } else {
+      return ResponseEntity.noContent().build();
+    }
   }
 }

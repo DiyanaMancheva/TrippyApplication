@@ -3,7 +3,7 @@ package com.diyanamancheva.author;
 public class AuthorRequest {
   private String name;
 
-  public AuthorRequest(String name) {
+  public AuthorRequest() {
 
   }
 

@@ -1,5 +1,6 @@
 package com.diyanamancheva.author;
 
+import com.diyanamancheva.client.Client;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
@@ -15,8 +16,7 @@ public class AuthorMapper {
       while (authorsResultSet.next()) {
         int id = authorsResultSet.getInt(1);
         String name = authorsResultSet.getString(2);
-        Author author = new Author(name);
-        author.setId(id);
+        Author author = new Author(id, name);
         authorsList.add(author);
       }
     } catch (SQLException e) {

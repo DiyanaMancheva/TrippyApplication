@@ -1,11 +1,14 @@
 package com.diyanamancheva.author;
 
 import com.diyanamancheva.client.Client;
+import com.diyanamancheva.client.ClientDto;
+import com.diyanamancheva.client.ClientRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-@Component
+@Service
 public class AuthorService {
   private AuthorAccessor authorAccessor;
   private AuthorMapper authorMapper;
@@ -26,23 +29,28 @@ public class AuthorService {
     return authorAccessor.readAuthorById(id);
   }
 
-  public void addAuthor(String name) {
+  public Author addAuthor(String name) {
     Author author = new Author(name);
-    authorAccessor.addAuthor(author);
+    author = authorAccessor.addAuthor(author);
+    return author;
   }
 
-  public int editAuthor(int id, String name) {
+  public AuthorDto editAuthor(int id, AuthorRequest authorRequest) {
 
-    Author author = new Author(name);
+    Author author = getAuthorById(id);
+    Author authorNew = new Author(id, authorRequest.getName());
+    authorAccessor.updateAuthor(authorNew);
+    AuthorDto authorDto = new AuthorDto(author.getId(), author.getName());
 
-    author.setId(id);
-
-    return authorAccessor.updateAuthor(author);
+    return authorDto;
   }
 
-  public int deleteAuthor(int id) {
-    return authorAccessor.deleteAuthor(id);
+  public AuthorDto removeAuthor(int id) {
+    Author authorOld = getAuthorById(id);
+    authorAccessor.deleteAuthor(id);
+    return new AuthorDto(authorOld.getId(), authorOld.getName());
   }
+
   public Author getAuthorByName(String name, List<Author> authors) {
     Author author = null;
     for (Author authorCurr : authors) {
