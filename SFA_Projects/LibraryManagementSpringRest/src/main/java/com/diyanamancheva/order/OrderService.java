@@ -18,6 +18,10 @@ public class OrderService {
     this.orderMapper = orderMapper;
   }
 
+  public Order getOrderById(int id){
+    return orderAccessor.readOrderById(id);
+  }
+
   public List<OrderDto> getAllOrders() {
     List<Order> orders = orderAccessor.readAllOrders();
 
@@ -27,37 +31,6 @@ public class OrderService {
   public void addOrder(int clientId, int bookId, LocalDate issueDate) {
     Order order = new Order(clientId, bookId, issueDate);
     orderAccessor.addOrder(order);
-  }
-
-  public int editOrder(LocalDate dueDate, int id) {
-    List<OrderDto> orderDtos = getAllOrders();
-
-    ArrayList<Order > orders = new ArrayList<>();
-
-    for(OrderDto orderDto : orderDtos){
-      Order order = orderMapper.mapOrderDtoToOrder(orderDto);
-      orders.add(order);
-    }
-
-    Order orderToEdit = getOrderById(id, orders);
-    orderToEdit.setDueDate(dueDate);
-
-    return orderAccessor.updateOrder(orderToEdit);
-  }
-
-  public int deleteOrder(int id) {
-    return orderAccessor.deleteOrder(id);
-  }
-
-  public Order getOrderById(int id, List<Order> orders) {
-    Order order = null;
-    for (Order orderFromList : orders) {
-      if (orderFromList.getId() == id) {
-        order = orderFromList;
-        break;
-      }
-    }
-    return order;
   }
 
   public List<Order> getOrderByClientId(int clientId, List<Order> orders) {

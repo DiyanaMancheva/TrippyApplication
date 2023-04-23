@@ -23,6 +23,47 @@ public class OrderAccessor {
       this.dataSource = dataSource;
     }
 
+    public Order readOrderById(int id){
+    ResultSet resultSet;
+    List<Order> orders;
+
+    final String selectSQL = "SELECT * FROM orders WHERE order_id = ?";
+
+    try(Connection connection = dataSource.getConnection();
+    PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+
+      preparedStatement.setInt(1, id);
+
+      resultSet = preparedStatement.executeQuery();
+
+      orders = orderMapper.mapResultSetToOrders(resultSet);
+
+      if (orders.size() > 1){
+        throw new SQLException("More than one orders with equal id.");
+      }
+    }catch (SQLException e){
+      throw new RuntimeException(e);
+    }
+
+    return orders.get(0);
+    }
+
+    public List<Order> readAllOrders() {
+      ResultSet resultSet;
+      List<Order> orders;
+      final String selectSQL = "SELECT * FROM orders";
+
+      try (Connection connection = dataSource.getConnection();
+           Statement statement = connection.createStatement()) {
+
+        resultSet = statement.executeQuery(selectSQL);
+        orders = orderMapper.mapResultSetToOrders(resultSet);
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+      return orders;
+    }
+
     public void addOrder(Order order) {
       final String insertSQL = "INSERT INTO Orders(client_id, book_id, issue_date, due_date) VALUES(?,?,?,?)";
 
@@ -38,18 +79,6 @@ public class OrderAccessor {
       } catch (SQLException e) {
         throw new RuntimeException(e);
       }
-    }
-
-    public List<Order> readAllOrders() {
-      ResultSet resultSet;
-      List<Order> orders;
-      try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement()) {
-        resultSet = statement.executeQuery("SELECT * FROM orders");
-        orders = orderMapper.mapResultSetToOrders(resultSet);
-      } catch (SQLException e) {
-        throw new RuntimeException(e);
-      }
-      return orders;
     }
 
     public int updateOrder(Order order) {
