@@ -82,11 +82,12 @@ public class OrderAccessor {
     }
 
     public int updateOrder(Order order) {
-      final String UpdateSQL = "UPDATE orders SET due_date = ? WHERE order_id = ?";
+      final String UpdateSQL = "UPDATE orders SET book_id = ? WHERE order_id = ?";
+
       try (Connection connection = dataSource.getConnection();
            PreparedStatement updateStatement = connection.prepareStatement(UpdateSQL)) {
 
-        updateStatement.setDate(1, Date.valueOf(order.getDueDate().toString()));
+        updateStatement.setInt(1, order.getBookId());
         updateStatement.setInt(2, order.getId());
 
         return updateStatement.executeUpdate();

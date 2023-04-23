@@ -33,6 +33,15 @@ public class OrderService {
     orderAccessor.addOrder(order);
   }
 
+  public OrderDto editOrder(int id, OrderRequest orderRequest){
+    Order order = getOrderById(id);
+    Order orderNew = new Order(id, orderRequest.getBookId(), orderRequest.getBookId(), orderRequest.getIssueDate());
+    orderAccessor.updateOrder(orderNew);
+    OrderDto orderDto = new OrderDto(order.getId(), order.getClientId(), order.getBookId(), order.getIssueDate());
+
+    return orderDto;
+  }
+
   public List<Order> getOrderByClientId(int clientId, List<Order> orders) {
     List<Order> ordersByClientId = new ArrayList<>();
 
