@@ -74,6 +74,21 @@ public class BookAccessor {
       }
     }
 
+    public int updateBook(Book book){
+      final String updateSQL = "UPDATE books SET publishing_date = ? WHERE book_id = ?";
+
+      try(Connection connection = dataSource.getConnection();
+      PreparedStatement updateStatement = connection.prepareStatement(updateSQL)){
+
+        updateStatement.setString(1, book.getPublishingDate());
+        updateStatement.setInt(2, book.getId());
+
+        return  updateStatement.executeUpdate();
+      }catch(SQLException e){
+        throw new RuntimeException(e);
+      }
+    }
+
     public int deleteBook(int id) {
       final String deleteSQL = "DELETE FROM books WHERE book_id = ?";
 

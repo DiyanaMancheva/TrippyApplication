@@ -13,6 +13,11 @@ public class Book {
     this.publishingDate = publishingDate;
   }
 
+  public Book(int id, String title, int authorId, String publishingDate){
+    this(title, authorId, publishingDate);
+    this.id = id;
+  }
+
   public boolean isAvailable = true;
 
   public int getId() {

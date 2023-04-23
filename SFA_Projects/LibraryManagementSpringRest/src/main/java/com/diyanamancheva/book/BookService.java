@@ -31,6 +31,16 @@ public class BookService {
     bookAccessor.addBook(book);
   }
 
+  public BookDto editBook(int id, BookRequest bookRequest){
+
+    Book book = getBookById(id);
+    Book bookNew = new Book(id, bookRequest.getTitle(), bookRequest.getAuthorId(), bookRequest.getPublishingDate());
+    bookAccessor.updateBook(bookNew);
+    BookDto bookDto = new BookDto(book.getId(), book.getTitle(), book.getAuthorId(), book.getPublishingDate());
+
+    return bookDto;
+  }
+
   public BookDto removeBook(int id) {
     Book bookOld = getBookById(id);
     bookAccessor.deleteBook(id);
