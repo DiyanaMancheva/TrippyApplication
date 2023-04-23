@@ -83,9 +83,9 @@ public class ClientAccessor {
     }
 
     public int updateClient(Client client) {
-      final String UpdateSQL = "UPDATE clients SET client_name = ? WHERE client_id = ?";
+      final String updateSQL = "UPDATE clients SET client_name = ? WHERE client_id = ?";
       try (Connection connection = dataSource.getConnection();
-           PreparedStatement updateStatement = connection.prepareStatement(UpdateSQL)) {
+           PreparedStatement updateStatement = connection.prepareStatement(updateSQL)) {
 
         updateStatement.setString(1, client.getName());
         updateStatement.setInt(2, client.getId());
