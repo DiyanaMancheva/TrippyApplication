@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,12 +23,24 @@ public class OrderController {
     this.orderService = orderService;
   }
 
-  @GetMapping("/orders/{id}")
+  @GetMapping("/orders/id={id}")
   public ResponseEntity<OrderDto> printOrderById(@PathVariable int id){
     Order order = orderService.getOrderById(id);
     OrderDto orderDto = new OrderDto(order.getId(), order.getClientId(), order.getBookId(), order.getIssueDate());
 
     return ResponseEntity.ok(orderDto);
+  }
+
+  @GetMapping("/orders/clientId={clientId}")
+  public ResponseEntity<List<OrderDto>> printOrderByClient(@PathVariable int clientId){
+    List<Order> orders = orderService.getOrderByClient(clientId);
+    List<OrderDto> orderDtos = new ArrayList<>();
+
+    for (Order order : orders) {
+      OrderDto orderDto = new OrderDto(order.getId(), order.getClientId(), order.getBookId(), order.getIssueDate());
+      orderDtos.add(orderDto);
+    }
+    return ResponseEntity.ok(orderDtos);
   }
 
   @GetMapping("/orders")
