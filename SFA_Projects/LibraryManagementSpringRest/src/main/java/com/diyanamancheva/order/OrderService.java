@@ -35,9 +35,17 @@ public class OrderService {
 
   public OrderDto editOrder(int id, OrderRequest orderRequest){
     Order order = getOrderById(id);
-    Order orderNew = new Order(id, orderRequest.getBookId(), orderRequest.getBookId(), orderRequest.getIssueDate());
+    Order orderNew = new Order(id, orderRequest.getClientId(), orderRequest.getBookId(), orderRequest.getIssueDate());
     orderAccessor.updateOrder(orderNew);
     OrderDto orderDto = new OrderDto(order.getId(), order.getClientId(), order.getBookId(), order.getIssueDate());
+
+    return orderDto;
+  }
+
+  public OrderDto deleteOrder(int id){
+    Order orderOld = getOrderById(id);
+    OrderDto orderDto = new OrderDto(orderOld.getId(), orderOld.getClientId(), orderOld.getBookId(), orderOld.getIssueDate());
+    orderAccessor.deleteOrder(id);
 
     return orderDto;
   }

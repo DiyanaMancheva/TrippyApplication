@@ -103,6 +103,7 @@ public class OrderAccessor {
            PreparedStatement deleteStatement = connection.prepareStatement(deleteSQL)) {
 
         deleteStatement.setInt(1, id);
+
         return deleteStatement.executeUpdate();
       } catch (SQLException e) {
         throw new RuntimeException(e);
