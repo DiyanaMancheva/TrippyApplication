@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class ClientController {
   }
 
   @PostMapping("/clients")
-  public ResponseEntity<Void> createClient(@RequestBody ClientRequest clientRequest){
+  public ResponseEntity<Void> createClient(@RequestBody @Valid ClientRequest clientRequest){
     Client client = clientService.addClient(clientRequest.getName());
     URI location = UriComponentsBuilder.fromUriString("/clients/{id}")
                                        .buildAndExpand(client.getId())
@@ -48,7 +49,7 @@ public class ClientController {
 
   @PutMapping("/clients/{id}")
   public ResponseEntity<ClientDto> updateClient(
-    @RequestBody ClientRequest clientRequest, @PathVariable int id,
+    @RequestBody @Valid ClientRequest clientRequest, @PathVariable int id,
     @RequestParam(required = false) boolean returnOld) {
 
     ClientDto clientDto = clientService.editClient(id, clientRequest);
