@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,14 +88,14 @@ public class OrderController {
   }
 
   @PostMapping("/orders")
-  public ResponseEntity<Void> createOrder(@RequestBody OrderRequest orderRequest) {
+  public ResponseEntity<Void> createOrder(@RequestBody @Valid OrderRequest orderRequest) {
     orderService.addOrder(orderRequest.getClientId(), orderRequest.getBookId(), orderRequest.getIssueDate());
     return ResponseEntity.status(201).build();
   }
 
   @PutMapping("/orders/{id}")
   public ResponseEntity<OrderDto> updateOrder(
-    @RequestBody OrderRequest orderRequest, @PathVariable int id,
+    @RequestBody @Valid OrderRequest orderRequest, @PathVariable int id,
     @RequestParam(required = false) boolean returnOld){
 
     OrderDto orderDto = orderService.editOrder(id, orderRequest);

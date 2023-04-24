@@ -1,9 +1,13 @@
 package com.diyanamancheva.order;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
 public class OrderRequest {
+  @Positive(message = "ClientId must be greater than 0")
   private int clientId;
+  @Positive(message = "BookId must be greater than 0")
   private int bookId;
   private LocalDate issueDate;
 
