@@ -3,10 +3,12 @@ package com.diyanamancheva.book;
 import com.diyanamancheva.exception.DatabaseConnectivityException;
 import com.diyanamancheva.exception.IDNotUniqueException;
 import com.diyanamancheva.exception.ItemNotFoundException;
+import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Component
 public class BookAccessor {
+
+    private static final Logger log = LoggerFactory.getLogger(BookAccessor.class);
 
     private BookMapper bookMapper;
     private HikariDataSource dataSource;
@@ -41,11 +45,14 @@ public class BookAccessor {
 
         books = bookMapper.mapResultSetToBooks(resultSet);
         if(books.size() > 1){
+          log.error(String.format("More than one books with equal id = %d found.", id));
           throw new IDNotUniqueException(String.format("More than one books with equal id = %d found.", id));
         }else if (books.size() == 0){
+          log.error(String.format("No books with id %d found", id));
           throw new ItemNotFoundException(String.format("No books with id %d found ", id));
         }
       } catch (SQLException e) {
+          log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
           throw new DatabaseConnectivityException(e);
       }
       return books.get(0);
@@ -58,6 +65,7 @@ public class BookAccessor {
         resultSet = statement.executeQuery("SELECT * FROM books");
         books = bookMapper.mapResultSetToBooks(resultSet);
       } catch (SQLException e) {
+          log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
           throw new DatabaseConnectivityException(e);
       }
       return books;
@@ -73,8 +81,10 @@ public class BookAccessor {
         preparedStatement.setInt(2, book.getAuthorId());
         preparedStatement.setString(3, book.getPublishingDate());
 
+        log.debug("Trying to persist new book");
         preparedStatement.executeUpdate();
       } catch (SQLException e) {
+          log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
           throw new DatabaseConnectivityException(e);
       }
     }
@@ -90,6 +100,7 @@ public class BookAccessor {
 
         return  updateStatement.executeUpdate();
       }catch(SQLException e){
+        log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
         throw new DatabaseConnectivityException(e);
       }
     }
@@ -103,6 +114,7 @@ public class BookAccessor {
         deleteStatement.setInt(1, id);
         return deleteStatement.executeUpdate();
       } catch (SQLException e) {
+          log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
           throw new DatabaseConnectivityException(e);
       }
     }

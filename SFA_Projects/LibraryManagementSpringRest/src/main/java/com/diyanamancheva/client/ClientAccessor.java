@@ -39,7 +39,7 @@ public class ClientAccessor {
 
         preparedStatement.setString(1, client.getName());
 
-        log.debug("Trying to persist new item");
+        log.debug("Trying to persist new client");
         preparedStatement.executeUpdate();
 
         ResultSet resultSet = preparedStatement.getGeneratedKeys();

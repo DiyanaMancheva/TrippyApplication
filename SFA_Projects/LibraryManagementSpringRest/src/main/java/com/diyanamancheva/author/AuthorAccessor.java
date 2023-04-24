@@ -41,7 +41,7 @@ public class AuthorAccessor {
 
       preparedStatement.setString(1, author.getName());
 
-      log.debug("Trying to persist new item");
+      log.debug("Trying to persist new author");
       preparedStatement.executeUpdate();
 
       ResultSet resultSet = preparedStatement.getGeneratedKeys();

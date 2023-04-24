@@ -1,6 +1,5 @@
 package com.diyanamancheva.author;
 
-import com.diyanamancheva.client.ClientAccessor;
 import com.diyanamancheva.exception.DatabaseConnectivityException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,7 @@ public class AuthorMapper {
       }
     } catch (SQLException e) {
       log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
-      throw new RuntimeException(e);
+      throw new DatabaseConnectivityException(e);
     }
     return authorsList;
   }
