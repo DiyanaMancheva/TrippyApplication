@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class AuthorController {
   }
 
   @PostMapping("/authors")
-  public ResponseEntity<Void> createAuthor(@RequestBody AuthorRequest authorRequest){
+  public ResponseEntity<Void> createAuthor(@RequestBody @Valid AuthorRequest authorRequest){
     Author author = authorService.addAuthor(authorRequest.getName());
     URI location = UriComponentsBuilder.fromUriString("/authors/{id}")
                                        .buildAndExpand(author.getId())
@@ -49,7 +50,7 @@ public class AuthorController {
 
   @PutMapping("/authors/{id}")
   public ResponseEntity<AuthorDto> updateAuthor(
-    @RequestBody AuthorRequest authorRequest, @PathVariable int id,
+    @RequestBody @Valid AuthorRequest authorRequest, @PathVariable int id,
     @RequestParam(required = false) boolean returnOld) {
 
     AuthorDto authorDto = authorService.editAuthor(id, authorRequest);
