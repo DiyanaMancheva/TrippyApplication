@@ -45,9 +45,4 @@ public class OrderMapper {
     }
     return orderDtos;
   }
-
-  public Order mapOrderDtoToOrder(OrderDto orderDto){
-    Order order = new Order(orderDto.getId(), orderDto.getClientId(), orderDto.getBookId(), orderDto.getIssueDate());
-    return order;
-  }
 }

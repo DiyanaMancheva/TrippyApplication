@@ -1,6 +1,5 @@
 package com.diyanamancheva.author;
 
-import com.diyanamancheva.client.Client;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;

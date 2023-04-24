@@ -62,18 +62,7 @@ public class Order {
     this.dueDate = dueDate;
   }
 
-  @Override
-  public String toString() {
-    return "Order: \n" +
-           "Id = " + id + "\n" +
-           "ClientId = " + clientId + "\n" +
-           "BookId = " + bookId + "\n" +
-           "IssueDate = " + issueDate + "\n" +
-           "DueDate = " + dueDate;
-  }
-
   private LocalDate CalculateDueDate() {
     return this.issueDate.plusMonths(1);
   }
-
 }

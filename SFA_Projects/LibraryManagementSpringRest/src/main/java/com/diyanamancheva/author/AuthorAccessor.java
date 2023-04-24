@@ -1,6 +1,5 @@
 package com.diyanamancheva.author;
 
-import com.diyanamancheva.client.Client;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

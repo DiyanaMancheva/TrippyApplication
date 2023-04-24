@@ -71,16 +71,4 @@ public class AuthorController {
       return ResponseEntity.noContent().build();
     }
   }
-  //@DeleteMapping("/authors/{id}")
-  //public ResponseEntity<AuthorDto> removeAuthor(
-  //  @RequestBody AuthorRequest authorRequest, @PathVariable int id,
-  //  @RequestParam(required = false) boolean returnOld) {
-//
-  //  AuthorDto authorDto = authorService.removeAuthor(id);
-  //  if (returnOld) {
-  //    return ResponseEntity.ok(authorDto);
-  //  } else {
-  //    return ResponseEntity.noContent().build();
-  //  }
-  //}
 }
