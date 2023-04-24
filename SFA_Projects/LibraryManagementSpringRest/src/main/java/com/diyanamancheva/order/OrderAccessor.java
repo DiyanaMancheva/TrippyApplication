@@ -74,6 +74,32 @@ public class OrderAccessor {
       return orders;
     }
 
+    public List<Order> readOrderByBook(int bookId){
+      ResultSet resultSet;
+      List<Order> orders;
+
+
+      final String selectSQL = "SELECT * FROM orders WHERE book_id = ?";
+
+      try(Connection connection = dataSource.getConnection();
+          PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+
+        preparedStatement.setInt(1, bookId);
+
+        resultSet = preparedStatement.executeQuery();
+
+        orders = orderMapper.mapResultSetToOrders(resultSet);
+
+        if (orders.size() == 0){
+          throw new SQLException("No orders found.");
+        }
+      }catch (SQLException e){
+        throw new RuntimeException(e);
+      }
+
+      return orders;
+    }
+
     public List<Order> readAllOrders() {
       ResultSet resultSet;
       List<Order> orders;

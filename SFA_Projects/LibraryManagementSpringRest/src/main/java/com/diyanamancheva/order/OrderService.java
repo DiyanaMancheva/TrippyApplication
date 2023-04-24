@@ -26,6 +26,10 @@ public class OrderService {
     return orderAccessor.readOrderByClient(clientId);
   }
 
+  public List<Order> getOrderByBook(int bookId){
+    return orderAccessor.readOrderByBook(bookId);
+  }
+
   public List<OrderDto> getAllOrders() {
     List<Order> orders = orderAccessor.readAllOrders();
 
@@ -52,17 +56,6 @@ public class OrderService {
     orderAccessor.deleteOrder(id);
 
     return orderDto;
-  }
-
-  public List<Order> getOrderByBookId(int bookId, List<Order> orders) {
-    List<Order> ordersByBookId = new ArrayList<>();
-
-    for (Order orderFromList : orders) {
-      if (orderFromList.getBookId() == bookId) {
-        ordersByBookId.add(orderFromList);
-      }
-    }
-    return ordersByBookId;
   }
 
   public List<Order> getOrderOnIssueDate(LocalDate issueDate, List<Order> orders) {

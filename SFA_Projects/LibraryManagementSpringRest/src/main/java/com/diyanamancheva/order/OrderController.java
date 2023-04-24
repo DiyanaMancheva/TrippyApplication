@@ -43,6 +43,18 @@ public class OrderController {
     return ResponseEntity.ok(orderDtos);
   }
 
+  @GetMapping("/orders/bookId={bookId}")
+  public ResponseEntity<List<OrderDto>> printOrderByBook(@PathVariable int bookId){
+    List<Order> orders = orderService.getOrderByBook(bookId);
+    List<OrderDto> orderDtos = new ArrayList<>();
+
+    for (Order order : orders) {
+      OrderDto orderDto = new OrderDto(order.getId(), order.getClientId(), order.getBookId(), order.getIssueDate());
+      orderDtos.add(orderDto);
+    }
+    return ResponseEntity.ok(orderDtos);
+  }
+
   @GetMapping("/orders")
   public ResponseEntity<List<OrderDto>> printAllOrders() {
     List<OrderDto> orders = orderService.getAllOrders();
