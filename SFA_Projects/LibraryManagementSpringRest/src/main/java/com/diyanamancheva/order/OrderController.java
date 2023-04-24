@@ -55,6 +55,18 @@ public class OrderController {
     return ResponseEntity.ok(orderDtos);
   }
 
+  @GetMapping("/orders/issueDate={issueDate}")
+  public ResponseEntity<List<OrderDto>> printOrderByIssueDate(@PathVariable String issueDate){
+    List<Order> orders = orderService.getOrderByIssueDate(issueDate);
+    List<OrderDto> orderDtos = new ArrayList<>();
+
+    for (Order order : orders) {
+      OrderDto orderDto = new OrderDto(order.getId(), order.getClientId(), order.getBookId(), order.getIssueDate());
+      orderDtos.add(orderDto);
+    }
+    return ResponseEntity.ok(orderDtos);
+  }
+
   @GetMapping("/orders")
   public ResponseEntity<List<OrderDto>> printAllOrders() {
     List<OrderDto> orders = orderService.getAllOrders();

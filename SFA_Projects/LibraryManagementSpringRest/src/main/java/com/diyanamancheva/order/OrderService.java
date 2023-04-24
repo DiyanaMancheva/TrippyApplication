@@ -30,6 +30,10 @@ public class OrderService {
     return orderAccessor.readOrderByBook(bookId);
   }
 
+  public List<Order> getOrderByIssueDate(String issueDate){
+    return orderAccessor.readOrderByIssueDate(issueDate);
+  }
+
   public List<OrderDto> getAllOrders() {
     List<Order> orders = orderAccessor.readAllOrders();
 
