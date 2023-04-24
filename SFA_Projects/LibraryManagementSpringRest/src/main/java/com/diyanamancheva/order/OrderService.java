@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -64,71 +63,5 @@ public class OrderService {
     orderAccessor.deleteOrder(id);
 
     return orderDto;
-  }
-
-  public List<Order> getOrderOnIssueDate(LocalDate issueDate, List<Order> orders) {
-    List<Order> ordersOnIssueDate = new ArrayList<>();
-
-    for (Order orderFromList : orders) {
-      if ( orderFromList.getIssueDate().isEqual(issueDate)) {
-        ordersOnIssueDate.add(orderFromList);
-      }
-    }
-    return ordersOnIssueDate;
-  }
-
-  public List<Order> getOrderBeforeIssueDate(LocalDate issueDate, List<Order> orders) {
-    List<Order> ordersBeforeIssueDate = new ArrayList<>();
-
-    for (Order orderFromList : orders) {
-      if ( orderFromList.getIssueDate().isBefore(issueDate)) {
-        ordersBeforeIssueDate.add(orderFromList);
-      }
-    }
-    return ordersBeforeIssueDate;
-  }
-
-  public List<Order> getOrderAfterIssueDate(LocalDate issueDate, List<Order> orders) {
-    List<Order> ordersAfterIssueDate = new ArrayList<>();
-
-    for (Order orderFromList : orders) {
-      if ( orderFromList.getIssueDate().isAfter(issueDate)) {
-        ordersAfterIssueDate.add(orderFromList);
-      }
-    }
-    return ordersAfterIssueDate;
-  }
-
-  public List<Order> getOrderOnDueDate(LocalDate dueDate, List<Order> orders) {
-    List<Order> ordersOnDueDate = new ArrayList<>();
-
-    for (Order orderFromList : orders) {
-      if ( orderFromList.getDueDate().isEqual(dueDate)) {
-        ordersOnDueDate.add(orderFromList);
-      }
-    }
-    return ordersOnDueDate;
-  }
-
-  public List<Order> getOrderBeforeDueDate(LocalDate dueDate, List<Order> orders) {
-    List<Order> ordersBeforeDueDate = new ArrayList<>();
-
-    for (Order orderFromList : orders) {
-      if ( orderFromList.getDueDate().isBefore(dueDate)) {
-        ordersBeforeDueDate.add(orderFromList);
-      }
-    }
-    return ordersBeforeDueDate;
-  }
-
-  public List<Order> getOrderAfterDueDate(LocalDate dueDate, List<Order> orders) {
-    List<Order> ordersAfterDueDate = new ArrayList<>();
-
-    for (Order orderFromList : orders) {
-      if ( orderFromList.getDueDate().isAfter(dueDate)) {
-        ordersAfterDueDate.add(orderFromList);
-      }
-    }
-    return ordersAfterDueDate;
   }
 }

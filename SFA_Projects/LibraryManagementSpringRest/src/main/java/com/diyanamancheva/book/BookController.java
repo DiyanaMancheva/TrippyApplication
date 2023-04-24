@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -42,14 +43,14 @@ public class BookController {
   }
 
   @PostMapping("/books")
-  public ResponseEntity<Void> createBook(@RequestBody BookRequest bookRequest) {
+  public ResponseEntity<Void> createBook(@RequestBody @Valid BookRequest bookRequest) {
     bookService.addBook(bookRequest.getTitle(), bookRequest.getAuthorId(), bookRequest.getPublishingDate());
     return ResponseEntity.status(201).build();
   }
 
   @PutMapping("/books/{id}")
   public ResponseEntity<BookDto> updateBook (
-    @RequestBody BookRequest bookRequest, @PathVariable int id,
+    @RequestBody @Valid BookRequest bookRequest, @PathVariable int id,
     @RequestParam(required = false) boolean returnOld){
 
     BookDto bookDto = bookService.editBook(id, bookRequest);

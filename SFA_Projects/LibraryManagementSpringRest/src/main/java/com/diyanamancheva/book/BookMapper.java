@@ -1,5 +1,8 @@
 package com.diyanamancheva.book;
 
+import com.diyanamancheva.exception.DatabaseConnectivityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
@@ -9,6 +12,9 @@ import java.util.List;
 
 @Component
 public class BookMapper {
+
+  private static final Logger log = LoggerFactory.getLogger(BookAccessor.class);
+
   public List<Book> mapResultSetToBooks(ResultSet booksResultSet) {
     List<Book> booksList = new ArrayList<>();
     try (booksResultSet) {
@@ -25,7 +31,8 @@ public class BookMapper {
         booksList.add(book);
       }
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
     }
     return booksList;
   }

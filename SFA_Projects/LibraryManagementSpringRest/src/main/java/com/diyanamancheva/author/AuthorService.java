@@ -1,8 +1,5 @@
 package com.diyanamancheva.author;
 
-import com.diyanamancheva.client.Client;
-import com.diyanamancheva.client.ClientDto;
-import com.diyanamancheva.client.ClientRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,16 +46,5 @@ public class AuthorService {
     Author authorOld = getAuthorById(id);
     authorAccessor.deleteAuthor(id);
     return new AuthorDto(authorOld.getId(), authorOld.getName());
-  }
-
-  public Author getAuthorByName(String name, List<Author> authors) {
-    Author author = null;
-    for (Author authorCurr : authors) {
-      if (authorCurr.getName().equals(name)) {
-        author = authorCurr;
-        break;
-      }
-    }
-    return author;
   }
 }

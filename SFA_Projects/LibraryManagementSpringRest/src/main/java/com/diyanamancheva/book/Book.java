@@ -49,12 +49,4 @@ public class Book {
   public void setPublishingDate(String publishingDate) {
     this.publishingDate = publishingDate;
   }
-
-  @Override
-  public String toString() {
-    return "Book: \n" +
-           "Id = " + id + "\n" +
-           "Tile = " + title + "\n" +
-           "AuthorId = " + authorId;
-  }
 }

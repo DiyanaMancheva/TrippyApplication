@@ -1,9 +1,14 @@
 package com.diyanamancheva.order;
 
+import com.diyanamancheva.exception.DatabaseConnectivityException;
+import com.diyanamancheva.exception.IDNotUniqueException;
+import com.diyanamancheva.exception.ItemNotFoundException;
+import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -14,6 +19,8 @@ import java.util.List;
 
 @Component
 public class OrderAccessor {
+   private static final Logger log = LoggerFactory.getLogger(OrderAccessor.class);
+
     private OrderMapper orderMapper;
     private HikariDataSource dataSource;
 
@@ -38,11 +45,16 @@ public class OrderAccessor {
 
       orders = orderMapper.mapResultSetToOrders(resultSet);
 
-      if (orders.size() > 1){
-        throw new SQLException("More than one orders with equal id.");
+      if(orders.size() > 1){
+        log.error(String.format("More than one orders with equal id = %d found.", id));
+        throw new IDNotUniqueException(String.format("More than one orders with equal id = %d found.", id));
+      }else if (orders.size() == 0){
+        log.error(String.format("No orders with id %d found ", id));
+        throw new ItemNotFoundException(String.format("No orders with id %d found ", id));
       }
     }catch (SQLException e){
-      throw new RuntimeException(e);
+      log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
     }
 
     return orders.get(0);
@@ -64,11 +76,13 @@ public class OrderAccessor {
 
         orders = orderMapper.mapResultSetToOrders(resultSet);
 
-        if (orders.size() == 0){
-          throw new SQLException("No orders found.");
+        if(orders.size() == 0) {
+          log.error(String.format("No orders with clientId %d found ", clientId));
+          throw new ItemNotFoundException(String.format("No orders with clientId %d found ", clientId));
         }
       }catch (SQLException e){
-        throw new RuntimeException(e);
+        log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+        throw new DatabaseConnectivityException(e);
       }
 
       return orders;
@@ -90,11 +104,13 @@ public class OrderAccessor {
 
         orders = orderMapper.mapResultSetToOrders(resultSet);
 
-        if (orders.size() == 0){
-          throw new SQLException("No orders found.");
+        if(orders.size() == 0) {
+          log.error(String.format("No orders with bookId %d found ", bookId));
+          throw new ItemNotFoundException(String.format("No orders with bookId %d found ", bookId));
         }
       }catch (SQLException e){
-        throw new RuntimeException(e);
+        log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+        throw new DatabaseConnectivityException(e);
       }
 
       return orders;
@@ -115,11 +131,13 @@ public class OrderAccessor {
 
         orders = orderMapper.mapResultSetToOrders(resultSet);
 
-        if (orders.size() == 0){
-          throw new SQLException("No orders found.");
+        if(orders.size() == 0) {
+          log.error("No orders with issueDate " + issueDate + " found");
+          throw new ItemNotFoundException("No orders with issueDate " + issueDate + " found ");
         }
       }catch (SQLException e){
-        throw new RuntimeException(e);
+        log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+        throw new DatabaseConnectivityException(e);
       }
 
       return orders;
@@ -140,11 +158,13 @@ public class OrderAccessor {
 
         orders = orderMapper.mapResultSetToOrders(resultSet);
 
-        if (orders.size() == 0){
-          throw new SQLException("No orders found.");
+        if(orders.size() == 0) {
+          log.error("No orders with dueDate " + dueDate + " found");
+          throw new ItemNotFoundException("No orders with dueDate " + dueDate + " found");
         }
       }catch (SQLException e){
-        throw new RuntimeException(e);
+        log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+        throw new DatabaseConnectivityException(e);
       }
 
       return orders;
@@ -160,8 +180,12 @@ public class OrderAccessor {
 
         resultSet = statement.executeQuery(selectSQL);
         orders = orderMapper.mapResultSetToOrders(resultSet);
+        if(orders.size() == 0) {
+          throw new ItemNotFoundException("No orders found.");
+        }
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+          throw new DatabaseConnectivityException(e);
       }
       return orders;
     }
@@ -177,9 +201,11 @@ public class OrderAccessor {
         preparedStatement.setDate(3, Date.valueOf(order.getIssueDate().toString()));
         preparedStatement.setDate(4, Date.valueOf(order.getDueDate().toString()));
 
+        log.debug("Trying to persist new order");
         preparedStatement.executeUpdate();
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+          throw new DatabaseConnectivityException(e);
       }
     }
 
@@ -194,7 +220,8 @@ public class OrderAccessor {
 
         return updateStatement.executeUpdate();
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+          throw new DatabaseConnectivityException(e);
       }
     }
 
@@ -208,7 +235,8 @@ public class OrderAccessor {
 
         return deleteStatement.executeUpdate();
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+          throw new DatabaseConnectivityException(e);
       }
     }
 }

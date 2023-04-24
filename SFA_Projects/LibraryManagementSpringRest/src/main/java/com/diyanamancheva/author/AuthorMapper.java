@@ -1,6 +1,8 @@
 package com.diyanamancheva.author;
 
-import com.diyanamancheva.client.Client;
+import com.diyanamancheva.exception.DatabaseConnectivityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
@@ -10,6 +12,8 @@ import java.util.List;
 
 @Component
 public class AuthorMapper {
+  private static final Logger log = LoggerFactory.getLogger(AuthorAccessor.class);
+
   public List<Author> mapResultSetToAuthors(ResultSet authorsResultSet) {
     List<Author> authorsList = new ArrayList<>();
     try (authorsResultSet) {
@@ -20,7 +24,8 @@ public class AuthorMapper {
         authorsList.add(author);
       }
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
     }
     return authorsList;
   }

@@ -1,10 +1,11 @@
 package com.diyanamancheva.client;
 
-public class ClientRequest {
-  private String name;
-  public ClientRequest(){
+import javax.validation.constraints.Pattern;
 
-  }
+public class ClientRequest {
+  @Pattern(regexp = "[A-Z]+[a-z]+[\\s.][A-Z]+[a-z]+", message = "Name must not be null or contain numbers")
+  private String name;
+  public ClientRequest(){}
 
   public String getName() {
     return name;

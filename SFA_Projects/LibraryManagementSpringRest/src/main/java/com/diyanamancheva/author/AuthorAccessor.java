@@ -1,7 +1,12 @@
 package com.diyanamancheva.author;
 
-import com.diyanamancheva.client.Client;
+import com.diyanamancheva.client.ClientAccessor;
+import com.diyanamancheva.exception.DatabaseConnectivityException;
+import com.diyanamancheva.exception.IDNotUniqueException;
+import com.diyanamancheva.exception.ItemNotFoundException;
 import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +19,9 @@ import java.util.List;
 
 @Component
 public class AuthorAccessor {
+
+    private static final Logger log = LoggerFactory.getLogger(AuthorAccessor.class);
+
     private AuthorMapper authorMapper;
     private HikariDataSource dataSource;
 
@@ -33,19 +41,23 @@ public class AuthorAccessor {
 
       preparedStatement.setString(1, author.getName());
 
+      log.debug("Trying to persist new author");
       preparedStatement.executeUpdate();
 
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
       if(resultSet.next()){
         authorId = resultSet.getInt(1);
       }else{
+        log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
         throw new SQLException("ID was NOT retrieved from inserted author.");
       }
     } catch (SQLException e) {
-      throw new RuntimeException("NOT able to create database connection.",e);
+        log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+        throw new DatabaseConnectivityException(e);
     }
 
     author.setId(authorId);
+    log.info(String.format("Author with id %d successfully persisted", authorId));
     return author;
   }
 
@@ -59,7 +71,8 @@ public class AuthorAccessor {
 
       return updateStatement.executeUpdate();
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+        log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+        throw new DatabaseConnectivityException(e);
     }
   }
 
@@ -70,7 +83,8 @@ public class AuthorAccessor {
         resultSet = statement.executeQuery("SELECT * FROM authors");
         authors = authorMapper.mapResultSetToAuthors(resultSet);
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+          throw new DatabaseConnectivityException(e);
       }
       return authors;
     }
@@ -89,10 +103,15 @@ public class AuthorAccessor {
 
         authors = authorMapper.mapResultSetToAuthors(resultSet);
         if(authors.size() > 1){
-          throw new SQLException("More than one authors with equal id");
+          log.error(String.format("More than one authors with equal id = %d found.", id));
+          throw new IDNotUniqueException(String.format("More than one authors with equal id = %d found.", id));
+        }else if (authors.size() == 0){
+          log.error(String.format("No authors with id %d found", id));
+          throw new ItemNotFoundException(String.format("No authors with id %d found ", id));
         }
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+          throw new DatabaseConnectivityException(e);
       }
       return authors.get(0);
     }
@@ -106,7 +125,8 @@ public class AuthorAccessor {
         deleteStatement.setInt(1, id);
         return deleteStatement.executeUpdate();
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          log.error("Unexpected exception occured when trying to query database. Rethrowing unchecked exception");
+          throw new DatabaseConnectivityException(e);
       }
     }
 }

@@ -24,11 +24,4 @@ public class Author {
   public void setName(String name) {
     this.name = name;
   }
-
-  @Override
-  public String toString() {
-    return "Author: \n" +
-           "id = " + id + "\n" +
-           "name = " + name + "\n";
-  }
 }
