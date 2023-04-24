@@ -34,6 +34,10 @@ public class OrderService {
     return orderAccessor.readOrderByIssueDate(issueDate);
   }
 
+  public List<Order> getOrderByDueDate(String dueDate){
+    return orderAccessor.readOrderByDueDate(dueDate);
+  }
+
   public List<OrderDto> getAllOrders() {
     List<Order> orders = orderAccessor.readAllOrders();
 

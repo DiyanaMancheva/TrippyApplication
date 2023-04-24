@@ -125,6 +125,31 @@ public class OrderAccessor {
       return orders;
     }
 
+    public List<Order> readOrderByDueDate(String dueDate){
+      ResultSet resultSet;
+      List<Order> orders;
+
+      final String selectSQL = "SELECT * FROM orders WHERE due_date = ?";
+
+      try(Connection connection = dataSource.getConnection();
+          PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+
+        preparedStatement.setDate(1, Date.valueOf(dueDate));
+  
+        resultSet = preparedStatement.executeQuery();
+
+        orders = orderMapper.mapResultSetToOrders(resultSet);
+
+        if (orders.size() == 0){
+          throw new SQLException("No orders found.");
+        }
+      }catch (SQLException e){
+        throw new RuntimeException(e);
+      }
+
+      return orders;
+    }
+
     public List<Order> readAllOrders() {
       ResultSet resultSet;
       List<Order> orders;
