@@ -1,5 +1,8 @@
 package com.diyanamancheva.client;
 
+import com.diyanamancheva.exception.DatabaseConnectivityException;
+import com.diyanamancheva.exception.IDNotUniqueException;
+import com.diyanamancheva.exception.ItemNotFoundException;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,7 +44,7 @@ public class ClientAccessor {
           throw new SQLException("ID was NOT retrieved from inserted client.");
         }
       } catch (SQLException e) {
-         throw new RuntimeException("NOT able to create database connection.",e);
+          throw new DatabaseConnectivityException(e);
       }
 
       client.setId(clientId);
@@ -55,7 +58,7 @@ public class ClientAccessor {
         resultSet = statement.executeQuery("SELECT * FROM clients");
         clients = clientMapper.mapResultSetToClients(resultSet);
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
       return clients;
     }
@@ -74,10 +77,12 @@ public class ClientAccessor {
 
         clients = clientMapper.mapResultSetToClients(resultSet);
         if(clients.size() > 1){
-          throw new SQLException("More than one clients with equal id");
+          throw new IDNotUniqueException(String.format("More than one clients with equal id = %d found.", id));
+        }else if (clients.size() == 0){
+          throw new ItemNotFoundException(String.format("No clients with id %d found ", id));
         }
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
       return clients.get(0);
     }
@@ -92,7 +97,7 @@ public class ClientAccessor {
 
         return updateStatement.executeUpdate();
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
     }
 
@@ -105,7 +110,7 @@ public class ClientAccessor {
         deleteStatement.setInt(1, id);
         return deleteStatement.executeUpdate();
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
     }
 }

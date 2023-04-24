@@ -1,5 +1,8 @@
 package com.diyanamancheva.order;
 
+import com.diyanamancheva.exception.DatabaseConnectivityException;
+import com.diyanamancheva.exception.IDNotUniqueException;
+import com.diyanamancheva.exception.ItemNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,11 +41,13 @@ public class OrderAccessor {
 
       orders = orderMapper.mapResultSetToOrders(resultSet);
 
-      if (orders.size() > 1){
-        throw new SQLException("More than one orders with equal id.");
+      if(orders.size() > 1){
+        throw new IDNotUniqueException(String.format("More than one orders with equal id = %d found.", id));
+      }else if (orders.size() == 0){
+        throw new ItemNotFoundException(String.format("No orders with id %d found ", id));
       }
     }catch (SQLException e){
-      throw new RuntimeException(e);
+      throw new DatabaseConnectivityException(e);
     }
 
     return orders.get(0);
@@ -64,11 +69,11 @@ public class OrderAccessor {
 
         orders = orderMapper.mapResultSetToOrders(resultSet);
 
-        if (orders.size() == 0){
-          throw new SQLException("No orders found.");
+        if(orders.size() == 0) {
+          throw new ItemNotFoundException(String.format("No orders with clientId %d found ", clientId));
         }
       }catch (SQLException e){
-        throw new RuntimeException(e);
+        throw new DatabaseConnectivityException(e);
       }
 
       return orders;
@@ -90,11 +95,11 @@ public class OrderAccessor {
 
         orders = orderMapper.mapResultSetToOrders(resultSet);
 
-        if (orders.size() == 0){
-          throw new SQLException("No orders found.");
+        if(orders.size() == 0) {
+          throw new ItemNotFoundException(String.format("No orders with bookId %d found ", bookId));
         }
       }catch (SQLException e){
-        throw new RuntimeException(e);
+        throw new DatabaseConnectivityException(e);
       }
 
       return orders;
@@ -115,11 +120,11 @@ public class OrderAccessor {
 
         orders = orderMapper.mapResultSetToOrders(resultSet);
 
-        if (orders.size() == 0){
-          throw new SQLException("No orders found.");
+        if(orders.size() == 0) {
+          throw new ItemNotFoundException("No orders with issueDate " + issueDate + " found ");
         }
       }catch (SQLException e){
-        throw new RuntimeException(e);
+        throw new DatabaseConnectivityException(e);
       }
 
       return orders;
@@ -140,11 +145,11 @@ public class OrderAccessor {
 
         orders = orderMapper.mapResultSetToOrders(resultSet);
 
-        if (orders.size() == 0){
-          throw new SQLException("No orders found.");
+        if(orders.size() == 0) {
+          throw new ItemNotFoundException("No orders with dueDate " + dueDate + " found ");
         }
       }catch (SQLException e){
-        throw new RuntimeException(e);
+        throw new DatabaseConnectivityException(e);
       }
 
       return orders;
@@ -160,8 +165,11 @@ public class OrderAccessor {
 
         resultSet = statement.executeQuery(selectSQL);
         orders = orderMapper.mapResultSetToOrders(resultSet);
+        if(orders.size() == 0) {
+          throw new ItemNotFoundException("No orders found.");
+        }
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
       return orders;
     }
@@ -179,7 +187,7 @@ public class OrderAccessor {
 
         preparedStatement.executeUpdate();
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
     }
 
@@ -194,7 +202,7 @@ public class OrderAccessor {
 
         return updateStatement.executeUpdate();
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
     }
 
@@ -208,7 +216,7 @@ public class OrderAccessor {
 
         return deleteStatement.executeUpdate();
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
     }
 }

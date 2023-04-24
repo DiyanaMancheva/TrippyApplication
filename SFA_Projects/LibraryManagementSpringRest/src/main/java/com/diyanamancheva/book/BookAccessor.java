@@ -1,5 +1,8 @@
 package com.diyanamancheva.book;
 
+import com.diyanamancheva.exception.DatabaseConnectivityException;
+import com.diyanamancheva.exception.IDNotUniqueException;
+import com.diyanamancheva.exception.ItemNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,10 +41,12 @@ public class BookAccessor {
 
         books = bookMapper.mapResultSetToBooks(resultSet);
         if(books.size() > 1){
-          throw new SQLException("More than one books with equal id");
+          throw new IDNotUniqueException(String.format("More than one books with equal id = %d found.", id));
+        }else if (books.size() == 0){
+          throw new ItemNotFoundException(String.format("No books with id %d found ", id));
         }
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
       return books.get(0);
     }
@@ -53,7 +58,7 @@ public class BookAccessor {
         resultSet = statement.executeQuery("SELECT * FROM books");
         books = bookMapper.mapResultSetToBooks(resultSet);
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
       return books;
     }
@@ -70,7 +75,7 @@ public class BookAccessor {
 
         preparedStatement.executeUpdate();
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
     }
 
@@ -85,7 +90,7 @@ public class BookAccessor {
 
         return  updateStatement.executeUpdate();
       }catch(SQLException e){
-        throw new RuntimeException(e);
+        throw new DatabaseConnectivityException(e);
       }
     }
 
@@ -98,7 +103,7 @@ public class BookAccessor {
         deleteStatement.setInt(1, id);
         return deleteStatement.executeUpdate();
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
     }
 }

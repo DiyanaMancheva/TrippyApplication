@@ -1,5 +1,8 @@
 package com.diyanamancheva.author;
 
+import com.diyanamancheva.exception.DatabaseConnectivityException;
+import com.diyanamancheva.exception.IDNotUniqueException;
+import com.diyanamancheva.exception.ItemNotFoundException;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,7 +44,7 @@ public class AuthorAccessor {
         throw new SQLException("ID was NOT retrieved from inserted author.");
       }
     } catch (SQLException e) {
-      throw new RuntimeException("NOT able to create database connection.",e);
+        throw new DatabaseConnectivityException(e);
     }
 
     author.setId(authorId);
@@ -58,7 +61,7 @@ public class AuthorAccessor {
 
       return updateStatement.executeUpdate();
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+        throw new DatabaseConnectivityException(e);
     }
   }
 
@@ -69,7 +72,7 @@ public class AuthorAccessor {
         resultSet = statement.executeQuery("SELECT * FROM authors");
         authors = authorMapper.mapResultSetToAuthors(resultSet);
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
       return authors;
     }
@@ -88,10 +91,12 @@ public class AuthorAccessor {
 
         authors = authorMapper.mapResultSetToAuthors(resultSet);
         if(authors.size() > 1){
-          throw new SQLException("More than one authors with equal id");
+          throw new IDNotUniqueException(String.format("More than one authors with equal id = %d found.", id));
+        }else if (authors.size() == 0){
+          throw new ItemNotFoundException(String.format("No authors with id %d found ", id));
         }
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
       return authors.get(0);
     }
@@ -105,7 +110,7 @@ public class AuthorAccessor {
         deleteStatement.setInt(1, id);
         return deleteStatement.executeUpdate();
       } catch (SQLException e) {
-        throw new RuntimeException(e);
+          throw new DatabaseConnectivityException(e);
       }
     }
 }
