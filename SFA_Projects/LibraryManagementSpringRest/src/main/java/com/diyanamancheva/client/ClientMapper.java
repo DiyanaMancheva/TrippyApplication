@@ -15,8 +15,7 @@ public class ClientMapper{
       while (clientsResultSet.next()) {
         int id = clientsResultSet.getInt(1);
         String name = clientsResultSet.getString(2);
-        Client client = new Client(name);
-        client.setId(id);
+        Client client = new Client(id, name);
         clientsList.add(client);
       }
     } catch (SQLException e) {
@@ -29,7 +28,7 @@ public class ClientMapper{
     ArrayList<ClientDto> clientDtos = new ArrayList<>();
 
     for(Client client : clients){
-      ClientDto clientDto = new ClientDto(client.getName());
+      ClientDto clientDto = new ClientDto(client.getId(), client.getName());
       clientDtos.add(clientDto);
     }
     return clientDtos;

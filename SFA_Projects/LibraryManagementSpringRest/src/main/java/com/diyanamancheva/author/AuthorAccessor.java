@@ -1,9 +1,10 @@
 package com.diyanamancheva.author;
 
+import com.diyanamancheva.client.Client;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,36 +23,45 @@ public class AuthorAccessor {
       this.dataSource = dataSource;
     }
 
-    public void addAuthor(Author author) {
-      final String insertSQL = "INSERT INTO Authors(author_name) VALUES(?)";
+  public Author addAuthor(Author author) {
+    final String insertSQL = "INSERT INTO Authors(Author_name) VALUES(?)";
+    int authorId;
 
-      try (Connection connection = dataSource.getConnection();
-           PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(insertSQL,
+                                                                           Statement.RETURN_GENERATED_KEYS)) {
 
-        preparedStatement.setString(1, author.getName());
+      preparedStatement.setString(1, author.getName());
 
-        preparedStatement.executeUpdate();
+      preparedStatement.executeUpdate();
 
-        System.out.println("Author: " + author.getName() + " was successfully added.");
-      } catch (SQLException e) {
-        System.out.println("Author: " + author.getName() + " was NOT added.");
-        throw new RuntimeException(e);
+      ResultSet resultSet = preparedStatement.getGeneratedKeys();
+      if(resultSet.next()){
+        authorId = resultSet.getInt(1);
+      }else{
+        throw new SQLException("ID was NOT retrieved from inserted author.");
       }
+    } catch (SQLException e) {
+      throw new RuntimeException("NOT able to create database connection.",e);
     }
 
-    public int updateAuthor(Author author) {
-      final String UpdateSQL = "UPDATE authors SET author_name = ? WHERE author_id = ?";
-      try (Connection connection = dataSource.getConnection();
-           PreparedStatement updateStatement = connection.prepareStatement(UpdateSQL)) {
+    author.setId(authorId);
+    return author;
+  }
 
-        updateStatement.setString(1, author.getName());
-        updateStatement.setInt(2, author.getId());
+  public int updateAuthor(Author author) {
+    final String UpdateSQL = "UPDATE authors SET author_name = ? WHERE author_id = ?";
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement updateStatement = connection.prepareStatement(UpdateSQL)) {
 
-        return updateStatement.executeUpdate();
-      } catch (SQLException e) {
-        throw new RuntimeException(e);
-      }
+      updateStatement.setString(1, author.getName());
+      updateStatement.setInt(2, author.getId());
+
+      return updateStatement.executeUpdate();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
+  }
 
     public List<Author> readAllAuthors() {
       ResultSet resultSet;
@@ -63,6 +73,28 @@ public class AuthorAccessor {
         throw new RuntimeException(e);
       }
       return authors;
+    }
+
+    public Author readAuthorById(int id) {
+      ResultSet resultSet;
+      List<Author> authors;
+
+      final String SQL = "SELECT * FROM authors WHERE author_id = ?";
+      try (Connection connection = dataSource.getConnection();
+           PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+        preparedStatement.setInt(1, id);
+
+        resultSet = preparedStatement.executeQuery();
+
+        authors = authorMapper.mapResultSetToAuthors(resultSet);
+        if(authors.size() > 1){
+          throw new SQLException("More than one authors with equal id");
+        }
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+      return authors.get(0);
     }
 
     public int deleteAuthor(int id) {

@@ -18,6 +18,26 @@ public class OrderService {
     this.orderMapper = orderMapper;
   }
 
+  public Order getOrderById(int id){
+    return orderAccessor.readOrderById(id);
+  }
+
+  public List<Order> getOrderByClient(int clientId){
+    return orderAccessor.readOrderByClient(clientId);
+  }
+
+  public List<Order> getOrderByBook(int bookId){
+    return orderAccessor.readOrderByBook(bookId);
+  }
+
+  public List<Order> getOrderByIssueDate(String issueDate){
+    return orderAccessor.readOrderByIssueDate(issueDate);
+  }
+
+  public List<Order> getOrderByDueDate(String dueDate){
+    return orderAccessor.readOrderByDueDate(dueDate);
+  }
+
   public List<OrderDto> getAllOrders() {
     List<Order> orders = orderAccessor.readAllOrders();
 
@@ -29,57 +49,21 @@ public class OrderService {
     orderAccessor.addOrder(order);
   }
 
-  public int editOrder(LocalDate dueDate, int id) {
-    List<OrderDto> orderDtos = getAllOrders();
+  public OrderDto editOrder(int id, OrderRequest orderRequest){
+    Order order = getOrderById(id);
+    Order orderNew = new Order(id, orderRequest.getClientId(), orderRequest.getBookId(), orderRequest.getIssueDate());
+    orderAccessor.updateOrder(orderNew);
+    OrderDto orderDto = new OrderDto(order.getId(), order.getClientId(), order.getBookId(), order.getIssueDate());
 
-    ArrayList<Order > orders = new ArrayList<>();
-
-    for(OrderDto orderDto : orderDtos){
-      Order order = orderMapper.mapOrderDtoToOrder(orderDto);
-      orders.add(order);
-    }
-
-    Order orderToEdit = getOrderById(id, orders);
-    orderToEdit.setDueDate(dueDate);
-
-    return orderAccessor.updateOrder(orderToEdit);
+    return orderDto;
   }
 
-  public int deleteOrder(int id) {
-    return orderAccessor.deleteOrder(id);
-  }
+  public OrderDto deleteOrder(int id){
+    Order orderOld = getOrderById(id);
+    OrderDto orderDto = new OrderDto(orderOld.getId(), orderOld.getClientId(), orderOld.getBookId(), orderOld.getIssueDate());
+    orderAccessor.deleteOrder(id);
 
-  public Order getOrderById(int id, List<Order> orders) {
-    Order order = null;
-    for (Order orderFromList : orders) {
-      if (orderFromList.getId() == id) {
-        order = orderFromList;
-        break;
-      }
-    }
-    return order;
-  }
-
-  public List<Order> getOrderByClientId(int clientId, List<Order> orders) {
-    List<Order> ordersByClientId = new ArrayList<>();
-
-    for (Order orderFromList : orders) {
-     if (orderFromList.getClientId() == clientId) {
-        ordersByClientId.add(orderFromList);
-      }
-    }
-    return ordersByClientId;
-  }
-
-  public List<Order> getOrderByBookId(int bookId, List<Order> orders) {
-    List<Order> ordersByBookId = new ArrayList<>();
-
-    for (Order orderFromList : orders) {
-      if (orderFromList.getBookId() == bookId) {
-        ordersByBookId.add(orderFromList);
-      }
-    }
-    return ordersByBookId;
+    return orderDto;
   }
 
   public List<Order> getOrderOnIssueDate(LocalDate issueDate, List<Order> orders) {

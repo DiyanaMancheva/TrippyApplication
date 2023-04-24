@@ -1,11 +1,11 @@
 package com.diyanamancheva.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class ClientService {
   private ClientAccessor clientAccessor;
   private ClientMapper clientMapper;
@@ -22,29 +22,29 @@ public class ClientService {
     return clientMapper.mapClientsToDtos(clients);
   }
 
-  public void addClient(String name) {
+  public Client getClientById(int id) {
+    return clientAccessor.readClientById(id);
+  }
+
+  public Client addClient(String name) {
     Client client = new Client(name);
-    clientAccessor.addClient(client);
-  }
-
-  public int editClient(int id, String name) {
-    Client client = new Client(name);
-    client.setId(id);
-
-    return clientAccessor.updateClient(client);
-  }
-
-  public int deleteClient(int id) {
-    return clientAccessor.deleteClient(id);
-  }
-  public Client getClientByName(String name, List<Client> clients) {
-    Client client = null;
-    for (Client clientCurr : clients) {
-      if (clientCurr.getName().equals(name)) {
-        client = clientCurr;
-        break;
-      }
-    }
+    client = clientAccessor.addClient(client);
     return client;
+  }
+
+  public ClientDto editClient(int id, ClientRequest clientRequest) {
+
+    Client client = getClientById(id);
+    Client clientNew = new Client(id, clientRequest.getName());
+    clientAccessor.updateClient(clientNew);
+    ClientDto clientDto = new ClientDto(client.getId(), client.getName());
+
+    return clientDto;
+  }
+
+  public ClientDto removeClient(int id) {
+    Client oldClient = getClientById(id);
+    clientAccessor.deleteClient(id);
+    return new ClientDto(oldClient.getId(), oldClient.getName());
   }
 }

@@ -1,5 +1,6 @@
 package com.diyanamancheva.author;
 
+import com.diyanamancheva.client.Client;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
@@ -15,8 +16,7 @@ public class AuthorMapper {
       while (authorsResultSet.next()) {
         int id = authorsResultSet.getInt(1);
         String name = authorsResultSet.getString(2);
-        Author author = new Author(name);
-        author.setId(id);
+        Author author = new Author(id, name);
         authorsList.add(author);
       }
     } catch (SQLException e) {
@@ -28,7 +28,7 @@ public class AuthorMapper {
   public List<AuthorDto> mapAuthorsToDtos(List<Author> authors){
     ArrayList<AuthorDto> authorDtos = new ArrayList<>();
     for(Author author : authors){
-      AuthorDto authorDto = new AuthorDto(author.getName());
+      AuthorDto authorDto = new AuthorDto(author.getId(), author.getName());
       authorDtos.add(authorDto);
     }
     return authorDtos;

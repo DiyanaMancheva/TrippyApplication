@@ -22,21 +22,30 @@ public class ClientAccessor {
       this.dataSource = dataSource;
     }
 
-    public void addClient(Client client) {
+    public Client addClient(Client client) {
       final String insertSQL = "INSERT INTO Clients(client_name) VALUES(?)";
+      int clientId;
 
       try (Connection connection = dataSource.getConnection();
-           PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+           PreparedStatement preparedStatement = connection.prepareStatement(insertSQL,
+                                                                             Statement.RETURN_GENERATED_KEYS)) {
 
         preparedStatement.setString(1, client.getName());
 
         preparedStatement.executeUpdate();
 
-        System.out.println("Client: " + client.getName() + " was successfully added.");
+        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+        if(resultSet.next()){
+          clientId = resultSet.getInt(1);
+        }else{
+          throw new SQLException("ID was NOT retrieved from inserted client.");
+        }
       } catch (SQLException e) {
-        System.out.println("Client: " + client.getName() + " was NOT added.");
-        throw new RuntimeException(e);
+         throw new RuntimeException("NOT able to create database connection.",e);
       }
+
+      client.setId(clientId);
+      return client;
     }
 
     public List<Client> readAllClients() {
@@ -51,10 +60,32 @@ public class ClientAccessor {
       return clients;
     }
 
-    public int updateClient(Client client) {
-      final String UpdateSQL = "UPDATE clients SET client_name = ? WHERE client_id = ?";
+    public Client readClientById(int id) {
+      ResultSet resultSet;
+      List<Client> clients;
+
+      final String SQL = "SELECT * FROM clients WHERE client_id = ?";
       try (Connection connection = dataSource.getConnection();
-           PreparedStatement updateStatement = connection.prepareStatement(UpdateSQL)) {
+           PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+        preparedStatement.setInt(1, id);
+
+        resultSet = preparedStatement.executeQuery();
+
+        clients = clientMapper.mapResultSetToClients(resultSet);
+        if(clients.size() > 1){
+          throw new SQLException("More than one clients with equal id");
+        }
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+      return clients.get(0);
+    }
+
+    public int updateClient(Client client) {
+      final String updateSQL = "UPDATE clients SET client_name = ? WHERE client_id = ?";
+      try (Connection connection = dataSource.getConnection();
+           PreparedStatement updateStatement = connection.prepareStatement(updateSQL)) {
 
         updateStatement.setString(1, client.getName());
         updateStatement.setInt(2, client.getId());

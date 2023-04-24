@@ -34,7 +34,7 @@ public class BookMapper {
     ArrayList<BookDto> bookDtos = new ArrayList<>();
 
     for(Book book : books){
-      BookDto bookDto = new BookDto(book.getTitle(), book.getAuthorId(), book.getPublishingDate());
+      BookDto bookDto = new BookDto(book.getId(), book.getTitle(), book.getAuthorId(), book.getPublishingDate());
       bookDtos.add(bookDto);
     }
     return bookDtos;

@@ -1,14 +1,24 @@
 package com.diyanamancheva.book;
 
 public class BookDto {
+  private int id;
   private String title;
   private int authorId;
   private String publishingDate;
 
-  public BookDto(String title, int authorId, String publishingDate) {
+  public BookDto(int id, String title, int authorId, String publishingDate) {
+    this.id = id;
     this.title = title;
     this.authorId = authorId;
     this.publishingDate = publishingDate;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId ( int id) {
+    this.id = id;
   }
 
   public String getTitle() {

@@ -16,6 +16,10 @@ public class BookService {
     this.bookMapper = bookMapper;
   }
 
+  public Book getBookById(int id) {
+    return bookAccessor.readBookById(id);
+  }
+
   public List<BookDto> getAllBooks() {
     List<Book> books = bookAccessor.readAllBooks();
 
@@ -27,29 +31,20 @@ public class BookService {
     bookAccessor.addBook(book);
   }
 
-  public int deleteBook(int id) {
-    return bookAccessor.deleteBook(id);
+  public BookDto editBook(int id, BookRequest bookRequest){
+
+    Book book = getBookById(id);
+    Book bookNew = new Book(id, bookRequest.getTitle(), bookRequest.getAuthorId(), bookRequest.getPublishingDate());
+    bookAccessor.updateBook(bookNew);
+    BookDto bookDto = new BookDto(book.getId(), book.getTitle(), book.getAuthorId(), book.getPublishingDate());
+
+    return bookDto;
   }
 
-  public Book getBookByTitle(String title, List<Book> books) {
-    Book book = null;
-    for (Book bookFromList : books) {
-      if (bookFromList.getTitle().equals(title)) {
-        book = bookFromList;
-        break;
-      }
-    }
-    return book;
-  }
+  public BookDto removeBook(int id) {
+    Book bookOld = getBookById(id);
+    bookAccessor.deleteBook(id);
 
-  public Book getBookById(int id, List<Book> books) {
-    Book book = null;
-    for (Book bookCurr : books) {
-      if (bookCurr.getId() == id) {
-        book = bookCurr;
-        break;
-      }
-    }
-    return book;
+    return new BookDto(bookOld.getId(), bookOld.getTitle(), bookOld.getAuthorId(), bookOld.getPublishingDate());
   }
 }

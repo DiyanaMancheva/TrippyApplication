@@ -3,8 +3,8 @@ package com.diyanamancheva.author;
 public class AuthorRequest {
   private String name;
 
-  public AuthorRequest(String name) {
-    this.name = name;
+  public AuthorRequest() {
+
   }
 
   public String getName() {
