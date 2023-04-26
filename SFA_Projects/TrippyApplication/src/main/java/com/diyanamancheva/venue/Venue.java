@@ -1,7 +1,11 @@
 package com.diyanamancheva.venue;
 
 import com.diyanamancheva.city.City;
+import com.diyanamancheva.review.Review;
 import com.diyanamancheva.type.Type;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Venue {
   private int id;
@@ -10,6 +14,7 @@ public class Venue {
   private City city;
   private String address;
   private float rating;
+  private List<Review> reviews;
 
   public Venue(String name, Type type, City city,
                String address, float rating){
@@ -18,6 +23,7 @@ public class Venue {
     this.city = city;
     this.address = address;
     this.rating = 0.0f;
+    this.reviews = new ArrayList<>();
   }
 
   public Venue(int id, String name, Type type, City city,
@@ -67,11 +73,15 @@ public class Venue {
   }
 
   public float getRating() {
-    return rating;
+    return this.calculateAverageRating();
   }
 
-  public void setRating(float rating) {
-    Float ratingAverage = (this.rating + rating) / 2;
-    this.rating = ratingAverage;
+  private float calculateAverageRating() {
+    Float ratingAll = 0.0f;
+    for (Review review : this.reviews){
+      ratingAll += review.getRating();
+    }
+    Float ratingAverage = ratingAll / this.reviews.size();
+    return ratingAverage;
   }
 }
