@@ -1,8 +1,11 @@
 package com.diyanamancheva.user;
 
 import com.diyanamancheva.city.City;
+import com.diyanamancheva.review.Review;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
   private int id;
@@ -10,6 +13,7 @@ public class User {
   private City city;
   private String email;
   private LocalDate joinDate;
+  private List<Review> reviews;
 
   public User(String username, City city,
               String email, LocalDate joinDate){
@@ -17,6 +21,7 @@ public class User {
     this.city = city;
     this.email = email;
     this.joinDate = joinDate;
+    this.reviews = new ArrayList<>();
   }
 
   public User(int id, String username, City city,
