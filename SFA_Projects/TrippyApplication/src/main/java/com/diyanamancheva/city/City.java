@@ -1,8 +1,15 @@
 package com.diyanamancheva.city;
 
+import com.diyanamancheva.venue.Venue;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class City {
   private int id;
   private String name;
+
+  private List<Venue> venues;
 
   public City(String name){
     this.name = name;
@@ -11,6 +18,7 @@ public class City {
   public City(int id, String name){
     this(name);
     this.id = id;
+    this.venues = new ArrayList<>();
   }
 
   public int getId() {
