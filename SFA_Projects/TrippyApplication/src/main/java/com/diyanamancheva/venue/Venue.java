@@ -71,6 +71,7 @@ public class Venue {
   }
 
   public void setRating(float rating) {
-    this.rating = rating;
+    Float ratingAverage = (this.rating + rating) / 2;
+    this.rating = ratingAverage;
   }
 }
