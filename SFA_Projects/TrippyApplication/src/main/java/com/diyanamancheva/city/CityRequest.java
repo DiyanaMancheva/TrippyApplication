@@ -2,11 +2,11 @@ package com.diyanamancheva.city;
 
 import javax.validation.constraints.Pattern;
 
-public class CityDto {
+public class CityRequest {
   @Pattern(regexp = "^[a-zA-Z]+.+(?:[\\s-][a-zA-Z]+)*$", message = "Name must not be null or contain numbers")
   private String name;
 
-  public CityDto(){}
+  public CityRequest(){}
 
   public String getName() {
     return name;
