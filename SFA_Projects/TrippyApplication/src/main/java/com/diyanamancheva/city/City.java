@@ -1,14 +1,14 @@
-package com.diyanamancheva.type;
+package com.diyanamancheva.city;
 
-public class Type {
+public class City {
   private int id;
   private String name;
 
-  public Type(String name){
+  public City(String name){
     this.name = name;
   }
 
-  public Type(int id, String name){
+  public City(int id, String name){
     this(name);
     this.id = id;
   }
