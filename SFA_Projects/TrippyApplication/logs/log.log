@@ -4,4 +4,10 @@
 ""27-04-2023 13:22:28 [main] INFO  com.diyanamancheva.TrippyApplication.logStarting - Starting TrippyApplication using Java 11.0.15 on DESKTOP-2CFGA48 with PID 16040 (C:\Users\Diyana\Java\LibraryManagement\SFA_Projects\TrippyApplication\target\classes started by Diyana in C:\Users\Diyana\Java\LibraryManagement\SFA_Projects\TrippyApplication)
 ""27-04-2023 13:22:28 [main] INFO  com.diyanamancheva.TrippyApplication.logStartupProfileInfo - The following 1 profile is active: "postgre"
 ""27-04-2023 13:22:30 [main] INFO  com.diyanamancheva.TrippyApplication.logStarted - Started TrippyApplication in 2.161 seconds (JVM running for 2.546)
+""27-04-2023 14:23:34 [main] INFO  c.d.TrippyApplicationTests.logStarting - Starting TrippyApplicationTests using Java 11.0.15 on DESKTOP-2CFGA48 with PID 21396 (started by Diyana in C:\Users\Diyana\Java\LibraryManagement\SFA_Projects\TrippyApplication)
+""27-04-2023 14:23:34 [main] INFO  c.d.TrippyApplicationTests.logStartupProfileInfo - The following 1 profile is active: "postgre"
+""27-04-2023 14:23:36 [main] INFO  c.d.TrippyApplicationTests.logStarted - Started TrippyApplicationTests in 2.219 seconds (JVM running for 3.166)
+""27-04-2023 14:23:49 [main] INFO  com.diyanamancheva.TrippyApplication.logStarting - Starting TrippyApplication using Java 11.0.15 on DESKTOP-2CFGA48 with PID 18200 (C:\Users\Diyana\Java\LibraryManagement\SFA_Projects\TrippyApplication\target\classes started by Diyana in C:\Users\Diyana\Java\LibraryManagement\SFA_Projects\TrippyApplication)
+""27-04-2023 14:23:49 [main] INFO  com.diyanamancheva.TrippyApplication.logStartupProfileInfo - The following 1 profile is active: "postgre"
+""27-04-2023 14:23:51 [main] INFO  com.diyanamancheva.TrippyApplication.logStarted - Started TrippyApplication in 2.276 seconds (JVM running for 2.647)
 "
