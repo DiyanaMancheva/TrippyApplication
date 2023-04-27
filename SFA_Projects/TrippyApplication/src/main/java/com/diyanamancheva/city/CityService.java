@@ -22,4 +22,10 @@ public class CityService {
 
     return cityDtos;
   }
+
+  public City getCityById(int id){
+    City city = cityAccessor.readCityById(id);
+
+    return  city;
+  }
 }
