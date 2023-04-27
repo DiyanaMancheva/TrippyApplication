@@ -48,7 +48,7 @@ public class UserAccessor {
     return users;
   }
 
-  public User readUsersById(int id){
+  public User readUserById(int id){
     ResultSet resultSet;
     List<User> users;
 
