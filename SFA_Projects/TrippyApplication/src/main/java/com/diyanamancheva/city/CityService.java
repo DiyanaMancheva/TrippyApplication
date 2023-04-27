@@ -22,4 +22,35 @@ public class CityService {
 
     return cityDtos;
   }
+
+  public City getCityById(int id){
+    City city = cityAccessor.readCityById(id);
+
+    return  city;
+  }
+
+  public City addCity(String name){
+    City cityNew = new City(name);
+    City city = cityAccessor.addCity(cityNew);
+
+    return city;
+  }
+
+  public CityDto updateCity(int id, CityRequest cityRequest){
+    City city = getCityById(id);
+    City cityNew = new City(id, cityRequest.getName());
+
+    cityAccessor.updateCity(cityNew);
+
+    CityDto cityDto = new CityDto(city.getId(), city.getName());
+    return cityDto;
+  }
+
+  public CityDto deleteCity(int id){
+    City city = getCityById(id);
+    cityAccessor.deleteCity(id);
+    CityDto cityDto = new CityDto(city.getId(), city.getName());
+
+    return cityDto;
+  }
 }
