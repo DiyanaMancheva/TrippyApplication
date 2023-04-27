@@ -1,5 +1,6 @@
 package com.diyanamancheva.city;
 
+import com.diyanamancheva.exception.DatabaseConnectivityException;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
@@ -20,7 +21,7 @@ public class CityMapper {
         cities.add(city);
       }
     }catch (SQLException e){
-      throw new RuntimeException(e);
+      throw new DatabaseConnectivityException(e);
     }
 
     return cities;
