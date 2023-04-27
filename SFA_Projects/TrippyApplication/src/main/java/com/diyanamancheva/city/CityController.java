@@ -4,8 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -30,5 +35,14 @@ public class CityController {
     CityDto cityDto = new CityDto(city.getId(), city.getName());
 
     return ResponseEntity.ok(cityDto);
+  }
+
+  @PostMapping("/cities")
+  public ResponseEntity<Void> createCity(@RequestBody @Valid CityRequest cityRequest){
+    City city = cityService.addCity(cityRequest.getName());
+    URI location = UriComponentsBuilder.fromUriString("/cities/{id}")
+                                       .buildAndExpand(city.getId()).toUri();
+
+    return ResponseEntity.created(location).build();
   }
 }

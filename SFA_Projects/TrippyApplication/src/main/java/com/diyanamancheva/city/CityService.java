@@ -28,4 +28,11 @@ public class CityService {
 
     return  city;
   }
+
+  public City addCity(String name){
+    City cityNew = new City(name);
+    City city = cityAccessor.addCity(cityNew);
+
+    return city;
+  }
 }

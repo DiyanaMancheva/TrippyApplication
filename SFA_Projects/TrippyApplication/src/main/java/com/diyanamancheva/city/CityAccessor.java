@@ -78,4 +78,37 @@ public class CityAccessor {
     return cities.get(0);
   }
 
+  public City addCity(City city){
+    ResultSet resultSet;
+    int cityId;
+
+    String insertSQL = "INSERT INTO cities(city_name) VALUES (?)";
+
+    try (Connection connection = dataSource.getConnection();
+    PreparedStatement preparedStatement = connection.prepareStatement(insertSQL,
+                                                                      Statement.RETURN_GENERATED_KEYS )) {
+
+      preparedStatement.setString(1, city.getName());
+
+      log.debug("Trying to persist a new city");
+      preparedStatement.executeUpdate();
+
+      resultSet = preparedStatement.getGeneratedKeys();
+
+      if (resultSet.next()){
+        cityId = resultSet.getInt(1);
+      } else {
+        log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+        throw new SQLException("Id was not retrieved from inserted city.");
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+
+    city.setId(cityId);
+
+    log.info(String.format("City with id %d successfully persisted", cityId));
+    return city;
+  }
 }
