@@ -35,4 +35,14 @@ public class CityService {
 
     return city;
   }
+
+  public CityDto updateCity(int id, CityRequest cityRequest){
+    City city = getCityById(id);
+    City cityNew = new City(id, cityRequest.getName());
+
+    cityAccessor.updateCity(cityNew);
+
+    CityDto cityDto = new CityDto(cityNew.getId(), cityNew.getName());
+    return cityDto;
+  }
 }

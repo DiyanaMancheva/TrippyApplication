@@ -111,4 +111,20 @@ public class CityAccessor {
     log.info(String.format("City with id %d successfully persisted", cityId));
     return city;
   }
+
+  public int updateCity(City city){
+    String updateSQL = "UPDATE cities SET city_name = ? WHERE city_id = ?";
+
+    try (Connection connection = dataSource.getConnection();
+    PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+
+      preparedStatement.setString(1, city.getName());
+      preparedStatement.setInt(2, city.getId());
+
+      return preparedStatement.executeUpdate();
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+  }
 }
