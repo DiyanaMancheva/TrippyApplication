@@ -42,7 +42,15 @@ public class CityService {
 
     cityAccessor.updateCity(cityNew);
 
-    CityDto cityDto = new CityDto(cityNew.getId(), cityNew.getName());
+    CityDto cityDto = new CityDto(city.getId(), city.getName());
+    return cityDto;
+  }
+
+  public CityDto deleteCity(int id){
+    City city = getCityById(id);
+    cityAccessor.deleteCity(id);
+    CityDto cityDto = new CityDto(city.getId(), city.getName());
+
     return cityDto;
   }
 }

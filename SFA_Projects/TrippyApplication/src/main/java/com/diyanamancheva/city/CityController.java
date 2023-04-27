@@ -2,6 +2,7 @@ package com.diyanamancheva.city;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +54,18 @@ public class CityController {
                                             @PathVariable int id,
                                             @RequestParam(required = false) boolean returnOld){
     CityDto cityDto = cityService.updateCity(id, cityRequest);
+
+    if(returnOld){
+      return ResponseEntity.ok(cityDto);
+    } else {
+      return ResponseEntity.noContent().build();
+    }
+  }
+
+  @DeleteMapping("/cities/{id}")
+  public ResponseEntity<CityDto> deleteCity(@PathVariable int id,
+                                            @RequestParam(required = false) boolean returnOld){
+    CityDto cityDto = cityService.deleteCity(id);
 
     if(returnOld){
       return ResponseEntity.ok(cityDto);
