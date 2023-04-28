@@ -3,6 +3,7 @@ package com.diyanamancheva.user;
 import com.diyanamancheva.exception.DatabaseConnectivityException;
 import com.diyanamancheva.exception.EntityNotFoundException;
 import com.diyanamancheva.exception.IdNotUniqueException;
+import com.diyanamancheva.review.Review;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -76,5 +78,42 @@ public class UserAccessor {
     }
 
     return users.get(0);
+  }
+
+  public User addUser(User user){
+    ResultSet resultSet;
+    int userId;
+
+    String insertSQL = "INSERT INTO user(username, city_id, email, joindate) VALUES (?,?,?,?)";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(insertSQL,
+                                                                           Statement.RETURN_GENERATED_KEYS )) {
+
+      preparedStatement.setString(1, user.getUsername());
+      preparedStatement.setInt(2, user.getCity().getId());
+      preparedStatement.setString(3, user.getEmail());
+      preparedStatement.setDate(4, Date.valueOf(user.getJoinDate().toString()));
+
+      log.debug("Trying to persist a new user");
+      preparedStatement.executeUpdate();
+
+      resultSet = preparedStatement.getGeneratedKeys();
+
+      if (resultSet.next()){
+        userId = resultSet.getInt(1);
+      } else {
+        log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+        throw new SQLException("Id was not retrieved from inserted user.");
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+
+    user.setId(userId);
+
+    log.info(String.format("User with id %d successfully persisted", userId));
+    return user;
   }
 }
