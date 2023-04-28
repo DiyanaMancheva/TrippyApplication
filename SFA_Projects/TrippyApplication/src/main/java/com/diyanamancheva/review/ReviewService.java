@@ -40,12 +40,14 @@ public class ReviewService {
     return review;
   }
 
-  public void addReview(int userId, int venueId, LocalDate creationDate,
+  public Review addReview(int userId, int venueId, LocalDate creationDate,
                         float rating, String text) {
     User user = userService.getUserById(userId);
     Venue venue = venueService.getVenueById(venueId);
 
     Review review = new Review(user, venue, creationDate, rating, text);
     reviewAccessor.addReview(review);
+
+    return review;
   }
 }

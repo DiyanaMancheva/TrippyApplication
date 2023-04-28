@@ -10,7 +10,7 @@ public class ReviewRequest {
   @Positive(message = "VenueId must be greater than 0")
   private int venueId;
   private LocalDate creationDate;
-  @Pattern(regexp = "[0-5](1)", message = "Rating must not be between 0 and 5")
+  //@Pattern(regexp = "[0-5]([.][0-9]*)?|[.][0-9]+", message = "Rating must be between 0 and 5")
   private float rating;
   private String text;
 
