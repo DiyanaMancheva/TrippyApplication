@@ -54,7 +54,7 @@ public class UserController {
   }
 
   @PutMapping("/users/{id}")
-  public ResponseEntity<UserDto> updateUser (@RequestBody @Valid UserRequest userRequest,
+  public ResponseEntity<UserDto> updateUser (@RequestBody @Valid UserUpdateRequest userRequest,
                                                  @PathVariable int id,
                                                  @RequestParam(required = false) boolean returnOld){
 

@@ -46,18 +46,18 @@ public class UserService {
       return user;
   }
 
-  public UserDto updateUser(int id, UserRequest userRequest){
+  public UserDto updateUser(int id, UserUpdateRequest userRequest){
     userAccessor.readUsersByUsernameAndEmail(userRequest.getUsername(), userRequest.getEmail());
     User user = getUserById(id);
-    City city = cityService.getCityById(userRequest.getCityId());
+    City city = cityService.getCityById(userRequest.getCity());
 
     User userNew = new User(id, userRequest.getUsername(),
-                            city, userRequest.getEmail(), userRequest.getJoinDate());
+                            city, userRequest.getEmail(), user.getJoinDate());
 
     userAccessor.updateUser(userNew);
 
-    UserDto userDto = new UserDto(user.getId(), user.getUsername(),
-                                  user.getCity(), user.getEmail(), user.getJoinDate());
+    UserDto userDto = new UserDto(user.getId(), userNew.getUsername(),
+                                  userNew.getCity(), userNew.getEmail(), user.getJoinDate());
 
     return userDto;
   }
