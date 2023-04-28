@@ -40,6 +40,7 @@ public class VenueService {
 
   public Venue addVenue(String name, int typeId, int cityId,
                           String address, float rating, int reviews) {
+    venueAccessor.readVenuesByNameAndCity(name, cityId);
     Type type = typeService.getTypeById(typeId);
     City city = cityService.getCityById(cityId);
 

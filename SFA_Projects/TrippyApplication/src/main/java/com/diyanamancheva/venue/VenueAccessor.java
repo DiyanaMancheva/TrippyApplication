@@ -3,6 +3,8 @@ package com.diyanamancheva.venue;
 import com.diyanamancheva.exception.DatabaseConnectivityException;
 import com.diyanamancheva.exception.EntityNotFoundException;
 import com.diyanamancheva.exception.IdNotUniqueException;
+import com.diyanamancheva.exception.UserExistsException;
+import com.diyanamancheva.user.User;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,6 +78,32 @@ public class VenueAccessor {
     }
 
     return venues.get(0);
+  }
+
+  public void readVenuesByNameAndCity(String name, int city){
+    ResultSet resultSet;
+    List<Venue> venues;
+
+    String selectByIdSQL = "SELECT * FROM venues WHERE venue_name = ? AND city_id = ?";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(selectByIdSQL)) {
+
+      preparedStatement.setString(1, name);
+      preparedStatement.setInt(2, city);
+
+      resultSet = preparedStatement.executeQuery();
+
+      venues = venueMapper.mapResultSetToVenues(resultSet);
+
+      if (venues.size() > 0){
+        log.error("Venue with name = " + name + " and city = " + city + " already exists.");
+        throw new UserExistsException("Venue with name = " + name + " and city = " + city + " already exists.");
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
   }
 
   public Venue addVenue(Venue venue){
