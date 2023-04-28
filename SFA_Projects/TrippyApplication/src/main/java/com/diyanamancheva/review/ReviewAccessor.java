@@ -134,4 +134,20 @@ public class ReviewAccessor {
       throw new DatabaseConnectivityException(e);
     }
   }
+
+  public int deleteReview(int id){
+    String deleteSQL = "DELETE FROM reviews WHERE review_id = ?";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+
+      preparedStatement.setInt(1, id);
+
+      return preparedStatement.executeUpdate();
+
+    } catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+  }
 }

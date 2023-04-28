@@ -66,4 +66,13 @@ public class ReviewService {
 
     return reviewDto;
   }
+
+  public ReviewDto deleteReview(int id){
+    Review review = getReviewById(id);
+    reviewAccessor.deleteReview(id);
+    ReviewDto reviewDto = new ReviewDto(review.getId(), review.getUser(), review.getVenue(),
+                                        review.getCreationDate(), review.getRating(), review.getText());
+
+    return reviewDto;
+  }
 }
