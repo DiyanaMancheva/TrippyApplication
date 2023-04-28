@@ -3,6 +3,7 @@ package com.diyanamancheva.venue;
 import com.diyanamancheva.exception.DatabaseConnectivityException;
 import com.diyanamancheva.exception.EntityNotFoundException;
 import com.diyanamancheva.exception.IdNotUniqueException;
+import com.diyanamancheva.exception.UserExistsException;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,5 +77,103 @@ public class VenueAccessor {
     }
 
     return venues.get(0);
+  }
+
+  public void readVenuesByNameAndCity(String name, int city){
+    ResultSet resultSet;
+    List<Venue> venues;
+
+    String selectByIdSQL = "SELECT * FROM venues WHERE venue_name = ? AND city_id = ?";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(selectByIdSQL)) {
+
+      preparedStatement.setString(1, name);
+      preparedStatement.setInt(2, city);
+
+      resultSet = preparedStatement.executeQuery();
+
+      venues = venueMapper.mapResultSetToVenues(resultSet);
+
+      if (venues.size() > 0){
+        log.error("Venue with name = " + name + " and city = " + city + " already exists.");
+        throw new UserExistsException("Venue with name = " + name + " and city = " + city + " already exists.");
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+  }
+
+  public Venue addVenue(Venue venue){
+    ResultSet resultSet;
+    int venueId;
+
+    String insertSQL = "INSERT INTO venues(type_id, city_id, venue_name, address, rating, reviewscount) VALUES (?,?,?,?,?,?)";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(insertSQL,
+                                                                           Statement.RETURN_GENERATED_KEYS )) {
+
+      preparedStatement.setInt(1, venue.getType().getId());
+      preparedStatement.setInt(2, venue.getCity().getId());
+      preparedStatement.setString(3, venue.getName());
+      preparedStatement.setString(4, venue.getAddress());
+      preparedStatement.setFloat(5, venue.getRating());
+      preparedStatement.setInt(6, venue.getReviews());
+
+      log.debug("Trying to persist a new venue");
+      preparedStatement.executeUpdate();
+
+      resultSet = preparedStatement.getGeneratedKeys();
+
+      if (resultSet.next()){
+        venueId = resultSet.getInt(1);
+      } else {
+        log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+        throw new SQLException("Id was not retrieved from inserted venue.");
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+
+    venue.setId(venueId);
+
+    log.info(String.format("Venue with id %d successfully persisted", venueId));
+    return venue;
+  }
+
+  public int updateVenue(Venue venue){
+    String updateSQL = "UPDATE venues SET address = ? WHERE venue_id = ?";
+
+    try(Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)){
+
+      preparedStatement.setString(1, venue.getAddress());
+      preparedStatement.setInt(2, venue.getId());
+
+
+      return  preparedStatement.executeUpdate();
+    }catch(SQLException e){
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+  }
+
+  public int deleteVenue(int id){
+    String deleteSQL = "DELETE FROM venues WHERE venue_id = ?";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+
+      preparedStatement.setInt(1, id);
+
+      return preparedStatement.executeUpdate();
+
+    } catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
   }
 }

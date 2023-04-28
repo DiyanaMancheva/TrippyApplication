@@ -3,6 +3,7 @@ package com.diyanamancheva.user;
 import com.diyanamancheva.exception.DatabaseConnectivityException;
 import com.diyanamancheva.exception.EntityNotFoundException;
 import com.diyanamancheva.exception.IdNotUniqueException;
+import com.diyanamancheva.exception.UserExistsException;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -76,5 +78,103 @@ public class UserAccessor {
     }
 
     return users.get(0);
+  }
+
+  public void readUsersByUsernameAndEmail(String username, String email){
+    ResultSet resultSet;
+    List<User> users;
+
+    String selectByIdSQL = "SELECT * FROM users WHERE username = ? AND email = ?";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(selectByIdSQL)) {
+
+      preparedStatement.setString(1, username);
+      preparedStatement.setString(2, email);
+
+      resultSet = preparedStatement.executeQuery();
+
+      users = userMapper.mapResultSetToUsers(resultSet);
+
+      if (users.size() > 0){
+        log.error("User with username = " + username + " and email = " + email + " already exists.");
+        throw new UserExistsException("User with username = " + username + " and email = " + email + " already exists.");
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+  }
+
+  public User addUser(User user){
+    ResultSet resultSet;
+    int userId;
+
+    String insertSQL = "INSERT INTO users(username, city_id, email, joindate) VALUES (?,?,?,?)";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(insertSQL,
+                                                                           Statement.RETURN_GENERATED_KEYS )) {
+
+      preparedStatement.setString(1, user.getUsername());
+      preparedStatement.setInt(2, user.getCity().getId());
+      preparedStatement.setString(3, user.getEmail());
+      preparedStatement.setDate(4, Date.valueOf(user.getJoinDate().toString()));
+
+      log.debug("Trying to persist a new user");
+      preparedStatement.executeUpdate();
+
+      resultSet = preparedStatement.getGeneratedKeys();
+
+      if (resultSet.next()){
+        userId = resultSet.getInt(1);
+      } else {
+        log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+        throw new SQLException("Id was not retrieved from inserted user.");
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+
+    user.setId(userId);
+
+    log.info(String.format("User with id %d successfully persisted", userId));
+    return user;
+  }
+
+  public int updateUser(User user){
+    String updateSQL = "UPDATE users SET username = ?, city_id = ?, email = ? WHERE user_id = ?";
+
+    try(Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)){
+
+      preparedStatement.setString(1, user.getUsername());
+      preparedStatement.setInt(2, user.getCity().getId());
+      preparedStatement.setString(3, user.getEmail());
+      preparedStatement.setInt(4, user.getId());
+
+
+      return  preparedStatement.executeUpdate();
+    }catch(SQLException e){
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+  }
+
+  public int deleteUser(int id){
+    String deleteSQL = "DELETE FROM users WHERE user_id = ?";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+
+      preparedStatement.setInt(1, id);
+
+      return preparedStatement.executeUpdate();
+
+    } catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
   }
 }
