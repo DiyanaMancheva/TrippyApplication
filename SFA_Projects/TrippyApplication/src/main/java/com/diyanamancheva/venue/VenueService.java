@@ -49,4 +49,19 @@ public class VenueService {
 
     return venue;
   }
+
+  public VenueDto updateVenue(int id, VenueUpdateRequest venueRequest){
+    //venueAccessor.readVenuesByNameAndCity(venueRequest.getName(), venueRequest.getCity());
+    Venue venue = getVenueById(id);
+
+    Venue venueNew = new Venue(id, venue.getName(), venue.getType(),
+                            venue.getCity(), venueRequest.getAddress(), venue.getRating(), venue.getReviews());
+
+    venueAccessor.updateVenue(venueNew);
+
+    VenueDto venueDto = new VenueDto(venue.getId(), venue.getName(), venue.getType(),
+                                  venue.getCity(), venueNew.getAddress(), venue.getRating(), venue.getReviews());
+
+    return venueDto;
+  }
 }

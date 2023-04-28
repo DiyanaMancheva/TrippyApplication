@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -47,5 +49,18 @@ public class VenueController {
                                        .buildAndExpand(venue.getId()).toUri();
 
     return ResponseEntity.created(location).build();
+  }
+
+  @PutMapping("/venues/{id}")
+  public ResponseEntity<VenueDto> updateVenue (@RequestBody @Valid VenueUpdateRequest venueRequest,
+                                             @PathVariable int id,
+                                             @RequestParam(required = false) boolean returnOld){
+
+    VenueDto venueDto = venueService.updateVenue(id, venueRequest);
+    if (returnOld){
+      return ResponseEntity.ok(venueDto);
+    }else{
+      return ResponseEntity.noContent().build();
+    }
   }
 }

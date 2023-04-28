@@ -4,7 +4,6 @@ import com.diyanamancheva.exception.DatabaseConnectivityException;
 import com.diyanamancheva.exception.EntityNotFoundException;
 import com.diyanamancheva.exception.IdNotUniqueException;
 import com.diyanamancheva.exception.UserExistsException;
-import com.diyanamancheva.user.User;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -143,5 +142,22 @@ public class VenueAccessor {
 
     log.info(String.format("Venue with id %d successfully persisted", venueId));
     return venue;
+  }
+
+  public int updateVenue(Venue venue){
+    String updateSQL = "UPDATE venues SET address = ? WHERE venue_id = ?";
+
+    try(Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)){
+
+      preparedStatement.setString(1, venue.getAddress());
+      preparedStatement.setInt(2, venue.getId());
+
+
+      return  preparedStatement.executeUpdate();
+    }catch(SQLException e){
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
   }
 }
