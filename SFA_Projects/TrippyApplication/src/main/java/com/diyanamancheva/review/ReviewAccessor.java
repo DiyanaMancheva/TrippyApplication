@@ -116,4 +116,22 @@ public class ReviewAccessor {
     log.info(String.format("Review with id %d successfully persisted", reviewId));
     return review;
   }
+
+  public int updateReview(Review review){
+    String updateSQL = "UPDATE reviews SET rating = ?, text = ? WHERE review_id = ?";
+
+    try(Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)){
+
+      preparedStatement.setFloat(1, review.getRating());
+      preparedStatement.setString(2, review.getText());
+      preparedStatement.setInt(3, review.getId());
+
+
+      return  preparedStatement.executeUpdate();
+    }catch(SQLException e){
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+  }
 }
