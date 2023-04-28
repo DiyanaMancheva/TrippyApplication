@@ -61,4 +61,12 @@ public class UserService {
 
     return userDto;
   }
+
+  public UserDto deleteUser(int id){
+    User user = getUserById(id);
+    userAccessor.deleteUser(id);
+    UserDto userDto = new UserDto(user.getId(), user.getUsername(), user.getCity(),
+                                  user.getEmail(), user.getJoinDate());
+    return userDto;
+  }
 }
