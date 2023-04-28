@@ -64,4 +64,12 @@ public class VenueService {
 
     return venueDto;
   }
+
+  public VenueDto deleteVenue(int id){
+    Venue venue = getVenueById(id);
+    venueAccessor.deleteVenue(id);
+    VenueDto venueDto = new VenueDto(venue.getId(), venue.getName(), venue.getType(),
+                                     venue.getCity(), venue.getAddress(), venue.getRating(), venue.getReviews());
+    return venueDto;
+  }
 }

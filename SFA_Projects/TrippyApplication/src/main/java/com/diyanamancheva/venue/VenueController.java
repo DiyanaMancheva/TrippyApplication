@@ -1,7 +1,9 @@
 package com.diyanamancheva.venue;
 
+import com.diyanamancheva.user.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +62,18 @@ public class VenueController {
     if (returnOld){
       return ResponseEntity.ok(venueDto);
     }else{
+      return ResponseEntity.noContent().build();
+    }
+  }
+
+  @DeleteMapping("/venues/{id}")
+  public ResponseEntity<VenueDto> deleteVenue(@PathVariable int id,
+                                            @RequestParam(required = false) boolean returnOld){
+    VenueDto venueDto = venueService.deleteVenue(id);
+
+    if(returnOld){
+      return ResponseEntity.ok(venueDto);
+    } else {
       return ResponseEntity.noContent().build();
     }
   }
