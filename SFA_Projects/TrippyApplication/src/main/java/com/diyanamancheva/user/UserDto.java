@@ -14,7 +14,6 @@ public class UserDto {
   private City city;
   private String email;
   private LocalDate joinDate;
-  private List<Review> reviews;
 
   public UserDto(int id, String username, City city,
                  String email, LocalDate joinDate){
@@ -23,7 +22,6 @@ public class UserDto {
     this.city = city;
     this.email = email;
     this.joinDate = joinDate;
-    this.reviews = new ArrayList<>();
   }
 
   public int getId() {
@@ -64,13 +62,5 @@ public class UserDto {
 
   public void setJoinDate(LocalDate joinDate) {
     this.joinDate = joinDate;
-  }
-
-  public List<Review> getReviews() {
-    return reviews;
-  }
-
-  public void setReviews(List<Review> reviews) {
-    this.reviews = reviews;
   }
 }
