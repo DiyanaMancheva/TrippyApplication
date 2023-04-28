@@ -47,6 +47,7 @@ public class UserService {
   }
 
   public UserDto updateUser(int id, UserRequest userRequest){
+    userAccessor.readUsersByUsernameAndEmail(userRequest.getUsername(), userRequest.getEmail());
     User user = getUserById(id);
     City city = cityService.getCityById(userRequest.getCityId());
 
