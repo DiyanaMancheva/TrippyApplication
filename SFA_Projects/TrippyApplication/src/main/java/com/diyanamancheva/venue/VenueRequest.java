@@ -24,7 +24,7 @@ public class VenueRequest {
     this.type = type;
     this.city = city;
     this.address = address;
-    this.rating = rating;
+    this.rating = 0.0f;
     this.reviews = 0;
   }
 
