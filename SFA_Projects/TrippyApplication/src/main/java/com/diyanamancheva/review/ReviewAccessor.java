@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -76,5 +77,43 @@ public class ReviewAccessor {
     }
 
     return reviews.get(0);
+  }
+
+  public Review addReview(Review review){
+    ResultSet resultSet;
+    int reviewId;
+
+    String insertSQL = "INSERT INTO reviews(user_id, venue_id, creationdate, rating, text) VALUES (?,?,?,?,?)";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(insertSQL,
+                                                                           Statement.RETURN_GENERATED_KEYS )) {
+
+      preparedStatement.setInt(1, review.getUser().getId());
+      preparedStatement.setInt(2, review.getVenue().getId());
+      preparedStatement.setDate(3, Date.valueOf(review.getCreationDate().toString()));
+      preparedStatement.setFloat(4, review.getRating());
+      preparedStatement.setString(5, review.getText());
+
+      log.debug("Trying to persist a new review");
+      preparedStatement.executeUpdate();
+
+      resultSet = preparedStatement.getGeneratedKeys();
+
+      if (resultSet.next()){
+        reviewId = resultSet.getInt(1);
+      } else {
+        log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+        throw new SQLException("Id was not retrieved from inserted review.");
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+
+    review.setId(reviewId);
+
+    log.info(String.format("Review with id %d successfully persisted", reviewId));
+    return review;
   }
 }
