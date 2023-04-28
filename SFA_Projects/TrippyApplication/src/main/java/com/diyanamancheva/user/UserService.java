@@ -2,6 +2,7 @@ package com.diyanamancheva.user;
 
 import com.diyanamancheva.city.City;
 import com.diyanamancheva.city.CityService;
+import com.diyanamancheva.exception.IdNotUniqueException;
 import com.diyanamancheva.review.Review;
 import com.diyanamancheva.venue.Venue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,12 @@ public class UserService {
 
   public User addUser(String username, int cityId,
                       String email, LocalDate joinDate) {
-    City city = cityService.getCityById(cityId);
+      userAccessor.readUsersByUsernameAndEmail(username, email);
+      City city = cityService.getCityById(cityId);
 
-    User user = new User(username, city, email, joinDate);
-    userAccessor.addUser(user);
+      User user = new User(username, city, email, joinDate);
+      userAccessor.addUser(user);
 
-    return user;
+      return user;
   }
 }

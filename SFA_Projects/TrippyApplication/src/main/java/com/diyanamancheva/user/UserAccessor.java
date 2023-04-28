@@ -3,6 +3,7 @@ package com.diyanamancheva.user;
 import com.diyanamancheva.exception.DatabaseConnectivityException;
 import com.diyanamancheva.exception.EntityNotFoundException;
 import com.diyanamancheva.exception.IdNotUniqueException;
+import com.diyanamancheva.exception.UserExistsException;
 import com.diyanamancheva.review.Review;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
@@ -78,6 +79,32 @@ public class UserAccessor {
     }
 
     return users.get(0);
+  }
+
+  public void readUsersByUsernameAndEmail(String username, String email){
+    ResultSet resultSet;
+    List<User> users;
+
+    String selectByIdSQL = "SELECT * FROM users WHERE username = ? AND email = ?";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(selectByIdSQL)) {
+
+      preparedStatement.setString(1, username);
+      preparedStatement.setString(2, email);
+
+      resultSet = preparedStatement.executeQuery();
+
+      users = userMapper.mapResultSetToUsers(resultSet);
+
+      if (users.size() > 0){
+        log.error("User with username = " + username + " and email = " + email + " already exists.");
+        throw new UserExistsException("User with username = " + username + " and email = " + email + " already exists.");
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
   }
 
   public User addUser(User user){
