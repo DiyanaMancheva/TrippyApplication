@@ -39,11 +39,12 @@ public class VenueMapper {
         String name = venuesResultSet.getString(4);
         String address = venuesResultSet.getString(5);
         float rating = venuesResultSet.getFloat(6);
+        int reviews = venuesResultSet.getInt(7);
 
         Type type = typeService.getTypeById(typeId);
         City city = cityService.getCityById(cityId);
 
-        Venue venue = new Venue(id, name, type, city, address, rating);
+        Venue venue = new Venue(id, name, type, city, address, rating, reviews);
 
         venues.add(venue);
       }
@@ -60,7 +61,8 @@ public class VenueMapper {
 
     for (Venue venue : venues){
       VenueDto venueDto = new VenueDto(venue.getId(), venue.getName(), venue.getType(),
-                                       venue.getCity(), venue.getAddress(), venue.getRating());
+                                       venue.getCity(), venue.getAddress(), venue.getRating(),
+                                       venue.getReviews());
       venueDtos.add(venueDto);
     }
 

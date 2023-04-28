@@ -33,7 +33,7 @@ public class VenueController {
   public ResponseEntity<VenueDto> getVenueById(@PathVariable int id){
     Venue venue = venueService.getVenueById(id);
     VenueDto venueDto = new VenueDto(venue.getId(), venue.getName(), venue.getType(),
-                                     venue.getCity(), venue.getAddress(), venue.getRating());
+                                     venue.getCity(), venue.getAddress(), venue.getRating(), venue.getReviews());
 
     return ResponseEntity.ok(venueDto);
   }
@@ -41,7 +41,7 @@ public class VenueController {
   @PostMapping("/venues")
   public ResponseEntity<Void> createVenue(@RequestBody @Valid VenueRequest venueRequest){
     Venue venue = venueService.addVenue(venueRequest.getName(), venueRequest.getType(), venueRequest.getCity(),
-                                        venueRequest.getAddress(), venueRequest.getRating());
+                                        venueRequest.getAddress(), venueRequest.getRating(), venueRequest.getReviews());
 
     URI location = UriComponentsBuilder.fromUriString("/venues/{id}")
                                        .buildAndExpand(venue.getId()).toUri();

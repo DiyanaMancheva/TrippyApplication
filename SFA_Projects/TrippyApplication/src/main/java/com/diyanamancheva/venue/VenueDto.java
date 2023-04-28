@@ -14,17 +14,17 @@ public class VenueDto {
   private City city;
   private String address;
   private float rating;
-  private List<Review> reviews;
+  private int reviews;
 
   public VenueDto(int id, String name, Type type, City city,
-               String address, float rating){
+               String address, float rating, int reviews){
     this.id = id;
     this.name = name;
     this.type = type;
     this.city = city;
     this.address = address;
-    this.rating = 0.0f;
-    this.reviews = new ArrayList<>();
+    this.rating = rating;
+    this.reviews = reviews;
   }
 
   public int getId() {
@@ -68,15 +68,27 @@ public class VenueDto {
   }
 
   public float getRating() {
-    return this.calculateAverageRating();
+    return rating;
   }
 
-  private float calculateAverageRating() {
-    Float ratingAll = 0.0f;
-    for (Review review : this.reviews){
-      ratingAll += review.getRating();
-    }
-    Float ratingAverage = ratingAll / this.reviews.size();
-    return ratingAverage;
+  public void setRating(float rating) {
+    this.rating = rating;
   }
+
+  public int getReviews() {
+    return reviews;
+  }
+
+  public void setReviews(int reviews) {
+    this.reviews = reviews;
+  }
+
+  //private float calculateAverageRating() {
+  //  Float ratingAll = 0.0f;
+  //  for (Review review : this.reviews){
+  //    ratingAll += review.getRating();
+  //  }
+  //  Float ratingAverage = ratingAll / this.reviews.size();
+  //  return ratingAverage;
+  //}
 }

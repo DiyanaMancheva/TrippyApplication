@@ -14,15 +14,18 @@ public class VenueRequest {
   private String address;
   private float rating;
 
+  private int reviews;
+
   public VenueRequest(){}
 
   public VenueRequest(String name, int type, int city,
-                      String address, float rating){
+                      String address, float rating, int reviews){
     this.name = name;
     this.type = type;
     this.city = city;
     this.address = address;
     this.rating = rating;
+    this.reviews = 0;
   }
 
   public String getName() {
@@ -43,5 +46,9 @@ public class VenueRequest {
 
   public float getRating() {
     return rating;
+  }
+
+  public int getReviews() {
+    return reviews;
   }
 }

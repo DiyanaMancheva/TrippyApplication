@@ -82,7 +82,7 @@ public class VenueAccessor {
     ResultSet resultSet;
     int venueId;
 
-    String insertSQL = "INSERT INTO venues(type_id, city_id, venue_name, address, rating) VALUES (?,?,?,?,?)";
+    String insertSQL = "INSERT INTO venues(type_id, city_id, venue_name, address, rating, reviewscount) VALUES (?,?,?,?,?,?)";
 
     try (Connection connection = dataSource.getConnection();
          PreparedStatement preparedStatement = connection.prepareStatement(insertSQL,
@@ -93,6 +93,7 @@ public class VenueAccessor {
       preparedStatement.setString(3, venue.getName());
       preparedStatement.setString(4, venue.getAddress());
       preparedStatement.setFloat(5, venue.getRating());
+      preparedStatement.setInt(6, venue.getReviews());
 
       log.debug("Trying to persist a new venue");
       preparedStatement.executeUpdate();

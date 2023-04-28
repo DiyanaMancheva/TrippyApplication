@@ -39,11 +39,11 @@ public class VenueService {
   }
 
   public Venue addVenue(String name, int typeId, int cityId,
-                          String address, float rating) {
+                          String address, float rating, int reviews) {
     Type type = typeService.getTypeById(typeId);
     City city = cityService.getCityById(cityId);
 
-    Venue venue = new Venue(name, type, city, address, rating);
+    Venue venue = new Venue(name, type, city, address, rating, reviews);
     venueAccessor.addVenue(venue);
 
     return venue;
