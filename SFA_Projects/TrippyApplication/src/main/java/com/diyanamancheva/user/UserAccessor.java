@@ -84,7 +84,7 @@ public class UserAccessor {
     ResultSet resultSet;
     int userId;
 
-    String insertSQL = "INSERT INTO user(username, city_id, email, joindate) VALUES (?,?,?,?)";
+    String insertSQL = "INSERT INTO users(username, city_id, email, joindate) VALUES (?,?,?,?)";
 
     try (Connection connection = dataSource.getConnection();
          PreparedStatement preparedStatement = connection.prepareStatement(insertSQL,
