@@ -1,18 +1,19 @@
 package com.diyanamancheva.review;
 
+import com.diyanamancheva.user.User;
 import com.diyanamancheva.venue.Venue;
 
 import java.time.LocalDate;
 
 public class ReviewDto {
   private int id;
-  private String user;
+  private User user;
   private Venue venue;
   private LocalDate creationDate;
   private float rating;
   private String text;
 
-  public ReviewDto(int id, String user, Venue venue,
+  public ReviewDto(int id, User user, Venue venue,
                    LocalDate creationDate, float rating, String text){
     this.id = id;
     this.user = user;
@@ -30,11 +31,11 @@ public class ReviewDto {
     this.id = id;
   }
 
-  public String getUser() {
+  public User getUser() {
     return user;
   }
 
-  public void setUser(String user) {
+  public void setUser(User user) {
     this.user = user;
   }
 
