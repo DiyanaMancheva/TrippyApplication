@@ -50,4 +50,20 @@ public class ReviewService {
 
     return review;
   }
+
+  public ReviewDto updateReview(int id, ReviewRequest reviewRequest){
+    Review review = getReviewById(id);
+    User user = userService.getUserById(reviewRequest.getUserId());
+    Venue venue = venueService.getVenueById(reviewRequest.getVenueId());
+
+    Review reviewNew = new Review(id, user, venue, reviewRequest.getCreationDate(),
+                                  reviewRequest.getRating(), reviewRequest.getText());
+
+    reviewAccessor.updateReview(reviewNew);
+
+    ReviewDto reviewDto = new ReviewDto(review.getId(), review.getUser(), review.getVenue(),
+                                        review.getCreationDate(), review.getRating(), review.getText());
+
+    return reviewDto;
+  }
 }
