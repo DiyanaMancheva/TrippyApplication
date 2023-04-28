@@ -77,4 +77,42 @@ public class VenueAccessor {
 
     return venues.get(0);
   }
+
+  public Venue addVenue(Venue venue){
+    ResultSet resultSet;
+    int venueId;
+
+    String insertSQL = "INSERT INTO venues(type_id, city_id, venue_name, address, rating) VALUES (?,?,?,?,?)";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(insertSQL,
+                                                                           Statement.RETURN_GENERATED_KEYS )) {
+
+      preparedStatement.setInt(1, venue.getType().getId());
+      preparedStatement.setInt(2, venue.getCity().getId());
+      preparedStatement.setString(3, venue.getName());
+      preparedStatement.setString(4, venue.getAddress());
+      preparedStatement.setFloat(5, venue.getRating());
+
+      log.debug("Trying to persist a new venue");
+      preparedStatement.executeUpdate();
+
+      resultSet = preparedStatement.getGeneratedKeys();
+
+      if (resultSet.next()){
+        venueId = resultSet.getInt(1);
+      } else {
+        log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+        throw new SQLException("Id was not retrieved from inserted venue.");
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+
+    venue.setId(venueId);
+
+    log.info(String.format("Venue with id %d successfully persisted", venueId));
+    return venue;
+  }
 }

@@ -1,33 +1,47 @@
 package com.diyanamancheva.venue;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 
 public class VenueRequest {
   @NotNull(message = "Name must not be null")
-  String name;
-  @Pattern(regexp = "^[a-zA-Z]+$", message = "Type must not be null or contain numbers")
-  String type;
-  @Pattern(regexp = "^[a-zA-Z]+.+(?:[\\s-][a-zA-Z]+)*$", message = "City name must not be null or contain numbers")
-  String city;
+  private String name;
+  @Positive(message = "VenueId must be greater than 0")
+  private int type;
+  @Positive(message = "VenueId must be greater than 0")
+  private int city;
   @NotNull(message = "Address must not be null")
-  String address;
+  private String address;
+  private float rating;
 
   public VenueRequest(){}
+
+  public VenueRequest(String name, int type, int city,
+                      String address, float rating){
+    this.name = name;
+    this.type = type;
+    this.city = city;
+    this.address = address;
+    this.rating = rating;
+  }
 
   public String getName() {
     return name;
   }
 
-  public String getType() {
+  public int getType() {
     return type;
   }
 
-  public String getCity() {
+  public int getCity() {
     return city;
   }
 
   public String getAddress() {
     return address;
+  }
+
+  public float getRating() {
+    return rating;
   }
 }
