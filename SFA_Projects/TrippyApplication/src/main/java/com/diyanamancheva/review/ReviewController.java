@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -48,5 +50,18 @@ public class ReviewController {
                                        .buildAndExpand(review.getId()).toUri();
 
     return ResponseEntity.created(location).build();
+  }
+
+  @PutMapping("/reviews/{id}")
+  public ResponseEntity<ReviewDto> updateReview (@RequestBody @Valid ReviewRequest reviewRequest,
+                                                 @PathVariable int id,
+                                                 @RequestParam(required = false) boolean returnOld){
+
+    ReviewDto reviewDto = reviewService.updateReview(id, reviewRequest);
+    if (returnOld){
+      return ResponseEntity.ok(reviewDto);
+    }else{
+      return ResponseEntity.noContent().build();
+    }
   }
 }
