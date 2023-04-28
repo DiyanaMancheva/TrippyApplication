@@ -1,13 +1,13 @@
 package com.diyanamancheva.user;
 
-import com.diyanamancheva.review.Review;
-import com.diyanamancheva.review.ReviewRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -50,5 +50,18 @@ public class UserController {
                                        .buildAndExpand(user.getId()).toUri();
 
     return ResponseEntity.created(location).build();
+  }
+
+  @PutMapping("/users/{id}")
+  public ResponseEntity<UserDto> updateUser (@RequestBody @Valid UserRequest userRequest,
+                                                 @PathVariable int id,
+                                                 @RequestParam(required = false) boolean returnOld){
+
+    UserDto userDto = userService.updateUser(id, userRequest);
+    if (returnOld){
+      return ResponseEntity.ok(userDto);
+    }else{
+      return ResponseEntity.noContent().build();
+    }
   }
 }

@@ -2,9 +2,6 @@ package com.diyanamancheva.user;
 
 import com.diyanamancheva.city.City;
 import com.diyanamancheva.city.CityService;
-import com.diyanamancheva.exception.IdNotUniqueException;
-import com.diyanamancheva.review.Review;
-import com.diyanamancheva.venue.Venue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +44,20 @@ public class UserService {
       userAccessor.addUser(user);
 
       return user;
+  }
+
+  public UserDto updateUser(int id, UserRequest userRequest){
+    User user = getUserById(id);
+    City city = cityService.getCityById(userRequest.getCityId());
+
+    User userNew = new User(id, userRequest.getUsername(),
+                            city, userRequest.getEmail(), userRequest.getJoinDate());
+
+    userAccessor.updateUser(userNew);
+
+    UserDto userDto = new UserDto(user.getId(), user.getUsername(),
+                                  user.getCity(), user.getEmail(), user.getJoinDate());
+
+    return userDto;
   }
 }

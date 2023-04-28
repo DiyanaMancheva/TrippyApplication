@@ -4,7 +4,6 @@ import com.diyanamancheva.exception.DatabaseConnectivityException;
 import com.diyanamancheva.exception.EntityNotFoundException;
 import com.diyanamancheva.exception.IdNotUniqueException;
 import com.diyanamancheva.exception.UserExistsException;
-import com.diyanamancheva.review.Review;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -142,5 +141,24 @@ public class UserAccessor {
 
     log.info(String.format("User with id %d successfully persisted", userId));
     return user;
+  }
+
+  public int updateUser(User user){
+    String updateSQL = "UPDATE users SET username = ?, city_id = ?, email = ? WHERE user_id = ?";
+
+    try(Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)){
+
+      preparedStatement.setString(1, user.getUsername());
+      preparedStatement.setInt(2, user.getCity().getId());
+      preparedStatement.setString(3, user.getEmail());
+      preparedStatement.setInt(4, user.getId());
+
+
+      return  preparedStatement.executeUpdate();
+    }catch(SQLException e){
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
   }
 }
