@@ -45,6 +45,13 @@ public class VenueService {
     return  venues;
   }
 
+  public List<Venue> getVenuesByCity(int cityId){
+    City city = cityService.getCityById(cityId);
+    List<Venue> venues = venueAccessor.readVenuesByCity(cityId);
+
+    return  venues;
+  }
+
   public Venue addVenue(String name, int typeId, int cityId,
                           String address, float rating, int reviews) {
     venueAccessor.readVenuesByNameAndCity(name, cityId);

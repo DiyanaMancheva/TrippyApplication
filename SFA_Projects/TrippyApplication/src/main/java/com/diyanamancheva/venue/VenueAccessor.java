@@ -106,6 +106,33 @@ public class VenueAccessor {
     return venues;
   }
 
+  public List<Venue> readVenuesByCity(int cityId){
+    ResultSet resultSet;
+    List<Venue> venues;
+
+    String selectByCityIdSQL = "SELECT * FROM venues WHERE city_id = ?";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(selectByCityIdSQL)) {
+
+      preparedStatement.setInt(1, cityId);
+
+      resultSet = preparedStatement.executeQuery();
+
+      venues = venueMapper.mapResultSetToVenues(resultSet);
+
+      if (venues.size() == 0) {
+        log.info(String.format("No venues with city id %d found", cityId));
+        throw new EntityNotFoundException(String.format("No venues with city id %d found", cityId));
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+
+    return venues;
+  }
+
   public void readVenuesByNameAndCity(String name, int city){
     ResultSet resultSet;
     List<Venue> venues;

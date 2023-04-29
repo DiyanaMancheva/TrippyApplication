@@ -57,6 +57,20 @@ public class VenueController {
     return ResponseEntity.ok(venueByTypeDtos);
   }
 
+  @GetMapping("/cities/{cityId}/venues")
+  public ResponseEntity<List<VenueByCityDto>> getVenuesByCity(@PathVariable int cityId){
+    List<Venue> venues = venueService.getVenuesByCity(cityId);
+    List<VenueByCityDto> venueByCityDtos = new ArrayList<>();
+
+    for(Venue venue : venues){
+      VenueByCityDto venueByCityDto = new VenueByCityDto(venue.getId(), venue.getName(), venue.getType().getName(),
+                                                         venue.getAddress(), venue.getRating(), venue.getReviews());
+      venueByCityDtos.add(venueByCityDto);
+    }
+
+    return ResponseEntity.ok(venueByCityDtos);
+  }
+
   @PostMapping("/venues")
   public ResponseEntity<Void> createVenue(@RequestBody @Valid VenueRequest venueRequest){
     Venue venue = venueService.addVenue(venueRequest.getName(), venueRequest.getType(), venueRequest.getCity(),
