@@ -83,10 +83,10 @@ public class ReviewAccessor {
     ResultSet resultSet;
     List<Review> reviews;
 
-    String selectByIdSQL = "SELECT * FROM reviews WHERE user_id = ?";
+    String selectByUserSQL = "SELECT * FROM reviews WHERE user_id = ?";
 
     try (Connection connection = dataSource.getConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(selectByIdSQL)) {
+         PreparedStatement preparedStatement = connection.prepareStatement(selectByUserSQL)) {
 
       preparedStatement.setInt(1, userId);
 
@@ -110,10 +110,10 @@ public class ReviewAccessor {
     ResultSet resultSet;
     List<Review> reviews;
 
-    String selectByIdSQL = "SELECT * FROM reviews WHERE venue_id = ?";
+    String selectByVenueSQL = "SELECT * FROM reviews WHERE venue_id = ?";
 
     try (Connection connection = dataSource.getConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(selectByIdSQL)) {
+         PreparedStatement preparedStatement = connection.prepareStatement(selectByVenueSQL)) {
 
       preparedStatement.setInt(1, venueId);
 
