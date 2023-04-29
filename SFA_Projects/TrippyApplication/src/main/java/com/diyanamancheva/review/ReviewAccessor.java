@@ -106,6 +106,33 @@ public class ReviewAccessor {
     return reviews;
   }
 
+  public List<Review> readReviewsByVenue(int venueId){
+    ResultSet resultSet;
+    List<Review> reviews;
+
+    String selectByIdSQL = "SELECT * FROM reviews WHERE venue_id = ?";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(selectByIdSQL)) {
+
+      preparedStatement.setInt(1, venueId);
+
+      resultSet = preparedStatement.executeQuery();
+
+      reviews = reviewMapper.mapResultSetToReviews(resultSet);
+
+      if (reviews.size() == 0) {
+        log.info(String.format("No reviews for venue with id %d found", venueId));
+        throw new EntityNotFoundException(String.format("No reviews for venue with id %d found", venueId));
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+
+    return reviews;
+  }
+
   public Review addReview(Review review){
     ResultSet resultSet;
     int reviewId;

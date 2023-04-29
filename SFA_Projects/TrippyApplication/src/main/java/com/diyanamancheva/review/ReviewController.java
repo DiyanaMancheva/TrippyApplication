@@ -55,6 +55,19 @@ public class ReviewController {
     return ResponseEntity.ok(reviewByUserDtos);
   }
 
+  @GetMapping("/venues/{venueId}/reviews")
+  public ResponseEntity<List<ReviewByVenueDto>> getReviewsByVenue(@PathVariable int venueId){
+    List<Review> reviews = reviewService.getReviewsByVenue(venueId);
+    List<ReviewByVenueDto> reviewByVenueDtos = new ArrayList<>();
+    for(Review review : reviews){
+      ReviewByVenueDto reviewByVenueDto = new ReviewByVenueDto(review.getId(), review.getUser().getUsername(),
+                                          review.getCreationDate(), review.getRating(), review.getText());
+      reviewByVenueDtos.add(reviewByVenueDto);
+    }
+
+    return ResponseEntity.ok(reviewByVenueDtos);
+  }
+
   @PostMapping("/reviews")
   public ResponseEntity<Void> createReview(@RequestBody @Valid ReviewRequest reviewRequest){
     Review review = reviewService.addReview(reviewRequest.getUserId(), reviewRequest.getVenueId(),
