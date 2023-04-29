@@ -79,6 +79,33 @@ public class VenueAccessor {
     return venues.get(0);
   }
 
+  public List<Venue> readVenuesByType(int typeId){
+    ResultSet resultSet;
+    List<Venue> venues;
+
+    String selectByTypeIdSQL = "SELECT * FROM venues WHERE type_id = ?";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(selectByTypeIdSQL)) {
+
+      preparedStatement.setInt(1, typeId);
+
+      resultSet = preparedStatement.executeQuery();
+
+      venues = venueMapper.mapResultSetToVenues(resultSet);
+
+      if (venues.size() == 0) {
+        log.info(String.format("No venues with type id %d found", typeId));
+        throw new EntityNotFoundException(String.format("No venues with type id %d found", typeId));
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+
+    return venues;
+  }
+
   public void readVenuesByNameAndCity(String name, int city){
     ResultSet resultSet;
     List<Venue> venues;

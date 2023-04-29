@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -40,6 +41,20 @@ public class VenueController {
                                      venue.getCity(), venue.getAddress(), venue.getRating(), venue.getReviews());
 
     return ResponseEntity.ok(venueDto);
+  }
+
+  @GetMapping("/types/{typeId}/venues")
+  public ResponseEntity<List<VenueByTypeDto>> getVenuesByType(@PathVariable int typeId){
+    List<Venue> venues = venueService.getVenuesByType(typeId);
+    List<VenueByTypeDto> venueByTypeDtos = new ArrayList<>();
+
+    for(Venue venue : venues){
+      VenueByTypeDto venueByTypeDto = new VenueByTypeDto(venue.getId(), venue.getName(), venue.getCity().getName(),
+                                                    venue.getAddress(), venue.getRating(), venue.getReviews());
+      venueByTypeDtos.add(venueByTypeDto);
+    }
+
+    return ResponseEntity.ok(venueByTypeDtos);
   }
 
   @PostMapping("/venues")
