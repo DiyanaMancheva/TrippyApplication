@@ -40,6 +40,13 @@ public class ReviewService {
     return review;
   }
 
+  public List<Review> getReviewsByUser(int userId){
+    User user = userService.getUserById(userId);
+    List<Review> reviews = reviewAccessor.readReviewsByUser(userId);
+
+    return reviews;
+  }
+
   public Review addReview(int userId, int venueId, LocalDate creationDate,
                         float rating, String text) {
     User user = userService.getUserById(userId);

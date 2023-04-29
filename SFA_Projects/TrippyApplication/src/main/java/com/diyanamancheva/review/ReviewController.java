@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,6 +40,19 @@ public class ReviewController {
                                         review.getCreationDate(), review.getRating(), review.getText());
 
     return ResponseEntity.ok(reviewDto);
+  }
+
+  @GetMapping("/users/{userId}/reviews")
+  public ResponseEntity<List<ReviewDto>> getReviewsByUser(@PathVariable int userId){
+    List<Review> reviews = reviewService.getReviewsByUser(userId);
+    List<ReviewDto> reviewDtos = new ArrayList<>();
+    for(Review review : reviews){
+      ReviewDto reviewDto = new ReviewDto(review.getId(), review.getUser(), review.getVenue(),
+                                          review.getCreationDate(), review.getRating(), review.getText());
+      reviewDtos.add(reviewDto);
+    }
+
+    return ResponseEntity.ok(reviewDtos);
   }
 
   @PostMapping("/reviews")

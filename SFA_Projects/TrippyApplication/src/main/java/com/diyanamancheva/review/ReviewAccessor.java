@@ -79,6 +79,33 @@ public class ReviewAccessor {
     return reviews.get(0);
   }
 
+  public List<Review> readReviewsByUser(int userId){
+    ResultSet resultSet;
+    List<Review> reviews;
+
+    String selectByIdSQL = "SELECT * FROM reviews WHERE user_id = ?";
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(selectByIdSQL)) {
+
+      preparedStatement.setInt(1, userId);
+
+      resultSet = preparedStatement.executeQuery();
+
+      reviews = reviewMapper.mapResultSetToReviews(resultSet);
+
+      if (reviews.size() == 0) {
+        log.info(String.format("No reviews for user with id %d found", userId));
+        throw new EntityNotFoundException(String.format("No reviews for user with id %d found", userId));
+      }
+    }catch (SQLException e) {
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+
+    return reviews;
+  }
+
   public Review addReview(Review review){
     ResultSet resultSet;
     int reviewId;
