@@ -43,16 +43,16 @@ public class ReviewController {
   }
 
   @GetMapping("/users/{userId}/reviews")
-  public ResponseEntity<List<ReviewDto>> getReviewsByUser(@PathVariable int userId){
+  public ResponseEntity<List<ReviewByUserDto>> getReviewsByUser(@PathVariable int userId){
     List<Review> reviews = reviewService.getReviewsByUser(userId);
-    List<ReviewDto> reviewDtos = new ArrayList<>();
+    List<ReviewByUserDto> reviewByUserDtos = new ArrayList<>();
     for(Review review : reviews){
-      ReviewDto reviewDto = new ReviewDto(review.getId(), review.getUser(), review.getVenue(),
+      ReviewByUserDto reviewByUserDto = new ReviewByUserDto(review.getId(), review.getVenue().getName(),
                                           review.getCreationDate(), review.getRating(), review.getText());
-      reviewDtos.add(reviewDto);
+      reviewByUserDtos.add(reviewByUserDto);
     }
 
-    return ResponseEntity.ok(reviewDtos);
+    return ResponseEntity.ok(reviewByUserDtos);
   }
 
   @PostMapping("/reviews")
