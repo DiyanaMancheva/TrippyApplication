@@ -40,6 +40,20 @@ public class ReviewService {
     return review;
   }
 
+  public List<Review> getReviewsByUser(int userId){
+    User user = userService.getUserById(userId);
+    List<Review> reviews = reviewAccessor.readReviewsByUser(userId);
+
+    return reviews;
+  }
+
+  public List<Review> getReviewsByVenue(int venueId){
+    Venue venue = venueService.getVenueById(venueId);
+    List<Review> reviews = reviewAccessor.readReviewsByVenue(venueId);
+
+    return reviews;
+  }
+
   public Review addReview(int userId, int venueId, LocalDate creationDate,
                         float rating, String text) {
     User user = userService.getUserById(userId);
@@ -47,7 +61,7 @@ public class ReviewService {
 
     Review review = new Review(user, venue, creationDate, rating, text);
     reviewAccessor.addReview(review);
-
+    venueService.updateVenueRatingAndReviews(venueId, rating);
     return review;
   }
 

@@ -1,26 +1,20 @@
 package com.diyanamancheva.venue;
 
 import com.diyanamancheva.city.City;
-import com.diyanamancheva.review.Review;
 import com.diyanamancheva.type.Type;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class VenueDto {
+public class VenueByTypeDto {
   private int id;
   private String name;
-  private Type type;
-  private City city;
+  private String city;
   private String address;
   private float rating;
   private int reviews;
 
-  public VenueDto(int id, String name, Type type, City city,
-               String address, float rating, int reviews){
+  public VenueByTypeDto(int id, String name, String city,
+                        String address, float rating, int reviews){
     this.id = id;
     this.name = name;
-    this.type = type;
     this.city = city;
     this.address = address;
     this.rating = rating;
@@ -43,19 +37,11 @@ public class VenueDto {
     this.name = name;
   }
 
-  public Type getType() {
-    return type;
-  }
-
-  public void setType(Type type) {
-    this.type = type;
-  }
-
-  public City getCity() {
+  public String getCity() {
     return city;
   }
 
-  public void setCity(City city) {
+  public void setCity(String city) {
     this.city = city;
   }
 

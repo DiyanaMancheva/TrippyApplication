@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,6 +40,32 @@ public class ReviewController {
                                         review.getCreationDate(), review.getRating(), review.getText());
 
     return ResponseEntity.ok(reviewDto);
+  }
+
+  @GetMapping("/users/{userId}/reviews")
+  public ResponseEntity<List<ReviewByUserDto>> getReviewsByUser(@PathVariable int userId){
+    List<Review> reviews = reviewService.getReviewsByUser(userId);
+    List<ReviewByUserDto> reviewByUserDtos = new ArrayList<>();
+    for(Review review : reviews){
+      ReviewByUserDto reviewByUserDto = new ReviewByUserDto(review.getId(), review.getVenue().getName(),
+                                          review.getCreationDate(), review.getRating(), review.getText());
+      reviewByUserDtos.add(reviewByUserDto);
+    }
+
+    return ResponseEntity.ok(reviewByUserDtos);
+  }
+
+  @GetMapping("/venues/{venueId}/reviews")
+  public ResponseEntity<List<ReviewByVenueDto>> getReviewsByVenue(@PathVariable int venueId){
+    List<Review> reviews = reviewService.getReviewsByVenue(venueId);
+    List<ReviewByVenueDto> reviewByVenueDtos = new ArrayList<>();
+    for(Review review : reviews){
+      ReviewByVenueDto reviewByVenueDto = new ReviewByVenueDto(review.getId(), review.getUser().getUsername(),
+                                          review.getCreationDate(), review.getRating(), review.getText());
+      reviewByVenueDtos.add(reviewByVenueDto);
+    }
+
+    return ResponseEntity.ok(reviewByVenueDtos);
   }
 
   @PostMapping("/reviews")

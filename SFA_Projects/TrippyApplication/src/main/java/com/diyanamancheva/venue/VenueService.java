@@ -38,6 +38,20 @@ public class VenueService {
     return  venue;
   }
 
+  public List<Venue> getVenuesByType(int typeId){
+    Type type = typeService.getTypeById(typeId);
+    List<Venue> venues = venueAccessor.readVenuesByType(typeId);
+
+    return  venues;
+  }
+
+  public List<Venue> getVenuesByCity(int cityId){
+    City city = cityService.getCityById(cityId);
+    List<Venue> venues = venueAccessor.readVenuesByCity(cityId);
+
+    return  venues;
+  }
+
   public Venue addVenue(String name, int typeId, int cityId,
                           String address, float rating, int reviews) {
     venueAccessor.readVenuesByNameAndCity(name, cityId);
@@ -51,7 +65,6 @@ public class VenueService {
   }
 
   public VenueDto updateVenue(int id, VenueUpdateRequest venueRequest){
-    //venueAccessor.readVenuesByNameAndCity(venueRequest.getName(), venueRequest.getCity());
     Venue venue = getVenueById(id);
 
     Venue venueNew = new Venue(id, venue.getName(), venue.getType(),
@@ -63,6 +76,19 @@ public class VenueService {
                                   venue.getCity(), venueNew.getAddress(), venue.getRating(), venue.getReviews());
 
     return venueDto;
+  }
+
+  public void updateVenueRatingAndReviews(int id, float rating){
+    Venue venue = getVenueById(id);
+
+    float ratingCurrent = venue.getRating();
+    float ratingNew = (ratingCurrent + rating) / 2.0f;
+    int reviewsCurrent = venue.getReviews();
+    int reviewsNew = reviewsCurrent + 1;
+    Venue venueNew = new Venue(id, venue.getName(), venue.getType(),
+                               venue.getCity(), venue.getAddress(), ratingNew, reviewsNew);
+
+    venueAccessor.updateVenueRatingAndReviews(venueNew);
   }
 
   public VenueDto deleteVenue(int id){
