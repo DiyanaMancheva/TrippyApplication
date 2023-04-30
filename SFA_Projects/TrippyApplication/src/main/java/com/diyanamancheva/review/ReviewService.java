@@ -61,7 +61,7 @@ public class ReviewService {
 
     Review review = new Review(user, venue, creationDate, rating, text);
     reviewAccessor.addReview(review);
-
+    venueService.updateVenueRatingAndReviews(venueId, rating);
     return review;
   }
 

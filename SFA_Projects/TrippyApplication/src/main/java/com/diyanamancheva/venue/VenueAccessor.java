@@ -215,6 +215,24 @@ public class VenueAccessor {
     }
   }
 
+  public int updateVenueRatingAndReviews(Venue venue){
+    String updateRatingReviewsSQL = "UPDATE venues SET rating = ?, reviewscount = ? WHERE venue_id = ?";
+
+    try(Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(updateRatingReviewsSQL)){
+
+      preparedStatement.setFloat(1, venue.getRating());
+      preparedStatement.setInt(2, venue.getReviews());
+      preparedStatement.setInt(3, venue.getId());
+
+
+      return  preparedStatement.executeUpdate();
+    }catch(SQLException e){
+      log.error("Unexpected exception occurred when trying to query database. Rethrowing unchecked exception");
+      throw new DatabaseConnectivityException(e);
+    }
+  }
+
   public int deleteVenue(int id){
     String deleteSQL = "DELETE FROM venues WHERE venue_id = ?";
 

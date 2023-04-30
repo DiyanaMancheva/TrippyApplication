@@ -78,6 +78,19 @@ public class VenueService {
     return venueDto;
   }
 
+  public void updateVenueRatingAndReviews(int id, float rating){
+    Venue venue = getVenueById(id);
+
+    float ratingCurrent = venue.getRating();
+    float ratingNew = (ratingCurrent + rating) / 2.0f;
+    int reviewsCurrent = venue.getReviews();
+    int reviewsNew = reviewsCurrent + 1;
+    Venue venueNew = new Venue(id, venue.getName(), venue.getType(),
+                               venue.getCity(), venue.getAddress(), ratingNew, reviewsNew);
+
+    venueAccessor.updateVenueRatingAndReviews(venueNew);
+  }
+
   public VenueDto deleteVenue(int id){
     Venue venue = getVenueById(id);
     venueAccessor.deleteVenue(id);
