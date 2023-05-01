@@ -87,13 +87,4 @@ public class Venue {
   public void setRating(float rating) {
     this.rating = rating;
   }
-
-  //private float calculateAverageRating() {
-  //  Float ratingAll = 0.0f;
-  //  for (Review review : this.reviews){
-  //    ratingAll += review.getRating();
-  //  }
-  //  Float ratingAverage = ratingAll / this.reviews.size();
-  //  return ratingAverage;
-  //}
 }
