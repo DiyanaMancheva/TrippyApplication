@@ -118,10 +118,7 @@ public class CityControllerTest {
 
   @Test
   public void deleteCity_noResponse_success() throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
-    String json = mapper.writeValueAsString(new CityRequest(CITY_NAME));
-
-    when(cityService.updateCity(eq(CITY_ID), any())).thenReturn(new CityDto(CITY_ID, CITY_NAME));
+    when(cityService.deleteCity(CITY_ID)).thenReturn(new CityDto(CITY_ID, CITY_NAME));
 
     mockMvc.perform(delete("/cities/" + CITY_ID))
            .andExpect(status().isNoContent());
@@ -130,10 +127,12 @@ public class CityControllerTest {
   @Test
   public void deleteCity_requestedResponse_success() throws Exception {
 
-    when(cityService.updateCity(eq(CITY_ID), any())).thenReturn(new CityDto(CITY_ID, CITY_NAME));
+    when(cityService.deleteCity(CITY_ID)).thenReturn(new CityDto(CITY_ID, CITY_NAME));
 
     mockMvc.perform(delete("/cities/" + CITY_ID)
                       .queryParam("returnOld", "true"))
-           .andExpect(status().isOk());
+           .andExpect(status().isOk())
+           .andExpect(jsonPath("$.id").value(CITY_ID))
+           .andExpect(jsonPath("$.name").value(CITY_NAME));
   }
 }
