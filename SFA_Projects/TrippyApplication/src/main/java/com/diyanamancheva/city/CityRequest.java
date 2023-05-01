@@ -8,6 +8,10 @@ public class CityRequest {
 
   public CityRequest(){}
 
+  public CityRequest(String name){
+    this.name = name;
+  }
+
   public String getName() {
     return name;
   }
