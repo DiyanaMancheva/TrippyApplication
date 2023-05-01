@@ -20,8 +20,8 @@ public class CityServiceTest {
   @InjectMocks
   private CityService cityService;
 
-  public static final int CITY_ID = 1;
-  public static final String CITY_NAME = "Test";
+  private static final int CITY_ID = 1;
+  private static final String CITY_NAME = "Test";
 
   @Test
   public void updateCity_success(){

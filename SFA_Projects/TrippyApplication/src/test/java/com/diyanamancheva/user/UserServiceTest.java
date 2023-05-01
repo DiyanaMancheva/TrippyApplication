@@ -23,12 +23,12 @@ public class UserServiceTest {
   @InjectMocks
   private UserService userService;
 
-  public static final int USER_ID = 1;
-  public static final String USERNAME = "Test";
-  public static final int CITY_ID = 1;
-  public static final String CITY_NAME = "TestCity";
-  public static final String EMAIL = "test.test@gmail.com";
-  public static final LocalDate JOINDATE = LocalDate.parse("2023-05-01");
+  private static final int USER_ID = 1;
+  private static final String USERNAME = "Test";
+  private static final int CITY_ID = 1;
+  private static final String CITY_NAME = "TestCity";
+  private static final String EMAIL = "test.test@gmail.com";
+  private static final LocalDate JOINDATE = LocalDate.parse("2023-05-01");
 
   @Test
   public void deleteUser_success() {
