@@ -1,4 +1,0 @@
-"16-05-2023 13:29:18 [main] INFO  com.diyanamancheva.TrippyApplication.logStarting - Starting TrippyApplication using Java 11.0.15 on DESKTOP-2CFGA48 with PID 18584 (C:\Users\Diyana\Java\LibraryManagement\TrippyApplication\target\classes started by Diyana in C:\Users\Diyana\Java\LibraryManagement\TrippyApplication)
-""16-05-2023 13:29:18 [main] INFO  com.diyanamancheva.TrippyApplication.logStartupProfileInfo - The following 1 profile is active: "postgre"
-""16-05-2023 13:29:20 [main] INFO  com.diyanamancheva.TrippyApplication.logStarted - Started TrippyApplication in 2.203 seconds (JVM running for 2.582)
-"
