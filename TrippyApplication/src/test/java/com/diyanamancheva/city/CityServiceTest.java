@@ -1,5 +1,10 @@
 package com.diyanamancheva.city;
 
+import com.diyanamancheva.controller.request.city.CityRequest;
+import com.diyanamancheva.dto.city.CityDto;
+import com.diyanamancheva.model.City;
+import com.diyanamancheva.repository.CityAccessor;
+import com.diyanamancheva.service.CityService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

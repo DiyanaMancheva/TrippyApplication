@@ -1,7 +1,12 @@
 package com.diyanamancheva.venue;
 
-import com.diyanamancheva.city.City;
-import com.diyanamancheva.type.Type;
+import com.diyanamancheva.controller.VenueController;
+import com.diyanamancheva.controller.request.venue.VenueUpdateRequest;
+import com.diyanamancheva.dto.venue.VenueDto;
+import com.diyanamancheva.model.City;
+import com.diyanamancheva.model.Type;
+import com.diyanamancheva.model.Venue;
+import com.diyanamancheva.service.VenueService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -85,7 +90,7 @@ public class VenueControllerTest {
     City cityTest = new City(CITY_ID, CITY_NAME);
     Type typeTest = new Type(TYPE_ID, TYPE_NAME);
     when(venueService.getVenueById(VENUE_ID)).thenReturn(new Venue(VENUE_ID, VENUE_NAME, typeTest, cityTest,
-                                                               ADDRESS, RATING, REVIEWS));
+                                                                   ADDRESS, RATING, REVIEWS));
 
     mockMvc.perform(get("/venues/" + VENUE_ID))
            .andExpect(status().isOk())
@@ -108,7 +113,7 @@ public class VenueControllerTest {
     String json = mapper.writeValueAsString(new VenueUpdateRequest(ADDRESS));
 
     when(venueService.updateVenue(eq(VENUE_ID), any())).thenReturn(new VenueDto(VENUE_ID, VENUE_NAME, typeTest,
-                                                                            cityTest, ADDRESS, RATING, REVIEWS));
+                                                                                cityTest, ADDRESS, RATING, REVIEWS));
 
     mockMvc.perform(put("/venues/" + VENUE_ID)
                       .contentType(MediaType.APPLICATION_JSON)

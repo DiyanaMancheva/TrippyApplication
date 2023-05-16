@@ -1,6 +1,9 @@
 package com.diyanamancheva.user;
 
-import com.diyanamancheva.city.City;
+import com.diyanamancheva.model.City;
+import com.diyanamancheva.model.User;
+import com.diyanamancheva.repository.UserAccessor;
+import com.diyanamancheva.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -9,7 +12,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDate;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

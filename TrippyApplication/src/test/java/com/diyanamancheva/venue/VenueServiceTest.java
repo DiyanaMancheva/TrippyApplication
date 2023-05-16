@@ -1,14 +1,16 @@
 package com.diyanamancheva.venue;
 
-import com.diyanamancheva.city.City;
-import com.diyanamancheva.type.Type;
+import com.diyanamancheva.model.City;
+import com.diyanamancheva.model.Type;
+import com.diyanamancheva.model.Venue;
+import com.diyanamancheva.repository.VenueAccessor;
+import com.diyanamancheva.service.VenueService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

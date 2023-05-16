@@ -1,11 +1,14 @@
 package com.diyanamancheva.review;
 
-import com.diyanamancheva.city.City;
-import com.diyanamancheva.type.Type;
-import com.diyanamancheva.user.User;
-import com.diyanamancheva.venue.Venue;
-import com.diyanamancheva.venue.VenueAccessor;
-import com.diyanamancheva.venue.VenueService;
+import com.diyanamancheva.model.City;
+import com.diyanamancheva.model.Review;
+import com.diyanamancheva.model.Type;
+import com.diyanamancheva.model.User;
+import com.diyanamancheva.model.Venue;
+import com.diyanamancheva.repository.ReviewAccessor;
+import com.diyanamancheva.repository.VenueAccessor;
+import com.diyanamancheva.service.ReviewService;
+import com.diyanamancheva.service.VenueService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

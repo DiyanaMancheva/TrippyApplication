@@ -1,6 +1,11 @@
 package com.diyanamancheva.user;
 
-import com.diyanamancheva.city.City;
+import com.diyanamancheva.controller.UserController;
+import com.diyanamancheva.controller.request.user.UserUpdateRequest;
+import com.diyanamancheva.dto.user.UserDto;
+import com.diyanamancheva.model.City;
+import com.diyanamancheva.model.User;
+import com.diyanamancheva.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;

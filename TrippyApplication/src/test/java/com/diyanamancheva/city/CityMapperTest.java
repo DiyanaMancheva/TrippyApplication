@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
+import com.diyanamancheva.dto.city.CityDto;
+import com.diyanamancheva.dto.mapper.CityMapper;
+import com.diyanamancheva.model.City;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

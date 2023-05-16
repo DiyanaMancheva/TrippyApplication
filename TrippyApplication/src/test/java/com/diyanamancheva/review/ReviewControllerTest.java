@@ -1,9 +1,13 @@
 package com.diyanamancheva.review;
 
-import com.diyanamancheva.city.City;
-import com.diyanamancheva.type.Type;
-import com.diyanamancheva.user.User;
-import com.diyanamancheva.venue.Venue;
+import com.diyanamancheva.dto.review.ReviewDto;
+import com.diyanamancheva.model.City;
+import com.diyanamancheva.controller.ReviewController;
+import com.diyanamancheva.model.Review;
+import com.diyanamancheva.service.ReviewService;
+import com.diyanamancheva.model.Type;
+import com.diyanamancheva.model.User;
+import com.diyanamancheva.model.Venue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,7 +67,7 @@ public class ReviewControllerTest {
     Type typeTest = new Type(TYPE_ID, TYPE_NAME);
     Venue venueTest = new Venue(VENUE_ID, VENUE_NAME, typeTest, cityTest, ADDRESS, RATING, REVIEWS);
     when(reviewService.getAllReviews()).thenReturn(Collections.singletonList(new ReviewDto(REVIEW_ID, userTest, venueTest,
-                                                                                        CREATIONDATE, RATING, TEXT)));
+                                                                                           CREATIONDATE, RATING, TEXT)));
     mockMvc.perform(get("/reviews"))
            .andExpect(status().isOk())
            .andExpect(jsonPath("$[0].id").value(REVIEW_ID))
@@ -95,7 +99,7 @@ public class ReviewControllerTest {
     Type typeTest = new Type(TYPE_ID, TYPE_NAME);
     Venue venueTest = new Venue(VENUE_ID, VENUE_NAME, typeTest, cityTest, ADDRESS, RATING, REVIEWS);
     when(reviewService.getReviewById(REVIEW_ID)).thenReturn(new Review(REVIEW_ID, userTest, venueTest,
-                                                                          CREATIONDATE, RATING, TEXT));
+                                                                       CREATIONDATE, RATING, TEXT));
 
     mockMvc.perform(get("/reviews/" + REVIEW_ID))
            .andExpect(status().isOk())

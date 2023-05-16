@@ -1,6 +1,9 @@
 package com.diyanamancheva.user;
 
-import com.diyanamancheva.city.City;
+import com.diyanamancheva.dto.mapper.UserMapper;
+import com.diyanamancheva.model.City;
+import com.diyanamancheva.dto.user.UserDto;
+import com.diyanamancheva.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,8 +17,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)

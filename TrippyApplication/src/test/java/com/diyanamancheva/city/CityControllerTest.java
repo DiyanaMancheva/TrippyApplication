@@ -1,5 +1,10 @@
 package com.diyanamancheva.city;
 
+import com.diyanamancheva.controller.CityController;
+import com.diyanamancheva.controller.request.city.CityRequest;
+import com.diyanamancheva.dto.city.CityDto;
+import com.diyanamancheva.model.City;
+import com.diyanamancheva.service.CityService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
