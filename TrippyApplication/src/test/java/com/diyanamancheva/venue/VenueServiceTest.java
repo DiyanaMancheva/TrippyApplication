@@ -3,7 +3,7 @@ package com.diyanamancheva.venue;
 import com.diyanamancheva.model.City;
 import com.diyanamancheva.model.Type;
 import com.diyanamancheva.model.Venue;
-import com.diyanamancheva.repository.VenueAccessor;
+import com.diyanamancheva.repository.VenueRepository;
 import com.diyanamancheva.service.VenueService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class VenueServiceTest {
 
   @Mock
-  private VenueAccessor venueAccessor;
+  private VenueRepository venueRepository;
 
   @InjectMocks
   private VenueService venueService;
@@ -42,8 +42,8 @@ public class VenueServiceTest {
                                                                    ADDRESS, RATING, REVIEWS));
     venueService.deleteVenue(VENUE_ID);
 
-    verify(venueAccessor, times(1)).readVenueById(VENUE_ID);
-    verify(venueAccessor, times(1)).deleteVenue(VENUE_ID);
+    verify(venueRepository, times(1)).readVenueById(VENUE_ID);
+    verify(venueRepository, times(1)).deleteVenue(VENUE_ID);
   }
 
 }

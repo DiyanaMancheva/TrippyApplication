@@ -3,7 +3,7 @@ package com.diyanamancheva.city;
 import com.diyanamancheva.controller.request.city.CityRequest;
 import com.diyanamancheva.dto.city.CityDto;
 import com.diyanamancheva.model.City;
-import com.diyanamancheva.repository.CityAccessor;
+import com.diyanamancheva.repository.CityRepository;
 import com.diyanamancheva.service.CityService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 public class CityServiceTest {
 
   @Mock
-  private CityAccessor cityAccessor;
+  private CityRepository cityRepository;
 
   @InjectMocks
   private CityService cityService;
@@ -35,7 +35,7 @@ public class CityServiceTest {
 
     CityDto result = cityService.updateCity(CITY_ID, cityRequest);
 
-    verify(cityAccessor, times(1)).readCityById(CITY_ID);
+    verify(cityRepository, times(1)).readCityById(CITY_ID);
     assertEquals(CITY_NAME, result.getName());
   }
 
@@ -45,8 +45,8 @@ public class CityServiceTest {
 
     cityService.deleteCity(CITY_ID);
 
-    verify(cityAccessor, times(1)).readCityById(CITY_ID);
-    verify(cityAccessor, times(1)).deleteCity(CITY_ID);
+    verify(cityRepository, times(1)).readCityById(CITY_ID);
+    verify(cityRepository, times(1)).deleteCity(CITY_ID);
   }
 
 }

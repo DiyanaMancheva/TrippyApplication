@@ -48,7 +48,7 @@ public class CityController {
 
   @PostMapping("/cities")
   public ResponseEntity<Void> createCity(@RequestBody @Valid CityRequest cityRequest){
-    City city = cityService.addCity(cityRequest.getName());
+    City city = cityService.addCity(cityRequest);
     URI location = UriComponentsBuilder.fromUriString("/cities/{id}")
                                        .buildAndExpand(city.getId()).toUri();
 

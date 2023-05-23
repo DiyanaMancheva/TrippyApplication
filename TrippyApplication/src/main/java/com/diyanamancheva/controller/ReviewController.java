@@ -77,9 +77,7 @@ public class ReviewController {
 
   @PostMapping("/reviews")
   public ResponseEntity<Void> createReview(@RequestBody @Valid ReviewRequest reviewRequest){
-    Review review = reviewService.addReview(reviewRequest.getUserId(), reviewRequest.getVenueId(),
-                            reviewRequest.getCreationDate(), reviewRequest.getRating(),
-                            reviewRequest.getText());
+    Review review = reviewService.addReview(reviewRequest);
 
     URI location = UriComponentsBuilder.fromUriString("/reviews/{id}")
                                        .buildAndExpand(review.getId()).toUri();

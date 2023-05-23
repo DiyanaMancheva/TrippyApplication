@@ -5,10 +5,8 @@ import com.diyanamancheva.model.Review;
 import com.diyanamancheva.model.Type;
 import com.diyanamancheva.model.User;
 import com.diyanamancheva.model.Venue;
-import com.diyanamancheva.repository.ReviewAccessor;
-import com.diyanamancheva.repository.VenueAccessor;
+import com.diyanamancheva.repository.ReviewRepository;
 import com.diyanamancheva.service.ReviewService;
-import com.diyanamancheva.service.VenueService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -25,7 +23,7 @@ import static org.mockito.Mockito.when;
 public class ReviewServiceTest {
 
   @Mock
-  private ReviewAccessor reviewAccessor;
+  private ReviewRepository reviewRepository;
 
   @InjectMocks
   private ReviewService reviewService;
@@ -58,8 +56,8 @@ public class ReviewServiceTest {
                                                                        CREATIONDATE, RATING, TEXT));
     reviewService.deleteReview(REVIEW_ID);
 
-    verify(reviewAccessor, times(1)).readReviewById(REVIEW_ID);
-    verify(reviewAccessor, times(1)).deleteReview(REVIEW_ID);
+    verify(reviewRepository, times(1)).readReviewById(REVIEW_ID);
+    verify(reviewRepository, times(1)).deleteReview(REVIEW_ID);
   }
 
 }

@@ -2,7 +2,7 @@ package com.diyanamancheva.user;
 
 import com.diyanamancheva.model.City;
 import com.diyanamancheva.model.User;
-import com.diyanamancheva.repository.UserAccessor;
+import com.diyanamancheva.repository.UserRepository;
 import com.diyanamancheva.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
 
   @Mock
-  private UserAccessor userAccessor;
+  private UserRepository userRepository;
 
   @InjectMocks
   private UserService userService;
@@ -39,8 +39,8 @@ public class UserServiceTest {
 
     userService.deleteUser(USER_ID);
 
-    verify(userAccessor, times(1)).readUserById(USER_ID);
-    verify(userAccessor, times(1)).deleteUser(USER_ID);
+    verify(userRepository, times(1)).readUserById(USER_ID);
+    verify(userRepository, times(1)).deleteUser(USER_ID);
   }
 
 }
