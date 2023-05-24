@@ -1,20 +1,38 @@
 package com.diyanamancheva.model;
 
-import com.diyanamancheva.model.City;
-import com.diyanamancheva.model.Review;
-import com.diyanamancheva.model.Type;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Entity
+@Table(name = "venues")
 public class Venue {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name="venue_id")
   private int id;
+  @Column(name="venue_name")
   private String name;
+  @OneToOne
+  @JoinColumn(name ="type_id")
   private Type type;
+  @OneToOne
+  @JoinColumn(name ="city_id")
   private City city;
+  @Column(name="address")
   private String address;
+  @Column(name="rating")
   private float rating;
+  @Column(name="reviewscount")
   private int reviews;
+
+  public Venue() {
+  }
 
   public Venue(String name, Type type, City city,
                String address, float rating, int reviews){

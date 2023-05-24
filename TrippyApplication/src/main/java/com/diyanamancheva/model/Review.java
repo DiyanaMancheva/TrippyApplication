@@ -1,17 +1,38 @@
 package com.diyanamancheva.model;
 
-import com.diyanamancheva.model.User;
-import com.diyanamancheva.model.Venue;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "reviews")
 public class Review {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name="review_id")
   private int id;
+  @ManyToOne
+  @JoinColumn(name ="user_id")
   private User user;
+  @OneToOne
+  @JoinColumn(name ="venue_id")
   private Venue venue;
+  @Column(name="creationdate")
   private LocalDate creationDate;
+  @Column(name="rating")
   private float rating;
+  @Column(name="text")
   private String text;
+
+  public Review() {
+  }
 
   public Review(User user, Venue venue, LocalDate creationDate,
                 float rating, String text){

@@ -34,13 +34,6 @@ public class UserMapperTest {
   @InjectMocks
   private UserMapper userMapper;
 
-  @Test(expected = RuntimeException.class)
-  public void mapResultSetToUsers_resultSetSQLException_success() throws SQLException {
-    when(resultSet.next()).thenThrow(new SQLException());
-
-    userMapper.mapResultSetToUsers(resultSet);
-  }
-
   @Test
   public void mapUsersToDtos_noExceptions_success() {
     City cityTest = new City(CITY_ID, CITY_NAME);
