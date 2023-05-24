@@ -49,8 +49,7 @@ public class UserController {
 
   @PostMapping("/users")
   public ResponseEntity<Void> createUser(@RequestBody @Valid UserRequest userRequest){
-    User user = userService.addUser(userRequest.getUsername(), userRequest.getCityId(),
-                                    userRequest.getEmail(), userRequest.getJoinDate());
+    User user = userService.addUser(userRequest);
 
     URI location = UriComponentsBuilder.fromUriString("/users/{id}")
                                        .buildAndExpand(user.getId()).toUri();
@@ -61,7 +60,7 @@ public class UserController {
   @PutMapping("/users/{id}")
   public ResponseEntity<UserDto> updateUser (@RequestBody @Valid UserUpdateRequest userRequest,
                                                  @PathVariable int id,
-                                                 @RequestParam(required = false) boolean returnOld){
+                                                 @RequestParam(defaultValue="true") boolean returnOld){
 
     UserDto userDto = userService.updateUser(id, userRequest);
     if (returnOld){
@@ -73,7 +72,7 @@ public class UserController {
 
   @DeleteMapping("/users/{id}")
   public ResponseEntity<UserDto> deleteUser(@PathVariable int id,
-                                                @RequestParam(required = false) boolean returnOld){
+                                                @RequestParam(defaultValue="true") boolean returnOld){
     UserDto userDto = userService.deleteUser(id);
 
     if(returnOld){

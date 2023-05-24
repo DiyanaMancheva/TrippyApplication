@@ -79,8 +79,7 @@ public class VenueController {
 
   @PostMapping("/venues")
   public ResponseEntity<Void> createVenue(@RequestBody @Valid VenueRequest venueRequest){
-    Venue venue = venueService.addVenue(venueRequest.getName(), venueRequest.getType(), venueRequest.getCity(),
-                                        venueRequest.getAddress(), venueRequest.getRating(), venueRequest.getReviews());
+    Venue venue = venueService.addVenue(venueRequest);
 
     URI location = UriComponentsBuilder.fromUriString("/venues/{id}")
                                        .buildAndExpand(venue.getId()).toUri();

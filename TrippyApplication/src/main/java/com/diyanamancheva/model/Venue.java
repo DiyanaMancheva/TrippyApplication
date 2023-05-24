@@ -1,9 +1,12 @@
 package com.diyanamancheva.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -11,13 +14,25 @@ import javax.persistence.Table;
 public class Venue {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name="venue_id")
   private int id;
+  @Column(name="venue_name")
   private String name;
+  @OneToOne
+  @JoinColumn(name ="type_id")
   private Type type;
+  @OneToOne
+  @JoinColumn(name ="city_id")
   private City city;
+  @Column(name="address")
   private String address;
+  @Column(name="rating")
   private float rating;
+  @Column(name="reviewscount")
   private int reviews;
+
+  public Venue() {
+  }
 
   public Venue(String name, Type type, City city,
                String address, float rating, int reviews){

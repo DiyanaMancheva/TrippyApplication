@@ -1,5 +1,6 @@
 package com.diyanamancheva.service;
 
+import com.diyanamancheva.controller.request.user.UserRequest;
 import com.diyanamancheva.controller.request.user.UserUpdateRequest;
 import com.diyanamancheva.dto.mapper.UserMapper;
 import com.diyanamancheva.dto.user.UserDto;
@@ -10,7 +11,6 @@ import com.diyanamancheva.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -42,15 +42,13 @@ public class UserService {
     return  user;
   }
 
-  public User addUser(String username, int cityId,
-                      String email, LocalDate joinDate) {
+  public User addUser(UserRequest userRequest) {
       //userRepository.readUsersByUsernameAndEmail(username, email);
-      City city = cityService.getCityById(cityId);
 
-      User user = new User(username, city, email, joinDate);
-      userRepository.save(user);
+      User userNew = userMapper.mapUserRequestToUser(userRequest);
+      userNew = userRepository.save(userNew);
 
-      return user;
+      return userNew;
   }
 
   public UserDto updateUser(int id, UserUpdateRequest userRequest){
@@ -58,13 +56,15 @@ public class UserService {
     User user = getUserById(id);
     City city = cityService.getCityById(userRequest.getCity());
 
-    User userNew = new User(id, userRequest.getUsername(),
-                            city, userRequest.getEmail(), user.getJoinDate());
+    User userOld = new User(user.getId(), user.getUsername(),
+                            city, user.getEmail(), user.getJoinDate());
 
-    userRepository.save(userNew);
+    user.setUsername(userRequest.getUsername());
+    user.setCity(city);
+    user.setEmail(userRequest.getEmail());
+    userRepository.save(user);
 
-    UserDto userDto = new UserDto(user.getId(), userNew.getUsername(),
-                                  userNew.getCity(), userNew.getEmail(), user.getJoinDate());
+    UserDto userDto = userMapper.mapUserToDto(userOld);
 
     return userDto;
   }

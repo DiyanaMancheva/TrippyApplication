@@ -4,7 +4,6 @@ import com.diyanamancheva.controller.request.review.ReviewRequest;
 import com.diyanamancheva.dto.mapper.ReviewMapper;
 import com.diyanamancheva.dto.review.ReviewDto;
 import com.diyanamancheva.exception.EntityNotFoundException;
-import com.diyanamancheva.model.City;
 import com.diyanamancheva.model.Review;
 import com.diyanamancheva.model.User;
 import com.diyanamancheva.repository.ReviewRepository;
@@ -12,7 +11,6 @@ import com.diyanamancheva.model.Venue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +41,7 @@ public class ReviewService {
 
   public Review getReviewById(int id){
     Review review = reviewRepository.findById(id)
-                                    .orElseThrow(() -> new EntityNotFoundException(String.format("Review with id %d not found", id)));;
+                                    .orElseThrow(() -> new EntityNotFoundException(String.format("Review with id %d not found", id)));
 
     return review;
   }
